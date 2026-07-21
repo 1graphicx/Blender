@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blender Masterclass — La formation complète pour débuter en 3D, en français</title>
+<meta name="description" content="Formation Blender 3D complète en français, pensée pour un débutant qui veut devenir autonome en une journée. Interface, modélisation, matériaux, éclairage, animation, Geometry Nodes, rendu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ============ TOPBAR ============ -->
+<header class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="15" stroke="#f08a34" stroke-width="1.4"/>
+        <circle cx="16" cy="12" r="6.2" fill="#f08a34"/>
+        <path d="M9 26 C9 19 13 16 16 16 C19 16 23 19 23 26" fill="none" stroke="#f08a34" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-stack">
+        <span>BLENDER MASTERCLASS</span>
+        <small>Formation FR · Zéro à Autonome</small>
+      </div>
+    </div>
+    <nav class="topnav">
+      <a href="#programme">Programme du jour</a>
+      <a href="#modules">Modules</a>
+      <a href="#raccourcis">Raccourcis</a>
+      <a href="#projets">Projets</a>
+      <a href="#pieges">Pièges</a>
+      <a href="#ressources">Ressources</a>
+    </nav>
+    <div class="progress-pill">
+      <span class="dot"></span>
+      <span id="topProgress">0% complété</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="reveal in">
+      <span class="eyebrow">Formation 100% en français · Blender 5.2 LTS</span>
+      <h1>Apprends <span class="accent">Blender</span><br>et deviens <span class="outline">autonome</span><br>en un seul jour.</h1>
+      <p class="hero-lede">
+        Une formation dense et structurée, pensée pour un <strong>débutant total</strong> :
+        interface, modélisation, matériaux, éclairage, animation, et même les
+        <strong>Geometry Nodes</strong>. Tout ce qu'il te faut pour partir de zéro
+        et livrer ton premier rendu 3D dans la journée — sans blabla, avec les vrais raccourcis.
+      </p>
+      <div class="hero-ctas">
+        <a href="#programme" class="btn btn-primary">
+          Commencer la formation
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#modules" class="btn btn-ghost">Voir les 11 modules</a>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-item"><span class="num">11</span><span class="lbl">Modules complets</span></div>
+        <div class="hero-meta-item"><span class="num">7–9h</span><span class="lbl">Programme sur 1 jour</span></div>
+        <div class="hero-meta-item"><span class="num">60+</span><span class="lbl">Raccourcis essentiels</span></div>
+        <div class="hero-meta-item"><span class="num">3</span><span class="lbl">Projets guidés</span></div>
+        <div class="hero-meta-item"><span class="num">33</span><span class="lbl">Exercices progressifs</span></div>
+      </div>
+    </div>
+
+    <div class="viewport-card reveal in">
+      <div class="viewport-topbar">
+        <div class="traffic"><span></span><span></span><span></span></div>
+        <span>Blender 5.2 LTS — Layout — Scene.blend</span>
+      </div>
+      <div class="viewport-stage" id="viewportStage">
+        <div class="viewport-hud hud-tl">User Persp<br>Ve:8 Fa:6 Ob:1-1</div>
+        <div class="viewport-hud hud-tr">Cycles<br><span id="fpsCounter">24 fps</span></div>
+        <svg id="cubeSvg" width="380" height="360" viewBox="0 0 380 360"></svg>
+        <div class="viewport-hud hud-br">X <span class="axis-x-c">rouge</span> · Y <span class="axis-y-c">vert</span> · Z <span class="axis-z-c">bleu</span></div>
+      </div>
+      <div class="viewport-footer">
+        <span>Global ▾</span>
+        <span>Point de pivot : Médian</span>
+        <span>Snap: Off</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ============ POURQUOI CETTE FORMATION ============ -->
+<section id="pourquoi">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">// Pourquoi celle-ci</span>
+        <h2>Conçue pour qu'on <br>ne t'y reprenne pas deux fois.</h2>
+      </div>
+      <p class="section-desc">
+        La plupart des tutos Blender sont soit trop lents (des heures pour poser un cube),
+        soit trop rapides (ils supposent que tu connais déjà les raccourcis). Celle-ci
+        est calibrée pour un vrai débutant, avec un objectif d'autonomie réelle.
+      </p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <svg class="icon-wrap" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false"><rect x="6" y="6" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M6 16h28M16 6v28" stroke="currentColor" stroke-width="1.2" opacity="0.5"/></svg>
+        <h3>Structure pédagogique claire</h3>
+        <p>Chaque module suit la même logique : concept → geste clavier/souris → piège fréquent → mini-exercice. Aucune impasse.</p>
+      </div>
+      <div class="pillar">
+        <svg class="icon-wrap" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false"><rect x="5" y="9" width="30" height="22" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M12 15h4M12 20h10M12 25h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <h3>100% à jour, en français</h3>
+        <p>Basée sur Blender 5.2 LTS (2026) : interface actuelle, Eevee Next, Cycles, Geometry Nodes — pas une capture d'écran d'il y a 15 ans.</p>
+      </div>
+      <div class="pillar">
+        <svg class="icon-wrap" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1.6"/><path d="M20 12v8l6 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Pensée pour une journée</h3>
+        <p>Un planning horaire réaliste en 4 phases, du premier cube au personnage texturé et animé, avec des pauses aux bons endroits.</p>
+      </div>
+      <div class="pillar">
+        <svg class="icon-wrap" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false"><path d="M20 6l4 8 9 1-6.5 6.3L28 30l-8-4.3L12 30l1.5-8.7L7 15l9-1 4-8z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        <h3>3 projets, pas de théorie creuse</h3>
+        <p>Tu modélises, textures, éclaires et animes de vrais objets — pas juste un cube gris posé sur un plan blanc.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ============ PROGRAMME DU JOUR ============ -->
+<section id="programme">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">// Ta journée type</span>
+        <h2>Le planning pour tenir<br>l'objectif « autonome en 1 jour ».</h2>
+      </div>
+      <p class="section-desc">
+        4 phases, chacune avec un objectif concret. Adapte les horaires à ton rythme :
+        ce qui compte, c'est l'ordre et de ne jamais passer à la suite sans avoir
+        pratiqué le geste.
+      </p>
+    </div>
+
+    <div class="day-timeline">
+
+      <div class="day-block reveal">
+        <div class="day-rail"><div class="time-tag">9h00</div><div class="day-rail-line"></div></div>
+        <div class="day-content">
+          <span class="phase-label p-decouverte">Phase 1 — Découverte (9h–10h30)</span>
+          <h3>Apprivoiser l'interface sans se noyer</h3>
+          <p>Installation, tour de l'interface, navigation dans la vue 3D, sélection, et le geste fondateur de Blender : déplacer / tourner / redimensionner au clavier. Objectif : ne plus jamais chercher la souris pour zoomer.</p>
+          <div class="day-tags"><span>Modules 1–3</span><span>Navigation 3D</span><span>Mode Objet</span></div>
+        </div>
+      </div>
+
+      <div class="day-block reveal">
+        <div class="day-rail"><div class="time-tag">10h30</div><div class="day-rail-line"></div></div>
+        <div class="day-content">
+          <span class="phase-label p-fondations">Phase 2 — Fondations (10h30–13h)</span>
+          <h3>Modéliser en mode Édition + premier rendu</h3>
+          <p>Sommets, arêtes, faces, extrusion, boucles de sélection, modificateur Subdivision Surface. Tu montes ta première vraie scène (table + chaise) et tu sors ton premier rendu Cycles.</p>
+          <div class="day-tags"><span>Module 4–5</span><span>TP Mobilier</span><span>Premier rendu</span></div>
+        </div>
+      </div>
+
+      <div class="day-block reveal">
+        <div class="day-rail"><div class="time-tag">13h00</div><div class="day-rail-line"></div></div>
+        <div class="day-content">
+          <span class="phase-label p-fondations">Pause déjeuner (13h–14h)</span>
+          <h3>Laisse reposer — c'est là que ça s'ancre</h3>
+          <p>Sérieusement : une vraie pause. La mémoire musculaire des raccourcis (G, R, S, Tab, Shift+A) se consolide mieux après une coupure qu'en continu.</p>
+        </div>
+      </div>
+
+      <div class="day-block reveal">
+        <div class="day-rail"><div class="time-tag">14h00</div><div class="day-rail-line"></div></div>
+        <div class="day-content">
+          <span class="phase-label p-creation">Phase 3 — Création (14h–17h30)</span>
+          <h3>Matériaux, textures, éclairage, courbes, texte 3D</h3>
+          <p>Shader Editor et nodes Principled BSDF, dépliage UV, les 4 types de lampes et leurs usages, modélisation par courbes. Tu textures et éclaires ton objet de la matinée jusqu'à obtenir un rendu présentable.</p>
+          <div class="day-tags"><span>Modules 6–9</span><span>Shading</span><span>Éclairage 3 points</span><span>UV</span></div>
+        </div>
+      </div>
+
+      <div class="day-block reveal">
+        <div class="day-rail"><div class="time-tag">17h30</div></div>
+        <div class="day-content">
+          <span class="phase-label p-maitrise">Phase 4 — Mise en mouvement (17h30–19h30)</span>
+          <h3>Animation, rig simple et découverte des Geometry Nodes</h3>
+          <p>Clés d'animation, courbes IPO/F-Curves, une armature basique pour faire bouger un objet, puis une première approche des Geometry Nodes pour générer de la variation procédurale. Tu termines avec une courte animation exportée en vidéo.</p>
+          <div class="day-tags"><span>Modules 10–11</span><span>Keyframes</span><span>Rig basique</span><span>Geometry Nodes</span><span>Export</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ============ MODULES ============ -->
+<section id="modules">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">// Programme complet</span>
+        <h2>11 modules, du premier<br>clic au Geometry Nodes.</h2>
+      </div>
+      <p class="section-desc">Clique sur un module pour dérouler le contenu détaillé : ce que tu apprends, les gestes précis, et les pièges à éviter. Chaque module se termine par un <strong>parcours d'exercices</strong> en 3 temps (Échauffement → Application → Défi) pour ancrer réellement le geste.</p>
+    </div>
+
+    <div class="exo-global" id="globalExoBar">
+      <span class="dot"></span>
+      <span id="globalExoText">0/33 exercices complétés</span>
+      <button type="button" id="resetExoBtn">Réinitialiser</button>
+    </div>
+
+    <div class="modules-list" id="modulesList">
+
+      <!-- MODULE 1 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">01</span>
+          <div class="module-titles">
+            <h3>Comprendre la 3D et installer Blender</h3>
+            <p>De « c'est quoi un mesh » à un Blender fonctionnel sur ta machine</p>
+          </div>
+          <span class="module-meta">25 min <span class="badge-level lvl-debutant">Débutant</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Ce que tu apprends</h4>
+              <ul>
+                <li>Les briques de base : <strong>mesh</strong> (maillage), <strong>vertex</strong> (sommet), <strong>edge</strong> (arête), <strong>face</strong>.</li>
+                <li>La chaîne de production 3D : modélisation → matériaux → éclairage → rendu → (animation).</li>
+                <li>Pourquoi Blender : logiciel libre et gratuit, complet, utilisé en studio (courts-métrages Sintel, Big Buck Bunny, jeux indés).</li>
+                <li>Téléchargement sur <strong>blender.org</strong>, version <strong>5.2 LTS</strong> recommandée (support long terme, la plus stable).</li>
+                <li>Interface en anglais par défaut : c'est volontaire, tous les tutos et forums l'utilisent — on garde l'anglais pour pouvoir suivre n'importe quelle ressource ensuite.</li>
+              </ul>
+              <p class="note">Astuce : configuration minimale confortable — une carte graphique récente (Nvidia idéalement pour Cycles/OptiX) et 16 Go de RAM. Ça tourne sur moins, mais les rendus seront plus lents.</p>
+            </div>
+            <div class="lesson-block">
+              <h4>Mini-exercice</h4>
+              <ul>
+                <li>Installer Blender 5.2 LTS et l'ouvrir.</li>
+                <li>Identifier à l'écran : la vue 3D, l'outliner (liste des objets), le panneau propriétés, la timeline.</li>
+                <li>Sauvegarder une première fois avec <kbd>Ctrl</kbd>+<kbd>S</kbd> pour prendre le réflexe dès le départ.</li>
+              </ul>
+              <h4>Vocabulaire clé</h4>
+              <ul>
+                <li><strong>Scène</strong> — le fichier .blend dans son ensemble.</li>
+                <li><strong>Objet</strong> — un élément indépendant (mesh, lampe, caméra...).</li>
+                <li><strong>Origine</strong> — le point orange qui représente la position de référence d'un objet.</li>
+              </ul>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m1">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m1">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m1-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m1-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">10 min</span></div>
+                    <h5>Installer et ouvrir Blender proprement</h5>
+                    <p>Télécharge Blender 5.2 LTS sur blender.org, installe-le, ouvre-le. Crée un dossier <strong>MaFormationBlender</strong> sur ton disque, puis sauvegarde immédiatement le fichier vide dedans avec <kbd>Ctrl</kbd>+<kbd>S</kbd> sous le nom <em>01_decouverte.blend</em>.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si le raccourci Ctrl+S ne fait rien, vérifie que ta souris est bien positionnée au-dessus de la vue 3D — chaque zone de l'interface capte ses propres raccourcis.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m1-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m1-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">15 min</span></div>
+                    <h5>Faire le tour des espaces de travail</h5>
+                    <p>Clique successivement sur chaque onglet en haut de l'écran (Layout, Modeling, Sculpting, UV Editing, Shading, Animation, Rendering). Pour chacun, note en une phrase ce qui change dans la disposition de l'écran.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Chaque espace de travail réorganise les mêmes zones (viewport, outliner, propriétés) autour d'une tâche précise — ce n'est jamais un logiciel différent, juste une autre disposition.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m1-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m1-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">15 min</span></div>
+                    <h5>Partir d'une scène vide et nommer proprement</h5>
+                    <p>Fichier → New → General. Supprime le cube par défaut, ajoute un Ico Sphere via Shift+A, puis renomme-le <strong>MonPremierObjet</strong> en double-cliquant sur son nom dans l'Outliner. Sauvegarde le fichier.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Le double-clic doit se faire directement sur le texte du nom dans l'Outliner (pas sur l'icône), sinon ça ne fait que sélectionner l'objet.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 2 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">02</span>
+          <div class="module-titles">
+            <h3>L'interface et la navigation 3D</h3>
+            <p>Se déplacer dans l'espace sans jamais lâcher le clavier</p>
+          </div>
+          <span class="module-meta">40 min <span class="badge-level lvl-debutant">Débutant</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Les zones de l'interface</h4>
+              <ul>
+                <li><strong>Vue 3D (Viewport)</strong> — la fenêtre centrale où tout se passe.</li>
+                <li><strong>Outliner</strong> — en haut à droite, la hiérarchie de tous les objets de la scène.</li>
+                <li><strong>Propriétés</strong> — en bas à droite, tous les réglages de l'objet sélectionné (matériaux, modificateurs, physique...).</li>
+                <li><strong>Timeline</strong> — en bas, pour l'animation.</li>
+                <li><strong>Espaces de travail</strong> — onglets en haut (Layout, Modeling, Sculpting, UV Editing, Shading, Animation, Rendering) : chacun réorganise l'écran pour une tâche précise.</li>
+              </ul>
+              <h4>Navigation à la souris</h4>
+              <ul>
+                <li><strong>Molette</strong> — zoom avant/arrière.</li>
+                <li><strong>Bouton du milieu (BM) maintenu</strong> — orbite autour de la scène.</li>
+                <li><strong>Maj + BM</strong> — panoramique (déplacer la vue).</li>
+                <li><strong>Ctrl + BM</strong> — zoom alternatif en glissant.</li>
+              </ul>
+            </div>
+            <div class="lesson-block">
+              <h4>Vues d'axe (pavé numérique)</h4>
+              <div class="kbd-row"><span class="lbl">Vue de dessus</span><kbd>Num 7</kbd></div>
+              <div class="kbd-row"><span class="lbl">Vue de face</span><kbd>Num 1</kbd></div>
+              <div class="kbd-row"><span class="lbl">Vue de côté (droite)</span><kbd>Num 3</kbd></div>
+              <div class="kbd-row"><span class="lbl">Vues opposées</span><kbd>Ctrl</kbd>+<kbd>Num 7/1/3</kbd></div>
+              <div class="kbd-row"><span class="lbl">Basculer ortho / perspective</span><kbd>Num 5</kbd></div>
+              <div class="kbd-row"><span class="lbl">Cadrer la sélection</span><kbd>.</kbd> (pavé num.)</div>
+              <div class="kbd-row"><span class="lbl">Tout cadrer</span><kbd>Home</kbd></div>
+              <div class="kbd-row"><span class="lbl">Vue caméra</span><kbd>Num 0</kbd></div>
+              <p class="note">Pas de pavé numérique (laptop) ? Active « Emulate Numpad » dans Édition → Préférences → Entrée. Les touches 1 à 9 du haut du clavier prennent alors le relais.</p>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m2">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m2">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m2-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m2-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">8 min</span></div>
+                    <h5>Naviguer 5 minutes sans clavier</h5>
+                    <p>Autour du cube par défaut, pratique uniquement à la souris : molette pour zoomer, bouton du milieu maintenu pour orbiter, Maj+bouton du milieu pour le panoramique. Aucun raccourci clavier pendant cet exercice.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si l'orbite « tremble » ou saute, c'est souvent que le bouton du milieu de la souris est mal cliqué — vérifie qu'il est bien maintenu enfoncé, pas juste cliqué une fois.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m2-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m2-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">10 min</span></div>
+                    <h5>Passer par toutes les vues d'axe</h5>
+                    <p>Sur le cube par défaut, enchaîne Num7 (dessus), Num1 (face), Num3 (côté), puis Num5 pour basculer ortho/perspective. Ajoute une caméra (Shift+A) et vérifie le cadrage avec Num0.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Pas de pavé numérique ? Active « Emulate Numpad » dans les Préférences comme indiqué plus haut avant de commencer cet exercice.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m2-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m2-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">10 min</span></div>
+                    <h5>Navigation 100% clavier chronométrée</h5>
+                    <p>Sans toucher à la molette ni au bouton du milieu : utilise uniquement le pavé numérique et le point « . » (cadrer sélection) et Home (tout cadrer) pour atteindre un cadrage caméra précis sur un objet. Chronomètre-toi.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Le point « . » du pavé numérique cadre uniquement l'objet sélectionné — sélectionne-le d'abord, sinon la vue se recadre sur toute la scène.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 3 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">03</span>
+          <div class="module-titles">
+            <h3>Sélection, transformation et Mode Objet</h3>
+            <p>G, R, S : les trois lettres qui pilotent 80% du travail</p>
+          </div>
+          <span class="module-meta">45 min <span class="badge-level lvl-debutant">Débutant</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Ajouter et sélectionner</h4>
+              <ul>
+                <li><strong>Shift+A</strong> ouvre le menu Ajouter (Mesh, Lumière, Caméra, Courbe...) au niveau du curseur 3D.</li>
+                <li><strong>Clic gauche</strong> sélectionne un objet (bord orange).</li>
+                <li><strong>Maj + clic</strong> ajoute à la sélection.</li>
+                <li><strong>A</strong> tout sélectionner, <strong>Alt+A</strong> tout désélectionner.</li>
+                <li><strong>B</strong> sélection par boîte, <strong>C</strong> pinceau de sélection (Échap pour sortir).</li>
+              </ul>
+              <h4>Le trio fondamental des transformations</h4>
+              <div class="kbd-row"><span class="lbl"><strong>G</strong>rab — déplacer</span><kbd>G</kbd></div>
+              <div class="kbd-row"><span class="lbl"><strong>R</strong>otate — tourner</span><kbd>R</kbd></div>
+              <div class="kbd-row"><span class="lbl"><strong>S</strong>cale — redimensionner</span><kbd>S</kbd></div>
+              <div class="kbd-row"><span class="lbl">Contraindre sur un axe</span><kbd>X</kbd> / <kbd>Y</kbd> / <kbd>Z</kbd></div>
+              <div class="kbd-row"><span class="lbl">Contraindre en local</span><kbd>X X</kbd> (double appui)</div>
+              <div class="kbd-row"><span class="lbl">Valeur numérique exacte</span>taper le chiffre après G/R/S</div>
+              <div class="kbd-row"><span class="lbl">Valider / Annuler</span><kbd>Clic gauche</kbd> / <kbd>Échap</kbd></div>
+              <p class="note">Exemple concret : <kbd>G</kbd> <kbd>Z</kbd> <kbd>2</kbd> <kbd>Entrée</kbd> déplace l'objet de 2 unités vers le haut, exactement. C'est le geste le plus utilisé de tout Blender.</p>
+            </div>
+            <div class="lesson-block">
+              <h4>Dupliquer, supprimer, cacher</h4>
+              <ul>
+                <li><strong>Maj+D</strong> — dupliquer (copie indépendante).</li>
+                <li><strong>Alt+D</strong> — dupliquer en lié (clone : modifier l'un modifie tous les autres).</li>
+                <li><strong>X</strong> ou <strong>Suppr</strong> — supprimer la sélection.</li>
+                <li><strong>H</strong> — cacher, <strong>Alt+H</strong> — tout réafficher.</li>
+              </ul>
+              <h4>Le point de pivot</h4>
+              <p style="font-size:13.5px;color:var(--ink-3);margin-bottom:8px;">Détermine le centre des rotations/échelles : Point médian (par défaut), Origine de l'objet actif, Curseur 3D, Origines individuelles. Se règle dans le menu déroulant en haut de la vue 3D.</p>
+              <h4>Widgets (gizmos)</h4>
+              <p style="font-size:13.5px;color:var(--ink-3);">Les flèches colorées superposées à l'objet : <span class="axis-x-c">rouge = X</span>, <span class="axis-y-c">vert = Y</span>, <span class="axis-z-c">bleu = Z</span>. Utiles à la souris, mais les raccourcis clavier restent plus rapides une fois le réflexe pris.</p>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m3">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m3">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m3-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m3-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">10 min</span></div>
+                    <h5>Ajouter et sélectionner trois objets</h5>
+                    <p>Avec Shift+A, ajoute un cube, une sphère UV et un cône. Sélectionne-les un par un au clic gauche, puis pratique la sélection multiple avec Maj+clic. Termine par A (tout sélectionner) et Alt+A (tout désélectionner).</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>L'objet actif (le dernier cliqué) a un contour orange plus clair que les autres objets sélectionnés — c'est lui qui sert de référence pour certaines opérations.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m3-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m3-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">12 min</span></div>
+                    <h5>G/R/S avec contraintes et valeurs exactes</h5>
+                    <p>Sur le cube, exécute précisément : <kbd>G</kbd> <kbd>Z</kbd> <kbd>2</kbd> <kbd>Entrée</kbd>, puis <kbd>R</kbd> <kbd>Z</kbd> <kbd>45</kbd> <kbd>Entrée</kbd>, puis <kbd>S</kbd> <kbd>X</kbd> <kbd>1.5</kbd> <kbd>Entrée</kbd>. Observe le panneau Item (touche N) pour vérifier les valeurs exactes obtenues.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Le panneau N s'ouvre à droite de la vue 3D et affiche Position, Rotation et Échelle en temps réel — indispensable pour vérifier un geste avant de le valider.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m3-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m3-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">15 min</span></div>
+                    <h5>Composition au clavier + reset des transforms</h5>
+                    <p>Place 5 objets dans un petit arrangement, chacun avec une position/rotation/échelle différente, uniquement au clavier (sans les widgets à la souris). Puis sélectionne tout et applique <kbd>Ctrl</kbd>+<kbd>A</kbd> → <strong>All Transforms</strong>. Vérifie dans le panneau N que rotation et échelle sont bien revenues à 0°/1.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Après « Apply All Transforms », la géométrie garde son aspect visuel mais les valeurs repartent à zéro — c'est ce qui évite les échelles bizarres plus tard (voir la section Pièges fréquents).</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 4 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">04</span>
+          <div class="module-titles">
+            <h3>Modélisation polygonale — Mode Édition</h3>
+            <p>Sommets, arêtes, faces : sculpter la géométrie</p>
+          </div>
+          <span class="module-meta">70 min <span class="badge-level lvl-debutant">Débutant</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Entrer en Mode Édition</h4>
+              <div class="kbd-row"><span class="lbl">Basculer Objet / Édition</span><kbd>Tab</kbd></div>
+              <div class="kbd-row"><span class="lbl">Mode Sommets</span><kbd>1</kbd></div>
+              <div class="kbd-row"><span class="lbl">Mode Arêtes</span><kbd>2</kbd></div>
+              <div class="kbd-row"><span class="lbl">Mode Faces</span><kbd>3</kbd></div>
+              <p style="font-size:13.5px;color:var(--ink-3);margin:10px 0;">Une fois en Mode Édition, tous les raccourcis G/R/S s'appliquent aux composants sélectionnés (sommets, arêtes ou faces) et non plus à l'objet entier.</p>
+              <h4>Les outils de construction</h4>
+              <ul>
+                <li><strong>Extrusion (E)</strong> — l'outil le plus important : fait sortir une nouvelle géométrie depuis la sélection.</li>
+                <li><strong>Inset (I)</strong> — insère une face à l'intérieur d'une face existante.</li>
+                <li><strong>Loop Cut (Ctrl+R)</strong> — ajoute une boucle d'arêtes tout autour du mesh, pour densifier la géométrie.</li>
+                <li><strong>Bevel / Chanfrein (Ctrl+B)</strong> — arrondit ou casse une arête vive.</li>
+                <li><strong>Merge (M)</strong> — fusionne des sommets sélectionnés (« at Center », « at Last »...).</li>
+                <li><strong>Fusion des doublons (M → By Distance)</strong> — nettoie les sommets superposés après un mirroir ou un import.</li>
+              </ul>
+            </div>
+            <div class="lesson-block">
+              <h4>Modificateurs indispensables</h4>
+              <ul>
+                <li><strong>Subdivision Surface</strong> — lisse le maillage en ajoutant des subdivisions à l'affichage, sans détruire la géométrie de base. Le grand classique pour des formes organiques.</li>
+                <li><strong>Mirror</strong> — modélise une moitié, l'autre est générée automatiquement (indispensable pour les personnages symétriques).</li>
+                <li><strong>Solidify</strong> — donne de l'épaisseur à une surface plate.</li>
+                <li><strong>Array</strong> — répète un objet en série (clôture, escalier, colonnade).</li>
+              </ul>
+              <p class="note">Un modificateur est non-destructif : la géométrie d'origine reste modifiable. On l'« applique » seulement quand on est sûr du résultat final.</p>
+              <h4>Ombrage</h4>
+              <p style="font-size:13.5px;color:var(--ink-3);">Clic droit → <strong>Shade Smooth</strong> pour lisser visuellement les facettes, ou <strong>Shade Auto Smooth</strong> pour lisser seulement les angles doux et garder les arêtes vives nettes.</p>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m4">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m4">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m4-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m4-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">10 min</span></div>
+                    <h5>Premiers pas en Mode Édition</h5>
+                    <p>Sur un cube, entre en Mode Édition (<kbd>Tab</kbd>). Bascule entre sommets, arêtes et faces (<kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd>). Sélectionne la face du dessus et extrude-la (<kbd>E</kbd>) de quelques unités vers le haut.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Après avoir appuyé sur E, le mouvement est déjà contraint à la normale de la face — pas besoin d'appuyer sur Z en plus dans ce cas simple.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m4-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m4-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">20 min</span></div>
+                    <h5>Modéliser une petite maison stylisée</h5>
+                    <p>Pars d'un cube. Utilise Inset (<kbd>I</kbd>) puis Extrude (<kbd>E</kbd>) sur la face du dessus pour créer un toit en pointe. Ajoute des Loop Cuts (<kbd>Ctrl</kbd>+<kbd>R</kbd>) sur une face pour délimiter l'emplacement d'une fenêtre, puis Inset + extrusion vers l'intérieur pour la creuser.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Pour un toit à 4 pans propre, utilise « Merge → At Center » sur les 4 sommets du sommet du toit après extrusion, plutôt que de les déplacer un par un.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m4-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m4-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">20 min</span></div>
+                    <h5>Forme organique lissée et symétrique</h5>
+                    <p>Modélise un galet ou une savonnette : ajoute un modificateur <strong>Mirror</strong> pour ne travailler qu'une moitié, puis <strong>Subdivision Surface</strong> pour arrondir. Applique Shade Auto Smooth. Termine par un nettoyage <kbd>M</kbd> → <strong>By Distance</strong> pour fusionner les doublons créés par le Mirror.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si un trou apparaît sur le plan de symétrie après le Mirror, c'est presque toujours un problème de sommets non fusionnés au centre — le nettoyage « By Distance » le résout.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 5 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">05</span>
+          <div class="module-titles">
+            <h3>TP guidé — Ta première scène (mobilier)</h3>
+            <p>Table, chaise et premier rendu Cycles</p>
+          </div>
+          <span class="module-meta">55 min <span class="badge-level lvl-debutant">Débutant</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Étapes du projet</h4>
+              <ul>
+                <li>Ajouter un cube (<kbd>Shift+A</kbd> → Mesh → Cube), l'aplatir en plateau de table avec <kbd>S</kbd> <kbd>Z</kbd> <kbd>0.1</kbd>.</li>
+                <li>Passer en Mode Édition, sélectionner les 4 coins du dessous, <strong>extruder</strong> (<kbd>E</kbd>) vers le bas pour créer les pieds.</li>
+                <li>Dupliquer (<kbd>Alt+D</kbd>) pour les 3 autres pieds — le duplicata lié permet de tous les épaissir en une fois.</li>
+                <li>Ajouter une caméra (<kbd>Shift+A</kbd> → Caméra), la positionner avec <kbd>Num 0</kbd> pour voir à travers son objectif.</li>
+                <li>Ajouter une lampe Sun ou Area au-dessus de la scène.</li>
+              </ul>
+            </div>
+            <div class="lesson-block">
+              <h4>Premier rendu</h4>
+              <div class="kbd-row"><span class="lbl">Lancer le rendu</span><kbd>F12</kbd></div>
+              <div class="kbd-row"><span class="lbl">Enregistrer l'image</span><kbd>F3</kbd></div>
+              <div class="kbd-row"><span class="lbl">Revoir le dernier rendu</span><kbd>F11</kbd></div>
+              <p class="note">Un rendu a besoin au minimum d'une caméra et d'une source de lumière — sans ça, l'image sort noire. C'est l'erreur n°1 des débutants.</p>
+              <h4>Checklist de fin de module</h4>
+              <ul>
+                <li>La scène contient au moins 2 objets construits par extrusion.</li>
+                <li>Le rendu F12 affiche une image correctement exposée.</li>
+                <li>Le fichier est sauvegardé (<kbd>Ctrl+S</kbd>).</li>
+              </ul>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m5">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m5">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m5-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m5-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">25 min</span></div>
+                    <h5>Reproduire la table exactement</h5>
+                    <p>Suis les étapes du projet ci-dessus au pied de la lettre : plateau aplati, 4 pieds extrudés, caméra et lampe Sun. Vérifie chaque item de la checklist de fin de module avant de continuer.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si le rendu F12 sort noir, relis le piège n°1 de la section Pièges fréquents : il manque presque toujours une caméra ou une lumière.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m5-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m5-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">25 min</span></div>
+                    <h5>Ajouter une chaise assortie</h5>
+                    <p>Construis une chaise en réutilisant les mêmes gestes : cube pour l'assise, extrusion des pieds, extrusion vers le haut pour le dossier. Place-la à côté de la table et vérifie qu'elle s'intègre bien dans le cadrage caméra.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Duplique un pied de table (Alt+D pour un duplicata lié) plutôt que de recréer les 4 pieds de la chaise depuis zéro — plus rapide et cohérent visuellement.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m5-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m5-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">30 min</span></div>
+                    <h5>Une salle à manger complète</h5>
+                    <p>Duplique la chaise 3 fois (Maj+D) autour de la table, avec des rotations différentes pour chaque chaise. Ajoute une seconde lampe (Area) pour adoucir les ombres, puis sors un rendu final F12 propre et enregistre-le (F3).</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Utilise le point de pivot « Curseur 3D » placé au centre de la table pour faire tourner les chaises facilement tout autour, plutôt que de les faire pivoter une par une sur leur propre origine.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 6 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">06</span>
+          <div class="module-titles">
+            <h3>Matériaux et Shader Editor</h3>
+            <p>Le Principled BSDF, le seul node qu'il faut vraiment connaître au début</p>
+          </div>
+          <span class="module-meta">60 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Créer et assigner un matériau</h4>
+              <ul>
+                <li>Onglet Propriétés → icône sphère à damier → <strong>New</strong> crée un matériau sur l'objet sélectionné.</li>
+                <li>Un objet peut avoir plusieurs matériaux ; en Mode Édition, sélectionner des faces puis cliquer <strong>Assign</strong> pour leur attribuer un matériau spécifique.</li>
+                <li>L'espace de travail <strong>Shading</strong> (en haut) ouvre le Shader Editor à base de nœuds.</li>
+              </ul>
+              <h4>Le node Principled BSDF</h4>
+              <ul>
+                <li><strong>Base Color</strong> — la couleur / texture diffuse.</li>
+                <li><strong>Metallic</strong> — 0 = diélectrique (plastique, bois...), 1 = métal pur.</li>
+                <li><strong>Roughness</strong> — 0 = miroir parfait, 1 = totalement mat.</li>
+                <li><strong>Normal</strong> (via un node Normal Map) — simule du relief sans ajouter de géométrie.</li>
+                <li><strong>Emission</strong> — rend la surface lumineuse (néons, écrans).</li>
+                <li><strong>Alpha</strong> — transparence (verre, feuillage découpé).</li>
+              </ul>
+              <p class="note">Un modèle « métal / rugosité » couvre 95% des matériaux réels : combine Metallic et Roughness plutôt que de chercher des propriétés exotiques.</p>
+            </div>
+            <div class="lesson-block">
+              <h4>Recettes rapides</h4>
+              <ul>
+                <li><strong>Plastique brillant</strong> — Metallic 0, Roughness ~0.15.</li>
+                <li><strong>Métal brossé</strong> — Metallic 1, Roughness ~0.35 avec une texture noise en entrée de Roughness.</li>
+                <li><strong>Verre</strong> — remplacer par un node Glass BSDF, ou Transmission à 1 sur le Principled.</li>
+                <li><strong>Bois</strong> — texture Image (photo) en Base Color + une version niveau de gris en Roughness.</li>
+              </ul>
+              <h4>Copier un matériau</h4>
+              <p style="font-size:13.5px;color:var(--ink-3);">Sélectionner tous les objets concernés, l'objet source en dernier (surbrillance claire), puis <kbd>Ctrl+L</kbd> → <strong>Link Materials</strong>.</p>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m6">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m6">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m6-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m6-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">10 min</span></div>
+                    <h5>Trois objets, trois couleurs</h5>
+                    <p>Ajoute 3 objets (cube, sphère, cône). Crée un nouveau matériau sur chacun et change uniquement leur Base Color pour qu'ils soient rouge, vert et bleu. Passe le viewport en Material Preview pour vérifier le résultat.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Le mode Solid du viewport n'affiche jamais les couleurs de matériau — bascule sur l'icône de sphère à damier en haut à droite de la vue 3D.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m6-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m6-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">20 min</span></div>
+                    <h5>Reproduire les 4 recettes rapides</h5>
+                    <p>Sur 4 objets distincts, applique successivement les réglages « plastique brillant », « métal brossé », « verre » et « bois » décrits dans les recettes rapides. Compare visuellement les résultats en Rendered View.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Pour le métal brossé, un node Noise Texture branché en Roughness donne un effet plus convaincant qu'une valeur fixe — expérimente l'échelle du bruit.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m6-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m6-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">20 min</span></div>
+                    <h5>Un objet, plusieurs matériaux</h5>
+                    <p>Modélise un dé simple (cube). En Mode Édition, sélectionne chaque face une par une et assigne-lui un matériau différent (Assign) pour simuler les 6 faces numérotées d'un dé, ou les zones d'une tasse (corps/anse).</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Il faut d'abord créer tous les matériaux (New) dans la liste de matériaux de l'objet avant de pouvoir les assigner face par face en Mode Édition.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 7 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">07</span>
+          <div class="module-titles">
+            <h3>Textures et dépliage UV</h3>
+            <p>Habiller un objet avec une vraie image</p>
+          </div>
+          <span class="module-meta">55 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Pourquoi déplier en UV ?</h4>
+              <p style="font-size:13.5px;color:var(--ink-3);margin-bottom:10px;">Une texture est une image 2D plate. Le dépliage UV consiste à « découper » virtuellement le mesh pour l'aplatir sur ce plan, comme un patron de couture — sans découpe, l'image se plaque n'importe comment sur les formes complexes.</p>
+              <h4>Marche à suivre</h4>
+              <ul>
+                <li>En Mode Édition, sélectionner les arêtes qui serviront de découpe (idéalement des zones peu visibles) → clic droit → <strong>Mark Seam</strong>.</li>
+                <li>Tout sélectionner (<kbd>A</kbd>) puis <kbd>U</kbd> → <strong>Unwrap</strong>.</li>
+                <li>Ouvrir l'espace de travail <strong>UV Editing</strong> pour voir et ajuster le résultat déplié.</li>
+                <li>Pour des formes simples : <strong>Smart UV Project</strong> déplie automatiquement sans marquage manuel.</li>
+              </ul>
+            </div>
+            <div class="lesson-block">
+              <h4>Brancher une texture</h4>
+              <ul>
+                <li>Shader Editor → <kbd>Shift+A</kbd> → Texture → <strong>Image Texture</strong>.</li>
+                <li>Charger une image, brancher sa sortie <strong>Color</strong> dans <strong>Base Color</strong> du Principled BSDF.</li>
+                <li>Pour du relief : brancher une seconde image (niveaux de gris) via un node <strong>Normal Map</strong> vers l'entrée Normal.</li>
+              </ul>
+              <h4>Sources de textures gratuites</h4>
+              <ul>
+                <li><strong>Poly Haven</strong> — textures PBR HDRI et modèles, licence libre.</li>
+                <li><strong>BlenderKit</strong> — add-on intégré, bibliothèque de matériaux et objets.</li>
+                <li><strong>ambientCG</strong> — textures PBR haute qualité, gratuites.</li>
+              </ul>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m7">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m7">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m7-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m7-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">10 min</span></div>
+                    <h5>Dépliage automatique d'un cube</h5>
+                    <p>Sur un cube, tout sélectionner (A) puis utiliser Smart UV Project (sans marquage manuel). Ouvre l'espace de travail UV Editing pour observer le résultat déplié en 6 carrés.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Smart UV Project fonctionne bien sur des formes simples (cubes, prismes) mais devient vite désordonné sur des formes organiques — c'est là que le marquage manuel prend le relais.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m7-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m7-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">15 min</span></div>
+                    <h5>Marquage de couture sur un cylindre</h5>
+                    <p>Sur un cylindre, sélectionne les arêtes verticales et les deux cercles (haut/bas) → Mark Seam. Tout sélectionner puis U → Unwrap. Observe les étirements dans l'UV Editor et ajuste le placement des coutures si besoin.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Place les coutures sur des zones peu visibles (dessous, arrière) : une fois la texture appliquée, la couture reste visible comme une légère cassure de motif.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m7-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m7-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">25 min</span></div>
+                    <h5>Texture PBR complète depuis Poly Haven</h5>
+                    <p>Télécharge un set de textures PBR gratuit sur Poly Haven (Base Color + Roughness + Normal). Déplie proprement ton objet, branche les 3 images dans le Shader Editor (Normal via un node Normal Map) et vérifie le rendu en Cycles.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>La texture de normal map doit être réglée en « Non-Color » dans ses propriétés d'image, sinon Blender interprète mal les valeurs de relief.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 8 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">08</span>
+          <div class="module-titles">
+            <h3>Éclairage et rendu (Cycles / Eevee)</h3>
+            <p>Les 4 lampes et le montage lumière à 3 points</p>
+          </div>
+          <span class="module-meta">50 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Les 4 types de lampe</h4>
+              <ul>
+                <li><strong>Point</strong> — une ampoule : éclaire dans toutes les directions depuis un point.</li>
+                <li><strong>Sun</strong> — rayons parallèles, intensité indépendante de la distance : simule le soleil.</li>
+                <li><strong>Spot</strong> — un cône de lumière, avec angle et adoucissement réglables.</li>
+                <li><strong>Area</strong> — une surface qui émet de la lumière : ombres douces et réalistes, idéale pour un éclairage studio ou simuler une fenêtre.</li>
+              </ul>
+              <h4>Le schéma 3 points (studio)</h4>
+              <ul>
+                <li><strong>Key light</strong> — lumière principale, la plus forte, à 45° de la caméra.</li>
+                <li><strong>Fill light</strong> — plus faible, adoucit les ombres du côté opposé.</li>
+                <li><strong>Rim / Back light</strong> — derrière le sujet, détache la silhouette du fond.</li>
+              </ul>
+            </div>
+            <div class="lesson-block">
+              <h4>Cycles vs Eevee Next</h4>
+              <ul>
+                <li><strong>Eevee Next</strong> — moteur temps réel, rapide, idéal pour itérer et pour le motion design ; qualité désormais très proche de Cycles.</li>
+                <li><strong>Cycles</strong> — moteur par lancer de rayons (path tracing), le plus réaliste, plus lent, avec accélération GPU (OptiX / CUDA / HIP / Metal).</li>
+              </ul>
+              <h4>Paramètres de rendu essentiels</h4>
+              <ul>
+                <li><strong>Résolution</strong> et <strong>Samples</strong> (nombre d'échantillons — plus = moins de grain, plus lent).</li>
+                <li><strong>Denoising</strong> — active un débruitage IA pour réduire les samples nécessaires.</li>
+                <li><strong>World</strong> — le fond de scène et son éclairage ambiant ; un <strong>HDRI</strong> (image panoramique) donne un éclairage réaliste en un clic.</li>
+              </ul>
+              <p class="note">Pour un rendu final propre en Cycles : 128 à 512 samples selon la scène, denoising activé, résolution ×2 pour de l'impression.</p>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m8">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m8">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m8-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m8-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">10 min</span></div>
+                    <h5>Comparer les 4 types de lampe</h5>
+                    <p>Sur une même scène (un objet + un sol), ajoute successivement une lampe Point, Sun, Spot puis Area (en supprimant la précédente à chaque fois). Observe à chaque fois la douceur et la direction des ombres en Rendered View.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Augmente la taille (Size) de la lampe Area pour voir directement son effet sur la douceur des ombres — plus la source est grande, plus l'ombre est douce.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m8-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m8-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">20 min</span></div>
+                    <h5>Monter un éclairage 3 points</h5>
+                    <p>Reprends l'objet du Module 5 ou 6. Place une lampe Key à 45° de la caméra, une lampe Fill plus faible du côté opposé, et une lampe Rim derrière l'objet. Ajuste les puissances jusqu'à obtenir un rendu équilibré.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Commence toujours par régler la Key light seule, puis ajoute la Fill à environ un tiers de sa puissance — c'est plus facile que de régler les trois lampes en même temps.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m8-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m8-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">20 min</span></div>
+                    <h5>Rendu Cycles + HDRI propre</h5>
+                    <p>Ajoute un HDRI dans les propriétés World. Passe en moteur Cycles, règle les Samples et active le Denoising. Sors un rendu final F12 en haute résolution et enregistre-le (F3).</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si le rendu Cycles est trop bruité même à 512 samples, vérifie que le Denoising est bien activé dans l'onglet Rendu — il réduit énormément le grain sans augmenter le temps de calcul.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 9 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">09</span>
+          <div class="module-titles">
+            <h3>Courbes, texte 3D et TP personnage stylisé</h3>
+            <p>Sortir du tout-polygone et modéliser un petit personnage</p>
+          </div>
+          <span class="module-meta">65 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Modélisation par courbes</h4>
+              <ul>
+                <li><kbd>Shift+A</kbd> → Courbe → <strong>Bézier</strong> : les poignées se manipulent comme les sommets d'un mesh (G, R, S).</li>
+                <li><strong>Extrude</strong> (dans Object Data Properties) — donne de l'épaisseur à la courbe (tubes, câbles, néons).</li>
+                <li><strong>Bevel Depth</strong> — arrondit la section pour un rendu tube parfait.</li>
+                <li><strong>Bevel Object</strong> — extrude une seconde courbe le long de la première : idéal pour des moulures ou rampes complexes.</li>
+                <li><strong>Alt+C → Mesh from Curve</strong> — convertit en mesh classique pour appliquer ensuite des modificateurs polygonaux.</li>
+              </ul>
+              <h4>Outil texte 3D</h4>
+              <p style="font-size:13.5px;color:var(--ink-3);">
+                <kbd>Shift+A</kbd> → Texte, puis <kbd>Tab</kbd> pour taper. Réglages de police, alignement, épaisseur dans Object Data Properties. « Text on Curve » permet de faire suivre le texte le long d'une courbe (logo, titre animé).
+              </p>
+            </div>
+            <div class="lesson-block">
+              <h4>TP : petit personnage stylisé</h4>
+              <ul>
+                <li>Partir d'une sphère UV pour la tête, d'un cube pour le corps.</li>
+                <li>Appliquer le modificateur <strong>Mirror</strong> pour ne modéliser qu'une moitié du corps.</li>
+                <li>Utiliser <strong>Subdivision Surface</strong> pour un rendu doux type « cartoon ».</li>
+                <li>Assigner un matériau différent par zone (peau, vêtements, yeux) via Assign en Mode Édition.</li>
+                <li>Cadrer, éclairer (schéma 3 points) et sortir un rendu final avec <kbd>F12</kbd>.</li>
+              </ul>
+              <p class="note">Objectif réaliste pour un premier personnage : silhouette simple et lisible plutôt que détails anatomiques précis. La stylisation pardonne les imperfections.</p>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m9">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m9">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m9-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m9-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">15 min</span></div>
+                    <h5>Un câble en courbe Bézier</h5>
+                    <p>Ajoute une courbe Bézier, déplace ses poignées avec G/R/S pour lui donner une forme sinueuse. Dans Object Data Properties, augmente le Bevel Depth pour lui donner l'épaisseur d'un câble ou d'un tube néon.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Les points de contrôle d'une courbe se sélectionnent et se déplacent exactement comme des sommets de mesh — les mêmes raccourcis G/R/S s'appliquent.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m9-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m9-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">15 min</span></div>
+                    <h5>Un titre en texte 3D</h5>
+                    <p>Ajoute un objet Texte (Shift+A → Texte), entre en édition (Tab) pour taper ton prénom, règle la police et l'épaisseur (Extrude) dans Object Data Properties, puis essaie « Text on Curve » avec une courbe Bézier créée à côté.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>« Text on Curve » se règle dans Object Data Properties → Paragraph → en indiquant la courbe cible dans le champ prévu.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m9-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m9-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">40 min</span></div>
+                    <h5>Le TP personnage stylisé complet</h5>
+                    <p>Réalise l'intégralité du TP décrit ci-dessus : sphère + cube, Mirror, Subdivision Surface, matériaux multiples par zone, éclairage 3 points et rendu final F12. C'est le deuxième des 3 projets de la formation.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Modélise d'abord uniquement la moitié droite du corps avec le modificateur Mirror actif en aperçu — tu verras l'ensemble en temps réel sans avoir à dupliquer manuellement.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 10 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">10</span>
+          <div class="module-titles">
+            <h3>Animation et rig basique</h3>
+            <p>Clés d'animation, courbes F-Curve, et une première armature</p>
+          </div>
+          <span class="module-meta">60 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Clés d'animation (keyframes)</h4>
+              <div class="kbd-row"><span class="lbl">Insérer une clé (position/rotation/échelle)</span><kbd>I</kbd></div>
+              <div class="kbd-row"><span class="lbl">Supprimer une clé</span><kbd>Alt+I</kbd></div>
+              <div class="kbd-row"><span class="lbl">Image suivante / précédente</span><kbd>→</kbd> / <kbd>←</kbd></div>
+              <div class="kbd-row"><span class="lbl">Lire l'animation</span><kbd>Alt+A</kbd> (ou barre espace)</div>
+              <p style="font-size:13.5px;color:var(--ink-3);margin:10px 0;">Principe : se placer sur une image, poser une clé, avancer dans le temps, changer la valeur, poser une nouvelle clé. Blender interpole automatiquement entre les deux.</p>
+              <h4>Affiner avec le Graph Editor</h4>
+              <p style="font-size:13.5px;color:var(--ink-3);">Les courbes F-Curve montrent l'évolution de chaque valeur dans le temps. On y règle le type d'interpolation (Bézier, Linéaire, Constant) pour contrôler l'accélération et la décélération — la clé d'une animation qui « a du poids ».</p>
+            </div>
+            <div class="lesson-block">
+              <h4>Armature simple (rig)</h4>
+              <ul>
+                <li><kbd>Shift+A</kbd> → Armature : ajoute un premier os.</li>
+                <li>En Mode Édition d'armature, extruder (<kbd>E</kbd>) pour chaîner les os d'un squelette basique.</li>
+                <li>Sélectionner le mesh puis l'armature (<kbd>Maj</kbd>), <kbd>Ctrl+P</kbd> → <strong>With Automatic Weights</strong> : Blender calcule automatiquement quelle partie du maillage suit quel os.</li>
+                <li>En <strong>Pose Mode</strong>, tourner les os anime le personnage sans déformer sa géométrie de base.</li>
+              </ul>
+              <p class="note">Le poids automatique (« skinning ») fait 80% du travail correctement sur une forme simple ; on peint ensuite les 20% restants dans Weight Paint pour les zones problématiques (aisselles, articulations).</p>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m10">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m10">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m10-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m10-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">10 min</span></div>
+                    <h5>Deux clés, un premier mouvement</h5>
+                    <p>Sur l'image 1, pose une clé de position (I → Location) sur un cube. Avance à l'image 50, déplace le cube et pose une nouvelle clé. Lis l'animation avec Alt+A ou la barre espace.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si le cube ne bouge pas à la lecture, vérifie que tu es bien revenu à l'image 1 avant de lancer la lecture — Blender lit à partir de la position actuelle de la timeline.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m10-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m10-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">15 min</span></div>
+                    <h5>Adoucir le mouvement dans le Graph Editor</h5>
+                    <p>Reprends l'animation précédente. Ouvre le Graph Editor, sélectionne les clés et change le type d'interpolation en Bézier avec Easing (Ease In/Out) pour obtenir un mouvement qui accélère puis ralentit, au lieu d'une vitesse constante.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Le raccourci T dans le Graph Editor ouvre le menu d'interpolation directement sur les clés sélectionnées, sans passer par un menu déroulant.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m10-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m10-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">30 min</span></div>
+                    <h5>Rig et pose sur le personnage stylisé</h5>
+                    <p>Sur le personnage du Module 9, ajoute une armature simple (2-3 os), parente le mesh avec Automatic Weights, puis pose 2 poses différentes en Pose Mode (ex. bras levé / bras baissé) avec une clé sur chacune pour créer un petit mouvement.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>En Pose Mode, insère la clé avec I → Rotation directement sur l'os sélectionné, pas sur l'objet mesh entier.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 11 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">11</span>
+          <div class="module-titles">
+            <h3>Geometry Nodes et export final</h3>
+            <p>La génération procédurale, la grande force de Blender moderne</p>
+          </div>
+          <span class="module-meta">50 min <span class="badge-level lvl-avance">Avancé (découverte)</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>C'est quoi les Geometry Nodes ?</h4>
+              <p style="font-size:13.5px;color:var(--ink-3);margin-bottom:10px;">Un système de nœuds qui génère et modifie de la géométrie de façon procédurale et non-destructive — au lieu de placer 200 arbres à la main, on décrit une règle (« disperser des instances sur cette surface, avec cette variation d'échelle ») et Blender l'exécute.</p>
+              <ul>
+                <li>Onglet <strong>Geometry Nodes</strong> → New crée un modificateur + un graphe de nœuds vide.</li>
+                <li><strong>Distribute Points on Faces</strong> — sème des points sur une surface.</li>
+                <li><strong>Instance on Points</strong> — place une copie d'un objet à chaque point (herbe, rochers, foule).</li>
+                <li><strong>Random Value</strong> — ajoute de la variation (taille, rotation) pour casser la répétition.</li>
+              </ul>
+              <p class="note">Usage typique débutant : disperser des instances de rochers ou d'herbe sur un terrain en quelques nœuds, plutôt que de dupliquer à la main pendant une heure.</p>
+            </div>
+            <div class="lesson-block">
+              <h4>Exporter ton travail</h4>
+              <ul>
+                <li><strong>Rendu image</strong> — <kbd>F12</kbd> puis <kbd>F3</kbd> pour enregistrer en PNG/JPEG.</li>
+                <li><strong>Animation vidéo</strong> — Propriétés de sortie → format FFmpeg (.mp4), puis Rendu → <strong>Render Animation</strong>.</li>
+                <li><strong>Modèle 3D</strong> — Fichier → Export → glTF (jeux vidéo/web), FBX (autres logiciels 3D), OBJ (impression 3D et échange universel).</li>
+              </ul>
+              <h4>Et après cette journée ?</h4>
+              <ul>
+                <li>Le <strong>Sculpting</strong> pour les formes organiques détaillées (visages, créatures).</li>
+                <li>La <strong>simulation physique</strong> (tissu, fluides, particules) pour des effets dynamiques.</li>
+                <li>Le <strong>Compositing</strong> (nœuds post-rendu) pour retoucher l'image finale sans ressortir de Blender.</li>
+              </ul>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m11">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m11">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m11-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m11-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">10 min</span></div>
+                    <h5>Premiers pas en Geometry Nodes</h5>
+                    <p>Sur un plan, ajoute un modificateur Geometry Nodes → New. Branche Distribute Points on Faces puis Instance on Points avec un cube réduit comme instance. Observe la grille de cubes générée automatiquement.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Augmente le paramètre « Density » de Distribute Points on Faces pour voir immédiatement plus ou moins d'instances apparaître.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m11-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m11-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">15 min</span></div>
+                    <h5>Casser la répétition avec Random Value</h5>
+                    <p>Ajoute un node Random Value branché sur l'échelle et la rotation des instances, pour que chaque copie soit légèrement différente. Compare le rendu avant/après pour voir l'effet sur le réalisme perçu.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Utilise un intervalle Random Value assez resserré (ex. 0.8 à 1.2 pour l'échelle) — une variation trop large donne un résultat chaotique plutôt que naturel.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m11-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m11-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">40 min</span></div>
+                    <h5>Le 3ᵉ projet complet : scène animée + export</h5>
+                    <p>Anime le personnage du Module 10 sur quelques images clés, ajoute un sol avec un champ d'herbe généré en Geometry Nodes en arrière-plan, puis exporte une courte vidéo (Render Animation → .mp4). C'est le dernier des 3 projets de la formation.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Vérifie d'abord le rendu d'une seule image (F12) avant de lancer le rendu de toute l'animation — repérer un problème d'éclairage ou de cadrage prend quelques secondes en image fixe, contre plusieurs minutes en vidéo complète.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ============ PIPELINE ============ -->
+<section id="pipeline">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">// La chaîne de production</span>
+        <h2>Le même pipeline que<br>les studios professionnels.</h2>
+      </div>
+      <p class="section-desc">Chaque module de cette formation correspond à un maillon de cette chaîne — dans le même ordre que celui qu'utilisent les productions réelles.</p>
+    </div>
+
+    <div class="pipeline">
+      <div class="pipe-step reveal">
+        <div class="n">01</div>
+        <h5>Modélisation</h5>
+        <p>Construire la géométrie : mesh, courbes, modificateurs.</p>
+      </div>
+      <div class="pipe-step reveal">
+        <div class="n">02</div>
+        <h5>UV & Texturing</h5>
+        <p>Déplier et habiller la surface avec des images.</p>
+      </div>
+      <div class="pipe-step reveal">
+        <div class="n">03</div>
+        <h5>Shading</h5>
+        <p>Définir les propriétés physiques de la matière.</p>
+      </div>
+      <div class="pipe-step reveal">
+        <div class="n">04</div>
+        <h5>Éclairage</h5>
+        <p>Poser les lumières et composer l'ambiance.</p>
+      </div>
+      <div class="pipe-step reveal">
+        <div class="n">05</div>
+        <h5>Animation</h5>
+        <p>Rig, clés, courbes de mouvement.</p>
+      </div>
+      <div class="pipe-step reveal">
+        <div class="n">06</div>
+        <h5>Rendu & Export</h5>
+        <p>Cycles / Eevee, puis livraison finale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ============ RACCOURCIS ============ -->
+<section id="raccourcis">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">// Aide-mémoire</span>
+        <h2>Les raccourcis à connaître<br>par cœur avant ce soir.</h2>
+      </div>
+      <p class="section-desc">Imprime cette section ou garde-la ouverte dans un onglet à côté de Blender pendant tes premiers jours.</p>
+    </div>
+
+    <div class="cheat-grid">
+      <div class="cheat-col">
+        <h4>Navigation & vues</h4>
+        <div class="cheat-row"><span class="action">Orbiter</span><span class="keys"><kbd>BM</kbd></span></div>
+        <div class="cheat-row"><span class="action">Panoramique</span><span class="keys"><kbd>Maj</kbd>+<kbd>BM</kbd></span></div>
+        <div class="cheat-row"><span class="action">Zoom</span><span class="keys"><kbd>Molette</kbd></span></div>
+        <div class="cheat-row"><span class="action">Vue de dessus</span><span class="keys"><kbd>Num 7</kbd></span></div>
+        <div class="cheat-row"><span class="action">Vue de face</span><span class="keys"><kbd>Num 1</kbd></span></div>
+        <div class="cheat-row"><span class="action">Vue de côté</span><span class="keys"><kbd>Num 3</kbd></span></div>
+        <div class="cheat-row"><span class="action">Ortho / Perspective</span><span class="keys"><kbd>Num 5</kbd></span></div>
+        <div class="cheat-row"><span class="action">Cadrer sélection</span><span class="keys"><kbd>.</kbd></span></div>
+        <div class="cheat-row"><span class="action">Tout cadrer</span><span class="keys"><kbd>Home</kbd></span></div>
+        <div class="cheat-row"><span class="action">Vue caméra</span><span class="keys"><kbd>Num 0</kbd></span></div>
+        <div class="cheat-row"><span class="action">Vue locale (isoler)</span><span class="keys"><kbd>/</kbd></span></div>
+        <div class="cheat-row"><span class="action">Vue Quad (4 vues)</span><span class="keys"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Q</kbd></span></div>
+      </div>
+
+      <div class="cheat-col">
+        <h4>Sélection & transformation</h4>
+        <div class="cheat-row"><span class="action">Ajouter un objet</span><span class="keys"><kbd>Maj</kbd>+<kbd>A</kbd></span></div>
+        <div class="cheat-row"><span class="action">Tout sélectionner</span><span class="keys"><kbd>A</kbd></span></div>
+        <div class="cheat-row"><span class="action">Désélectionner tout</span><span class="keys"><kbd>Alt</kbd>+<kbd>A</kbd></span></div>
+        <div class="cheat-row"><span class="action">Boîte de sélection</span><span class="keys"><kbd>B</kbd></span></div>
+        <div class="cheat-row"><span class="action">Déplacer</span><span class="keys"><kbd>G</kbd></span></div>
+        <div class="cheat-row"><span class="action">Tourner</span><span class="keys"><kbd>R</kbd></span></div>
+        <div class="cheat-row"><span class="action">Redimensionner</span><span class="keys"><kbd>S</kbd></span></div>
+        <div class="cheat-row"><span class="action">Contraindre axe X/Y/Z</span><span class="keys"><kbd>X</kbd>/<kbd>Y</kbd>/<kbd>Z</kbd></span></div>
+        <div class="cheat-row"><span class="action">Dupliquer</span><span class="keys"><kbd>Maj</kbd>+<kbd>D</kbd></span></div>
+        <div class="cheat-row"><span class="action">Dupliquer lié</span><span class="keys"><kbd>Alt</kbd>+<kbd>D</kbd></span></div>
+        <div class="cheat-row"><span class="action">Supprimer</span><span class="keys"><kbd>X</kbd></span></div>
+        <div class="cheat-row"><span class="action">Cacher / Réafficher</span><span class="keys"><kbd>H</kbd> / <kbd>Alt</kbd>+<kbd>H</kbd></span></div>
+      </div>
+
+      <div class="cheat-col">
+        <h4>Édition & rendu</h4>
+        <div class="cheat-row"><span class="action">Mode Objet ⇄ Édition</span><span class="keys"><kbd>Tab</kbd></span></div>
+        <div class="cheat-row"><span class="action">Sommets / Arêtes / Faces</span><span class="keys"><kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd></span></div>
+        <div class="cheat-row"><span class="action">Extruder</span><span class="keys"><kbd>E</kbd></span></div>
+        <div class="cheat-row"><span class="action">Inset (insérer face)</span><span class="keys"><kbd>I</kbd></span></div>
+        <div class="cheat-row"><span class="action">Boucle d'arêtes</span><span class="keys"><kbd>Ctrl</kbd>+<kbd>R</kbd></span></div>
+        <div class="cheat-row"><span class="action">Chanfrein</span><span class="keys"><kbd>Ctrl</kbd>+<kbd>B</kbd></span></div>
+        <div class="cheat-row"><span class="action">Fusionner sommets</span><span class="keys"><kbd>M</kbd></span></div>
+        <div class="cheat-row"><span class="action">Dépliage UV</span><span class="keys"><kbd>U</kbd></span></div>
+        <div class="cheat-row"><span class="action">Insérer clé animation</span><span class="keys"><kbd>I</kbd></span></div>
+        <div class="cheat-row"><span class="action">Lancer le rendu</span><span class="keys"><kbd>F12</kbd></span></div>
+        <div class="cheat-row"><span class="action">Enregistrer l'image</span><span class="keys"><kbd>F3</kbd></span></div>
+        <div class="cheat-row"><span class="action">Sauvegarder le fichier</span><span class="keys"><kbd>Ctrl</kbd>+<kbd>S</kbd></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ============ PROJETS ============ -->
+<section id="projets">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">// Mets les mains dedans</span>
+        <h2>3 projets pour ancrer<br>chaque compétence.</h2>
+      </div>
+      <p class="section-desc">Suis-les dans l'ordre : chacun réutilise les acquis du précédent et en ajoute un nouveau.</p>
+    </div>
+
+    <div class="tp-grid">
+      <div class="tp-card reveal">
+        <div class="tp-thumb">
+          <span class="difficulty">Modules 4–5</span>
+          <svg width="120" height="100" viewBox="0 0 120 100" fill="none">
+            <ellipse cx="60" cy="80" rx="42" ry="7" fill="#000" opacity="0.35"/>
+            <rect x="22" y="34" width="76" height="8" fill="#3a3d4a" stroke="#5b5e70" stroke-width="1"/>
+            <rect x="27" y="42" width="6" height="34" fill="#2c2e38"/>
+            <rect x="87" y="42" width="6" height="34" fill="#2c2e38"/>
+            <rect x="27" y="42" width="6" height="34" fill="#f08a34" opacity="0.5"/>
+            <rect x="87" y="42" width="6" height="34" fill="#5c9cff" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="tp-body">
+          <h3>Le mobilier de base</h3>
+          <p>Table et chaise entièrement modélisées par extrusion, premier rendu Cycles avec une lampe Sun. L'exercice fondateur pour ancrer G/R/S et le Mode Édition.</p>
+          <div class="tp-skills"><span>Extrusion</span><span>Duplication</span><span>Rendu F12</span></div>
+        </div>
+      </div>
+
+      <div class="tp-card reveal">
+        <div class="tp-thumb">
+          <span class="difficulty">Modules 6–9</span>
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="36" r="20" fill="#2c2e38" stroke="#f08a34" stroke-width="1.4"/>
+            <rect x="34" y="54" width="32" height="34" rx="8" fill="#23242f" stroke="#5c9cff" stroke-width="1.2"/>
+            <circle cx="43" cy="32" r="2.4" fill="#f2f0ea"/>
+            <circle cx="57" cy="32" r="2.4" fill="#f2f0ea"/>
+          </svg>
+        </div>
+        <div class="tp-body">
+          <h3>Personnage stylisé texturé</h3>
+          <p>Sphères et cubes assemblés en personnage cartoon, symétrie via Mirror, matériaux multiples par zone, éclairage 3 points pour un rendu présentable.</p>
+          <div class="tp-skills"><span>Mirror</span><span>Shading</span><span>Éclairage studio</span></div>
+        </div>
+      </div>
+
+      <div class="tp-card reveal">
+        <div class="tp-thumb">
+          <span class="difficulty">Modules 10–11</span>
+          <svg width="110" height="100" viewBox="0 0 110 100" fill="none">
+            <line x1="55" y1="20" x2="55" y2="50" stroke="#ff5d5d" stroke-width="2"/>
+            <line x1="55" y1="50" x2="40" y2="80" stroke="#8bdc63" stroke-width="2"/>
+            <line x1="55" y1="50" x2="70" y2="80" stroke="#8bdc63" stroke-width="2"/>
+            <circle cx="55" cy="20" r="4" fill="#f08a34"/>
+            <circle cx="55" cy="50" r="4" fill="#f08a34"/>
+            <circle cx="40" cy="80" r="4" fill="#5c9cff"/>
+            <circle cx="70" cy="80" r="4" fill="#5c9cff"/>
+          </svg>
+        </div>
+        <div class="tp-body">
+          <h3>Animation + variation procédurale</h3>
+          <p>Une armature basique fait bouger le personnage sur quelques images clés, puis un champ d'herbe généré en Geometry Nodes complète le décor. Export en .mp4.</p>
+          <div class="tp-skills"><span>Rig & Pose Mode</span><span>Keyframes</span><span>Geometry Nodes</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ============ PIÈGES FRÉQUENTS ============ -->
+<section id="pieges">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">// Débogage débutant</span>
+        <h2>Les blocages classiques,<br>et comment s'en sortir en 10 secondes.</h2>
+      </div>
+      <p class="section-desc">99% des blocages de débutant tiennent en une dizaine de cas. Reconnais le symptôme, applique le correctif.</p>
+    </div>
+
+    <div class="pitfalls">
+      <div class="pitfall reveal">
+        <div class="px">01</div>
+        <div class="problem"><h5>Le rendu (F12) sort tout noir</h5><p>Aucune erreur affichée, l'image est juste noire ou vide.</p></div>
+        <div class="solution"><span class="tag-fix">Correctif</span><p>Il manque une caméra dans la scène, ou la caméra ne regarde pas les objets, ou il n'y a aucune lumière. Vérifier <kbd>Num 0</kbd> pour voir le cadrage exact de la caméra.</p></div>
+      </div>
+      <div class="pitfall reveal">
+        <div class="px">02</div>
+        <div class="problem"><h5>G / R / S ne font rien</h5><p>Les touches de transformation semblent bloquées.</p></div>
+        <div class="solution"><span class="tag-fix">Correctif</span><p>Le curseur de la souris doit être positionné dans la vue 3D au moment d'appuyer sur la touche — chaque zone de l'interface a ses propres raccourcis.</p></div>
+      </div>
+      <div class="pitfall reveal">
+        <div class="px">03</div>
+        <div class="problem"><h5>L'objet a un aspect « facetté » après Subdivision Surface</h5><p>Le lissage ne semble pas s'appliquer visuellement.</p></div>
+        <div class="solution"><span class="tag-fix">Correctif</span><p>Ajouter aussi <strong>Shade Auto Smooth</strong> (clic droit sur l'objet) en plus du modificateur — Subdivision Surface ajoute de la géométrie, Shade Smooth lisse l'ombrage.</p></div>
+      </div>
+      <div class="pitfall reveal">
+        <div class="px">04</div>
+        <div class="problem"><h5>Une échelle bizarre après rotation (S ne se comporte plus normalement)</h5><p>L'objet se déforme de travers en le redimensionnant.</p></div>
+        <div class="solution"><span class="tag-fix">Correctif</span><p>L'échelle de l'objet n'a jamais été appliquée. En Mode Objet : <kbd>Ctrl</kbd>+<kbd>A</kbd> → <strong>Apply → All Transforms</strong> pour repartir sur des valeurs propres.</p></div>
+      </div>
+      <div class="pitfall reveal">
+        <div class="px">05</div>
+        <div class="problem"><h5>La texture ne s'affiche pas dans le viewport</h5><p>Le matériau existe mais la vue reste grise.</p></div>
+        <div class="solution"><span class="tag-fix">Correctif</span><p>Passer le mode d'affichage du viewport en <strong>Material Preview</strong> ou <strong>Rendered</strong> (icônes en haut à droite de la vue 3D) — le mode Solid n'affiche pas les textures.</p></div>
+      </div>
+      <div class="pitfall reveal">
+        <div class="px">06</div>
+        <div class="problem"><h5>Impossible de sélectionner un objet</h5><p>Le clic gauche ne semble rien sélectionner.</p></div>
+        <div class="solution"><span class="tag-fix">Correctif</span><p>Vérifier que l'objet n'est pas dans une collection désactivée à l'affichage, ni verrouillé/caché dans l'Outliner (icône œil ou curseur barré).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ============ RESSOURCES ============ -->
+<section id="ressources">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">// Pour aller plus loin</span>
+        <h2>Add-ons et bibliothèques<br>pour accélérer une fois les bases acquises.</h2>
+      </div>
+      <p class="section-desc">Une sélection curatée, classée par usage. Les gratuits d'abord — n'investis dans un add-on payant que quand tu sais précisément ce qui te manque.</p>
+    </div>
+
+    <div class="res-grid">
+      <div class="res-card reveal">
+        <h4>Gratuits, intégrés ou officiels</h4>
+        <div class="res-link-row"><span>BlenderKit — bibliothèque d'objets & matériaux</span><span class="tag">Add-on</span></div>
+        <div class="res-link-row"><span>Poly Haven — HDRI, textures PBR, modèles</span><span class="tag">Web</span></div>
+        <div class="res-link-row"><span>ambientCG — textures PBR libres de droit</span><span class="tag">Web</span></div>
+        <div class="res-link-row"><span>Extensions Platform — le store officiel intégré</span><span class="tag">Blender 5.x</span></div>
+        <div class="res-link-row"><span>Node Wrangler — raccourcis Shader Editor (inclus)</span><span class="tag">Add-on</span></div>
+      </div>
+
+      <div class="res-card reveal">
+        <h4>Végétation & environnement</h4>
+        <div class="res-link-row"><span>Botaniq — bibliothèque d'arbres et plantes</span><span class="tag">Payant</span></div>
+        <div class="res-link-row"><span>GrassBlade — herbe procédurale réaliste</span><span class="tag">Payant</span></div>
+        <div class="res-link-row"><span>Gardener — dispersion végétale avancée</span><span class="tag">Payant</span></div>
+        <div class="res-link-row"><span>Forestation — génération de forêts</span><span class="tag">Payant</span></div>
+        <div class="res-link-row"><span>Alpha Trees — arbres en cartes alpha optimisées</span><span class="tag">Payant</span></div>
+      </div>
+
+      <div class="res-card reveal">
+        <h4>Matériaux & éclairage</h4>
+        <div class="res-link-row"><span>Materialiq — bibliothèque de shaders prêts à l'emploi</span><span class="tag">Payant</span></div>
+        <div class="res-link-row"><span>Real Wood Textures — essences de bois PBR</span><span class="tag">Payant</span></div>
+        <div class="res-link-row"><span>Gobos — textures de lumière projetée (gobos)</span><span class="tag">Payant</span></div>
+        <div class="res-link-row"><span>Glare / Flared — effets d'éclat et flares réalistes</span><span class="tag">Payant</span></div>
+      </div>
+
+      <div class="res-card reveal">
+        <h4>Personnages & apprentissage continu</h4>
+        <div class="res-link-row"><span>Human Generator — création rapide de personnages</span><span class="tag">Payant</span></div>
+        <div class="res-link-row"><span>blender.org/manual — documentation officielle FR/EN</span><span class="tag">Web</span></div>
+        <div class="res-link-row"><span>Blender Studio — courts-métrages et fichiers sources</span><span class="tag">Web</span></div>
+        <div class="res-link-row"><span>r/blenderhelp & forums FR — support communautaire</span><span class="tag">Communauté</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">// Questions fréquentes</span>
+        <h2>Avant de te lancer.</h2>
+      </div>
+    </div>
+
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span>Faut-il un ordinateur puissant pour commencer ?</span><span class="faq-plus" aria-hidden="true"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">Non. Blender tourne sur des machines modestes pour tout ce qui est modélisation et Eevee. Une carte graphique dédiée devient utile surtout pour accélérer les rendus Cycles — mais rien n'empêche d'apprendre sur un CPU classique en attendant.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span>« Devenir pro en 1 jour », c'est vraiment réaliste ?</span><span class="faq-plus" aria-hidden="true"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">En un jour, tu peux devenir <strong>autonome</strong> : comprendre l'interface, modéliser, texturer, éclairer, animer et exporter sans être bloqué. La maîtrise professionnelle (anatomie, hard-surface avancé, simulation) demande des mois de pratique régulière — mais le socle technique, lui, tient dans une journée bien structurée.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span>Pourquoi l'interface reste-t-elle en anglais dans le cours ?</span><span class="faq-plus" aria-hidden="true"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">Parce que 100% des tutoriels vidéo, forums et extensions utilisent les noms anglais des menus et outils. Apprendre directement avec ce vocabulaire te permet de suivre n'importe quelle ressource après cette formation, sans traduction mentale.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span>Cycles ou Eevee, lequel apprendre en premier ?</span><span class="faq-plus" aria-hidden="true"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">Commence par Eevee Next pour itérer vite pendant l'apprentissage (retour visuel immédiat), puis passe en Cycles pour ton rendu final quand le réalisme compte vraiment. Les réglages de matériaux sont quasiment identiques entre les deux moteurs.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span>Dois-je apprendre le sculpting et les simulations dès le premier jour ?</span><span class="faq-plus" aria-hidden="true"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">Non — cette formation les laisse volontairement de côté. Elles s'appuient sur les fondamentaux couverts ici (navigation, mesh, matériaux) et se travaillent bien mieux une fois ce socle solide.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="cta-final">
+  <div class="container">
+    <span class="eyebrow" style="justify-content:center;">// À toi de jouer</span>
+    <h2>Ouvre Blender.<br>La formation commence <span class="accent" style="color:var(--blender-orange)">maintenant</span>.</h2>
+    <p>Reviens à cette page à chaque module — elle reste ta référence pendant toute ta progression, pas seulement pour cette première journée.</p>
+    <div class="hero-ctas" style="justify-content:center;">
+      <a href="#modules" class="btn btn-primary">Revoir les 11 modules</a>
+      <a href="#raccourcis" class="btn btn-ghost">Ouvrir l'aide-mémoire</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-grid">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="15" stroke="#f08a34" stroke-width="1.4"/>
+        <circle cx="16" cy="12" r="6.2" fill="#f08a34"/>
+        <path d="M9 26 C9 19 13 16 16 16 C19 16 23 19 23 26" fill="none" stroke="#f08a34" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-stack">
+        <span>BLENDER MASTERCLASS</span>
+        <small>Formation FR · Zéro à Autonome</small>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="#programme">Programme</a>
+      <a href="#modules">Modules</a>
+      <a href="#projets">Projets</a>
+      <a href="#ressources">Ressources</a>
+    </div>
+    <div class="footer-note">Contenu pédagogique original · Blender® est une marque de la Blender Foundation.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
