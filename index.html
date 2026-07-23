@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blender Masterclass — La formation complète pour débuter en 3D, en français</title>
-<meta name="description" content="Formation Blender 3D complète en français, pensée pour un débutant qui veut devenir autonome en une journée. Interface, modélisation, matériaux, éclairage, animation, Geometry Nodes, rendu.">
+<title>Blender → Roblox Studio — La formation complète pour créer et scripter ton jeu, en français</title>
+<meta name="description" content="Formation en français pour créer des jeux Roblox de A à Z : modélise tes assets dans Blender, exporte-les proprement, puis donne-leur vie avec le scripting Lua dans Roblox Studio.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -24,8 +24,8 @@
         <path d="M9 26 C9 19 13 16 16 16 C19 16 23 19 23 26" fill="none" stroke="#f08a34" stroke-width="2.2" stroke-linecap="round"/>
       </svg>
       <div class="brand-stack">
-        <span>BLENDER MASTERCLASS</span>
-        <small>Formation FR · Zéro à Autonome</small>
+        <span>BLENDER → ROBLOX STUDIO</span>
+        <small>Formation FR · Modélise, exporte, scripte</small>
       </div>
     </div>
     <nav class="topnav">
@@ -47,27 +47,27 @@
 <section class="hero">
   <div class="container hero-grid">
     <div class="reveal in">
-      <span class="eyebrow">Formation 100% en français · Blender 5.2 LTS</span>
-      <h1>Apprends <span class="accent">Blender</span><br>et deviens <span class="outline">autonome</span><br>en un seul jour.</h1>
+      <span class="eyebrow">Formation 100% en français · Blender 5.2 LTS → Roblox Studio</span>
+      <h1>Modélise dans <span class="accent">Blender</span><br>puis donne vie à ton jeu<br>dans <span class="outline">Roblox Studio</span>.</h1>
       <p class="hero-lede">
-        Une formation dense et structurée, pensée pour un <strong>débutant total</strong> :
-        interface, modélisation, matériaux, éclairage, animation, et même les
-        <strong>Geometry Nodes</strong>. Tout ce qu'il te faut pour partir de zéro
-        et livrer ton premier rendu 3D dans la journée — sans blabla, avec les vrais raccourcis.
+        Une formation dense et structurée pour un <strong>débutant total</strong>, dans le bon ordre :
+        tu apprends d'abord à <strong>modéliser tes propres assets</strong> dans Blender, à les
+        <strong>exporter proprement</strong>, puis à les importer et à les faire <strong>fonctionner</strong>
+        dans Roblox Studio avec du vrai scripting Lua. Ton avantage : savoir déjà modéliser avant de scripter.
       </p>
       <div class="hero-ctas">
         <a href="#programme" class="btn btn-primary">
           Commencer la formation
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="#modules" class="btn btn-ghost">Voir les 11 modules</a>
+        <a href="#modules" class="btn btn-ghost">Voir les 12 modules</a>
       </div>
       <div class="hero-meta">
-        <div class="hero-meta-item"><span class="num">11</span><span class="lbl">Modules complets</span></div>
+        <div class="hero-meta-item"><span class="num">12</span><span class="lbl">Modules complets</span></div>
         <div class="hero-meta-item"><span class="num">7–9h</span><span class="lbl">Programme sur 1 jour</span></div>
-        <div class="hero-meta-item"><span class="num">60+</span><span class="lbl">Raccourcis essentiels</span></div>
+        <div class="hero-meta-item"><span class="num">50+</span><span class="lbl">Raccourcis & instructions Lua</span></div>
         <div class="hero-meta-item"><span class="num">3</span><span class="lbl">Projets guidés</span></div>
-        <div class="hero-meta-item"><span class="num">33</span><span class="lbl">Exercices progressifs</span></div>
+        <div class="hero-meta-item"><span class="num">34</span><span class="lbl">Exercices progressifs</span></div>
       </div>
     </div>
 
@@ -78,7 +78,7 @@
       </div>
       <div class="viewport-stage" id="viewportStage">
         <div class="viewport-hud hud-tl">User Persp<br>Ve:8 Fa:6 Ob:1-1</div>
-        <div class="viewport-hud hud-tr">Cycles<br><span id="fpsCounter">24 fps</span></div>
+        <div class="viewport-hud hud-tr">Eevee Next<br><span id="fpsCounter">24 fps</span></div>
         <svg id="cubeSvg" width="380" height="360" viewBox="0 0 380 360"></svg>
         <div class="viewport-hud hud-br">X <span class="axis-x-c">rouge</span> · Y <span class="axis-y-c">vert</span> · Z <span class="axis-z-c">bleu</span></div>
       </div>
@@ -102,32 +102,33 @@
         <h2>Conçue pour qu'on <br>ne t'y reprenne pas deux fois.</h2>
       </div>
       <p class="section-desc">
-        La plupart des tutos Blender sont soit trop lents (des heures pour poser un cube),
-        soit trop rapides (ils supposent que tu connais déjà les raccourcis). Celle-ci
-        est calibrée pour un vrai débutant, avec un objectif d'autonomie réelle.
+        La plupart des gens apprennent Roblox Studio en scriptant d'abord, puis découvrent trop tard
+        qu'ils ne savent pas créer leurs propres objets 3D et dépendent entièrement du catalogue.
+        Ici, l'ordre est inversé volontairement : tu maîtrises d'abord la <strong>modélisation</strong>,
+        pour ensuite scripter des objets que <strong>tu as toi-même conçus</strong>.
       </p>
     </div>
 
     <div class="pillars">
       <div class="pillar">
         <svg class="icon-wrap" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false"><rect x="6" y="6" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M6 16h28M16 6v28" stroke="currentColor" stroke-width="1.2" opacity="0.5"/></svg>
-        <h3>Structure pédagogique claire</h3>
-        <p>Chaque module suit la même logique : concept → geste clavier/souris → piège fréquent → mini-exercice. Aucune impasse.</p>
+        <h3>Le bon ordre : modéliser avant de scripter</h3>
+        <p>Tu apprends d'abord à créer un objet dans Blender, puis seulement à le faire réagir dans Roblox Studio. Comprendre la géométrie que tu manipules rend le scripting bien plus naturel.</p>
       </div>
       <div class="pillar">
         <svg class="icon-wrap" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false"><rect x="5" y="9" width="30" height="22" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M12 15h4M12 20h10M12 25h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-        <h3>100% à jour, en français</h3>
-        <p>Basée sur Blender 5.2 LTS (2026) : interface actuelle, Eevee Next, Cycles, Geometry Nodes — pas une capture d'écran d'il y a 15 ans.</p>
+        <h3>Uniquement ce qui sert vraiment à Roblox</h3>
+        <p>Basée sur Blender 5.2 LTS, mais recentrée : pas de rendu photoréaliste ni de Geometry Nodes avancés — juste la modélisation low-poly, l'UV et l'export propre vers Roblox Studio.</p>
       </div>
       <div class="pillar">
         <svg class="icon-wrap" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1.6"/><path d="M20 12v8l6 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         <h3>Pensée pour une journée</h3>
-        <p>Un planning horaire réaliste en 4 phases, du premier cube au personnage texturé et animé, avec des pauses aux bons endroits.</p>
+        <p>Un planning horaire réaliste en 4 phases, du premier cube dans Blender jusqu'à un script Lua fonctionnel dans Roblox Studio, avec des pauses aux bons endroits.</p>
       </div>
       <div class="pillar">
         <svg class="icon-wrap" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false"><path d="M20 6l4 8 9 1-6.5 6.3L28 30l-8-4.3L12 30l1.5-8.7L7 15l9-1 4-8z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
         <h3>3 projets, pas de théorie creuse</h3>
-        <p>Tu modélises, textures, éclaires et animes de vrais objets — pas juste un cube gris posé sur un plan blanc.</p>
+        <p>Tu modélises un objet, tu l'exportes, tu l'importes dans Roblox Studio et tu le scriptes pour qu'il fasse quelque chose — un vrai mini-projet de jeu, pas un cube gris isolé.</p>
       </div>
     </div>
   </div>
@@ -145,8 +146,8 @@
       </div>
       <p class="section-desc">
         4 phases, chacune avec un objectif concret. Adapte les horaires à ton rythme :
-        ce qui compte, c'est l'ordre et de ne jamais passer à la suite sans avoir
-        pratiqué le geste.
+        ce qui compte, c'est l'ordre — tout Blender avant tout Roblox Studio — et de ne
+        jamais passer à la suite sans avoir pratiqué le geste.
       </p>
     </div>
 
@@ -166,9 +167,9 @@
         <div class="day-rail"><div class="time-tag">10h30</div><div class="day-rail-line"></div></div>
         <div class="day-content">
           <span class="phase-label p-fondations">Phase 2 — Fondations (10h30–13h)</span>
-          <h3>Modéliser en mode Édition + premier rendu</h3>
-          <p>Sommets, arêtes, faces, extrusion, boucles de sélection, modificateur Subdivision Surface. Tu montes ta première vraie scène (table + chaise) et tu sors ton premier rendu Cycles.</p>
-          <div class="day-tags"><span>Module 4–5</span><span>TP Mobilier</span><span>Premier rendu</span></div>
+          <h3>Modéliser en mode Édition + premier objet propre</h3>
+          <p>Sommets, arêtes, faces, extrusion, boucles de sélection, modificateur Subdivision Surface utilisé avec parcimonie (le low-poly est ta cible, pas le photoréalisme). Tu montes ta première vraie scène (table + chaise) prête pour un jeu.</p>
+          <div class="day-tags"><span>Module 4–5</span><span>TP Mobilier</span><span>Low-poly</span></div>
         </div>
       </div>
 
@@ -184,20 +185,20 @@
       <div class="day-block reveal">
         <div class="day-rail"><div class="time-tag">14h00</div><div class="day-rail-line"></div></div>
         <div class="day-content">
-          <span class="phase-label p-creation">Phase 3 — Création (14h–17h30)</span>
-          <h3>Matériaux, textures, éclairage, courbes, texte 3D</h3>
-          <p>Shader Editor et nodes Principled BSDF, dépliage UV, les 4 types de lampes et leurs usages, modélisation par courbes. Tu textures et éclaires ton objet de la matinée jusqu'à obtenir un rendu présentable.</p>
-          <div class="day-tags"><span>Modules 6–9</span><span>Shading</span><span>Éclairage 3 points</span><span>UV</span></div>
+          <span class="phase-label p-creation">Phase 3 — Habillage et export (14h–16h30)</span>
+          <h3>Matériaux simples, UV, animation basique et export FBX</h3>
+          <p>Couleurs et matériaux simples pensés pour Roblox, dépliage UV pour tes textures, une animation basique avec une armature, puis le geste le plus important de la journée : exporter proprement un mesh en FBX pour Roblox Studio (échelle, orientation, pivot, triangles).</p>
+          <div class="day-tags"><span>Modules 6–9</span><span>Matériaux</span><span>UV</span><span>Export FBX</span></div>
         </div>
       </div>
 
       <div class="day-block reveal">
-        <div class="day-rail"><div class="time-tag">17h30</div></div>
+        <div class="day-rail"><div class="time-tag">16h30</div></div>
         <div class="day-content">
-          <span class="phase-label p-maitrise">Phase 4 — Mise en mouvement (17h30–19h30)</span>
-          <h3>Animation, rig simple et découverte des Geometry Nodes</h3>
-          <p>Clés d'animation, courbes IPO/F-Curves, une armature basique pour faire bouger un objet, puis une première approche des Geometry Nodes pour générer de la variation procédurale. Tu termines avec une courte animation exportée en vidéo.</p>
-          <div class="day-tags"><span>Modules 10–11</span><span>Keyframes</span><span>Rig basique</span><span>Geometry Nodes</span><span>Export</span></div>
+          <span class="phase-label p-maitrise">Phase 4 — Roblox Studio (16h30–19h30)</span>
+          <h3>Importer, comprendre l'interface et scripter en Lua</h3>
+          <p>Import de ton mesh Blender dans Roblox Studio, tour de l'interface (Explorer, Properties, Workspace), bases du langage Lua (variables, fonctions, conditions, boucles), puis tes premiers scripts pour faire réagir l'objet que tu as toi-même modélisé.</p>
+          <div class="day-tags"><span>Modules 10–12</span><span>Import Blender→Roblox</span><span>Bases Lua</span><span>Premier script</span></div>
         </div>
       </div>
 
@@ -213,7 +214,7 @@
     <div class="section-head">
       <div>
         <span class="section-tag">// Programme complet</span>
-        <h2>11 modules, du premier<br>clic au Geometry Nodes.</h2>
+        <h2>9 modules, du premier<br>clic à l'export Roblox.</h2>
       </div>
       <p class="section-desc">Clique sur un module pour dérouler le contenu détaillé : ce que tu apprends, les gestes précis, et les pièges à éviter. Chaque module se termine par un <strong>parcours d'exercices</strong> en 3 temps (Échauffement → Application → Défi) pour ancrer réellement le geste.</p>
     </div>
@@ -248,7 +249,7 @@
                 <li>Téléchargement sur <strong>blender.org</strong>, version <strong>5.2 LTS</strong> recommandée (support long terme, la plus stable).</li>
                 <li>Interface en anglais par défaut : c'est volontaire, tous les tutos et forums l'utilisent — on garde l'anglais pour pouvoir suivre n'importe quelle ressource ensuite.</li>
               </ul>
-              <p class="note">Astuce : configuration minimale confortable — une carte graphique récente (Nvidia idéalement pour Cycles/OptiX) et 16 Go de RAM. Ça tourne sur moins, mais les rendus seront plus lents.</p>
+              <p class="note">Astuce : configuration minimale confortable — une carte graphique récente et 8 Go de RAM suffisent largement pour du low-poly. Ça tourne aussi sur une machine modeste, juste un peu moins fluide dans le viewport.</p>
             </div>
             <div class="lesson-block">
               <h4>Mini-exercice</h4>
@@ -574,8 +575,8 @@
         <div class="module-head" role="button" tabindex="0" aria-expanded="false">
           <span class="module-num">05</span>
           <div class="module-titles">
-            <h3>TP guidé — Ta première scène (mobilier)</h3>
-            <p>Table, chaise et premier rendu Cycles</p>
+            <h3>TP guidé — Ta première scène (mobilier de jeu)</h3>
+            <p>Table, chaise et un mesh propre, pensé pour Roblox dès le départ</p>
           </div>
           <span class="module-meta">55 min <span class="badge-level lvl-debutant">Débutant</span></span>
           <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -588,20 +589,21 @@
                 <li>Ajouter un cube (<kbd>Shift+A</kbd> → Mesh → Cube), l'aplatir en plateau de table avec <kbd>S</kbd> <kbd>Z</kbd> <kbd>0.1</kbd>.</li>
                 <li>Passer en Mode Édition, sélectionner les 4 coins du dessous, <strong>extruder</strong> (<kbd>E</kbd>) vers le bas pour créer les pieds.</li>
                 <li>Dupliquer (<kbd>Alt+D</kbd>) pour les 3 autres pieds — le duplicata lié permet de tous les épaissir en une fois.</li>
-                <li>Ajouter une caméra (<kbd>Shift+A</kbd> → Caméra), la positionner avec <kbd>Num 0</kbd> pour voir à travers son objectif.</li>
-                <li>Ajouter une lampe Sun ou Area au-dessus de la scène.</li>
+                <li>Garder chaque pied très simple (un cube étiré suffit) : dans un jeu, chaque triangle a un coût, contrairement à un rendu Blender classique.</li>
               </ul>
             </div>
             <div class="lesson-block">
-              <h4>Premier rendu</h4>
-              <div class="kbd-row"><span class="lbl">Lancer le rendu</span><kbd>F12</kbd></div>
-              <div class="kbd-row"><span class="lbl">Enregistrer l'image</span><kbd>F3</kbd></div>
-              <div class="kbd-row"><span class="lbl">Revoir le dernier rendu</span><kbd>F11</kbd></div>
-              <p class="note">Un rendu a besoin au minimum d'une caméra et d'une source de lumière — sans ça, l'image sort noire. C'est l'erreur n°1 des débutants.</p>
+              <h4>Réflexe « objet de jeu » à prendre dès maintenant</h4>
+              <ul>
+                <li>Une fois content de la forme, <kbd>Ctrl</kbd>+<kbd>A</kbd> → <strong>All Transforms</strong> pour repartir d'une échelle propre à 1.0 (indispensable avant export, voir Module 9).</li>
+                <li>Vérifie l'origine de l'objet : <kbd>Shift</kbd>+<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd> → « Origin to Geometry » pour la recentrer si besoin.</li>
+                <li>Pas de caméra ni de lumière à ajouter ici : dans Roblox, c'est le moteur du jeu qui gère l'éclairage — ta table doit juste être un mesh propre, pas une scène de rendu.</li>
+              </ul>
+              <p class="note">Différence clé avec un usage Blender classique : on n'optimise pas pour « joli en rendu final », on optimise pour « léger et propre une fois importé dans un moteur de jeu ».</p>
               <h4>Checklist de fin de module</h4>
               <ul>
                 <li>La scène contient au moins 2 objets construits par extrusion.</li>
-                <li>Le rendu F12 affiche une image correctement exposée.</li>
+                <li>Les transformations (échelle/rotation) de chaque objet ont été appliquées.</li>
                 <li>Le fichier est sauvegardé (<kbd>Ctrl+S</kbd>).</li>
               </ul>
             </div>
@@ -618,8 +620,8 @@
                   <div>
                     <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">25 min</span></div>
                     <h5>Reproduire la table exactement</h5>
-                    <p>Suis les étapes du projet ci-dessus au pied de la lettre : plateau aplati, 4 pieds extrudés, caméra et lampe Sun. Vérifie chaque item de la checklist de fin de module avant de continuer.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Si le rendu F12 sort noir, relis le piège n°1 de la section Pièges fréquents : il manque presque toujours une caméra ou une lumière.</p></details>
+                    <p>Suis les étapes du projet ci-dessus au pied de la lettre : plateau aplati, 4 pieds extrudés. Applique les transforms et vérifie l'origine. Coche chaque item de la checklist de fin de module avant de continuer.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si l'objet « saute » bizarrement quand tu le déplaces après coup, c'est presque toujours une transform non appliquée — relis le piège correspondant dans la section Pièges fréquents.</p></details>
                   </div>
                 </div>
 
@@ -628,8 +630,8 @@
                   <div>
                     <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">25 min</span></div>
                     <h5>Ajouter une chaise assortie</h5>
-                    <p>Construis une chaise en réutilisant les mêmes gestes : cube pour l'assise, extrusion des pieds, extrusion vers le haut pour le dossier. Place-la à côté de la table et vérifie qu'elle s'intègre bien dans le cadrage caméra.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Duplique un pied de table (Alt+D pour un duplicata lié) plutôt que de recréer les 4 pieds de la chaise depuis zéro — plus rapide et cohérent visuellement.</p></details>
+                    <p>Construis une chaise en réutilisant les mêmes gestes : cube pour l'assise, extrusion des pieds, extrusion vers le haut pour le dossier. Place-la à côté de la table et compte tes faces (Statistiques dans l'Outliner) : reste sous les 200.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Duplique un pied de table (Alt+D pour un duplicata lié) plutôt que de recréer les 4 pieds de la chaise depuis zéro — plus rapide, plus léger et cohérent visuellement.</p></details>
                   </div>
                 </div>
 
@@ -637,8 +639,8 @@
                   <label class="exo-check"><input type="checkbox" data-exo-checkbox="m5-e3"><span class="exo-box"></span></label>
                   <div>
                     <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">30 min</span></div>
-                    <h5>Une salle à manger complète</h5>
-                    <p>Duplique la chaise 3 fois (Maj+D) autour de la table, avec des rotations différentes pour chaque chaise. Ajoute une seconde lampe (Area) pour adoucir les ombres, puis sors un rendu final F12 propre et enregistre-le (F3).</p>
+                    <h5>Une petite salle à manger complète</h5>
+                    <p>Duplique la chaise 3 fois (Maj+D) autour de la table, avec des rotations différentes pour chaque chaise. Applique All Transforms sur chaque objet, puis regroupe le tout dans une Collection nommée « Mobilier » — tu la retrouveras au Module 9 pour l'export.</p>
                     <details class="exo-hint"><summary>Indice</summary><p>Utilise le point de pivot « Curseur 3D » placé au centre de la table pour faire tourner les chaises facilement tout autour, plutôt que de les faire pivoter une par une sur leur propre origine.</p></details>
                   </div>
                 </div>
@@ -654,39 +656,30 @@
         <div class="module-head" role="button" tabindex="0" aria-expanded="false">
           <span class="module-num">06</span>
           <div class="module-titles">
-            <h3>Matériaux et Shader Editor</h3>
-            <p>Le Principled BSDF, le seul node qu'il faut vraiment connaître au début</p>
+            <h3>Matériaux simples pour Roblox</h3>
+            <p>Base Color et rien de plus : Roblox recalcule le reste lui-même</p>
           </div>
-          <span class="module-meta">60 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
+          <span class="module-meta">35 min <span class="badge-level lvl-debutant">Débutant</span></span>
           <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="module-body">
           <div class="module-body-inner">
             <div class="lesson-block">
+              <h4>Pourquoi on simplifie ici</h4>
+              <p style="font-size:13.5px;color:var(--ink-3);margin-bottom:10px;">Blender permet de construire des shaders très complexes (nodes, Metallic, Roughness, Emission...), mais à l'export FBX vers Roblox, seule la <strong>couleur de base</strong> et éventuellement une <strong>texture image</strong> passent correctement. Une fois l'objet importé, c'est <strong>Roblox Studio</strong> (propriétés Material, Color, Reflectance) qui gère l'aspect final en jeu. Construire un shader complexe dans Blender pour un objet Roblox est donc du temps perdu.</p>
               <h4>Créer et assigner un matériau</h4>
               <ul>
                 <li>Onglet Propriétés → icône sphère à damier → <strong>New</strong> crée un matériau sur l'objet sélectionné.</li>
-                <li>Un objet peut avoir plusieurs matériaux ; en Mode Édition, sélectionner des faces puis cliquer <strong>Assign</strong> pour leur attribuer un matériau spécifique.</li>
-                <li>L'espace de travail <strong>Shading</strong> (en haut) ouvre le Shader Editor à base de nœuds.</li>
+                <li>Un objet peut avoir plusieurs matériaux ; en Mode Édition, sélectionner des faces puis cliquer <strong>Assign</strong> pour leur attribuer un matériau spécifique — utile pour distinguer visuellement les parties d'un objet avant même d'arriver dans Roblox.</li>
+                <li>Règle uniquement le champ <strong>Base Color</strong> : c'est la seule valeur qui compte vraiment pour la suite.</li>
               </ul>
-              <h4>Le node Principled BSDF</h4>
-              <ul>
-                <li><strong>Base Color</strong> — la couleur / texture diffuse.</li>
-                <li><strong>Metallic</strong> — 0 = diélectrique (plastique, bois...), 1 = métal pur.</li>
-                <li><strong>Roughness</strong> — 0 = miroir parfait, 1 = totalement mat.</li>
-                <li><strong>Normal</strong> (via un node Normal Map) — simule du relief sans ajouter de géométrie.</li>
-                <li><strong>Emission</strong> — rend la surface lumineuse (néons, écrans).</li>
-                <li><strong>Alpha</strong> — transparence (verre, feuillage découpé).</li>
-              </ul>
-              <p class="note">Un modèle « métal / rugosité » couvre 95% des matériaux réels : combine Metallic et Roughness plutôt que de chercher des propriétés exotiques.</p>
             </div>
             <div class="lesson-block">
-              <h4>Recettes rapides</h4>
+              <h4>Ce qu'il faut retenir pour la suite</h4>
               <ul>
-                <li><strong>Plastique brillant</strong> — Metallic 0, Roughness ~0.15.</li>
-                <li><strong>Métal brossé</strong> — Metallic 1, Roughness ~0.35 avec une texture noise en entrée de Roughness.</li>
-                <li><strong>Verre</strong> — remplacer par un node Glass BSDF, ou Transmission à 1 sur le Principled.</li>
-                <li><strong>Bois</strong> — texture Image (photo) en Base Color + une version niveau de gris en Roughness.</li>
+                <li><strong>Base Color</strong> — la couleur qui sera visible une fois importée (ou remplacée par un des « Material » prédéfinis de Roblox si tu préfères repartir de zéro là-bas).</li>
+                <li><strong>Metallic / Roughness / Emission</strong> — utile seulement si tu comptes exporter aussi une texture image (Module 7) ; ignore ces réglages si tu comptes juste peindre en couleur unie.</li>
+                <li>Pas besoin d'ouvrir le Shader Editor pour ce parcours : le panneau Propriétés suffit largement.</li>
               </ul>
               <h4>Copier un matériau</h4>
               <p style="font-size:13.5px;color:var(--ink-3);">Sélectionner tous les objets concernés, l'objet source en dernier (surbrillance claire), puis <kbd>Ctrl+L</kbd> → <strong>Link Materials</strong>.</p>
@@ -712,10 +705,10 @@
                 <div class="exo-card" data-exo-id="m6-e2">
                   <label class="exo-check"><input type="checkbox" data-exo-checkbox="m6-e2"><span class="exo-box"></span></label>
                   <div>
-                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">20 min</span></div>
-                    <h5>Reproduire les 4 recettes rapides</h5>
-                    <p>Sur 4 objets distincts, applique successivement les réglages « plastique brillant », « métal brossé », « verre » et « bois » décrits dans les recettes rapides. Compare visuellement les résultats en Rendered View.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Pour le métal brossé, un node Noise Texture branché en Roughness donne un effet plus convaincant qu'une valeur fixe — expérimente l'échelle du bruit.</p></details>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">15 min</span></div>
+                    <h5>Colorer la table et la chaise du Module 5</h5>
+                    <p>Reprends ta scène de mobilier. Donne une Base Color bois (brun) à la table et une couleur assortie à la chaise. Utilise Ctrl+L → Link Materials pour appliquer la même couleur à tous les pieds d'un coup.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Garde des couleurs franches et simples : dans un jeu vu de loin, les nuances subtiles ne se remarquent presque jamais.</p></details>
                   </div>
                 </div>
 
@@ -724,7 +717,7 @@
                   <div>
                     <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">20 min</span></div>
                     <h5>Un objet, plusieurs matériaux</h5>
-                    <p>Modélise un dé simple (cube). En Mode Édition, sélectionne chaque face une par une et assigne-lui un matériau différent (Assign) pour simuler les 6 faces numérotées d'un dé, ou les zones d'une tasse (corps/anse).</p>
+                    <p>Modélise un dé simple (cube). En Mode Édition, sélectionne chaque face une par une et assigne-lui un matériau différent (Assign) pour simuler les 6 faces numérotées d'un dé — c'est exactement ce geste qui servira pour des objets multi-couleurs dans un jeu (coffre, panneau, etc.).</p>
                     <details class="exo-hint"><summary>Indice</summary><p>Il faut d'abord créer tous les matériaux (New) dans la liste de matériaux de l'objet avant de pouvoir les assigner face par face en Mode Édition.</p></details>
                   </div>
                 </div>
@@ -750,27 +743,27 @@
           <div class="module-body-inner">
             <div class="lesson-block">
               <h4>Pourquoi déplier en UV ?</h4>
-              <p style="font-size:13.5px;color:var(--ink-3);margin-bottom:10px;">Une texture est une image 2D plate. Le dépliage UV consiste à « découper » virtuellement le mesh pour l'aplatir sur ce plan, comme un patron de couture — sans découpe, l'image se plaque n'importe comment sur les formes complexes.</p>
+              <p style="font-size:13.5px;color:var(--ink-3);margin-bottom:10px;">Une texture est une image 2D plate. Le dépliage UV consiste à « découper » virtuellement le mesh pour l'aplatir sur ce plan, comme un patron de couture — sans découpe, l'image se plaque n'importe comment sur les formes complexes. Roblox lit ces coordonnées UV pour poser correctement une texture ou un decal sur ton mesh importé : un mauvais dépliage, c'est une texture étirée ou déformée en jeu.</p>
               <h4>Marche à suivre</h4>
               <ul>
                 <li>En Mode Édition, sélectionner les arêtes qui serviront de découpe (idéalement des zones peu visibles) → clic droit → <strong>Mark Seam</strong>.</li>
                 <li>Tout sélectionner (<kbd>A</kbd>) puis <kbd>U</kbd> → <strong>Unwrap</strong>.</li>
                 <li>Ouvrir l'espace de travail <strong>UV Editing</strong> pour voir et ajuster le résultat déplié.</li>
-                <li>Pour des formes simples : <strong>Smart UV Project</strong> déplie automatiquement sans marquage manuel.</li>
+                <li>Pour des formes simples : <strong>Smart UV Project</strong> déplie automatiquement sans marquage manuel — largement suffisant pour un prop de jeu low-poly.</li>
               </ul>
             </div>
             <div class="lesson-block">
-              <h4>Brancher une texture</h4>
+              <h4>Ce qui compte vraiment pour Roblox</h4>
               <ul>
-                <li>Shader Editor → <kbd>Shift+A</kbd> → Texture → <strong>Image Texture</strong>.</li>
-                <li>Charger une image, brancher sa sortie <strong>Color</strong> dans <strong>Base Color</strong> du Principled BSDF.</li>
-                <li>Pour du relief : brancher une seconde image (niveaux de gris) via un node <strong>Normal Map</strong> vers l'entrée Normal.</li>
+                <li>Pas besoin d'aller plus loin que l'unwrap dans Blender : Roblox n'importe pas les graphes de nodes du Shader Editor, donc inutile d'y brancher des textures ici.</li>
+                <li>Vérifie l'absence d'étirement dans l'UV Editor (mailles régulières, pas de triangles écrasés) — c'est la seule chose qui affecte le rendu final en jeu.</li>
+                <li>Une fois le mesh exporté (Module 9), l'image de texture s'applique côté Roblox Studio via une <strong>Texture</strong>, une <strong>SurfaceAppearance</strong> ou un <strong>Decal</strong> posé sur les UV que tu viens de créer.</li>
               </ul>
               <h4>Sources de textures gratuites</h4>
               <ul>
-                <li><strong>Poly Haven</strong> — textures PBR HDRI et modèles, licence libre.</li>
-                <li><strong>BlenderKit</strong> — add-on intégré, bibliothèque de matériaux et objets.</li>
-                <li><strong>ambientCG</strong> — textures PBR haute qualité, gratuites.</li>
+                <li><strong>Poly Haven</strong> — textures PBR et images libres de droit, pratiques pour préparer un set d'images à réutiliser dans Roblox.</li>
+                <li><strong>ambientCG</strong> — textures haute qualité, gratuites.</li>
+                <li>Le <strong>Toolbox</strong> de Roblox Studio propose aussi des textures et decals prêts à l'emploi, directement dans l'éditeur — pratique une fois ton mesh importé.</li>
               </ul>
             </div>
 
@@ -804,10 +797,10 @@
                 <div class="exo-card" data-exo-id="m7-e3">
                   <label class="exo-check"><input type="checkbox" data-exo-checkbox="m7-e3"><span class="exo-box"></span></label>
                   <div>
-                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">25 min</span></div>
-                    <h5>Texture PBR complète depuis Poly Haven</h5>
-                    <p>Télécharge un set de textures PBR gratuit sur Poly Haven (Base Color + Roughness + Normal). Déplie proprement ton objet, branche les 3 images dans le Shader Editor (Normal via un node Normal Map) et vérifie le rendu en Cycles.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>La texture de normal map doit être réglée en « Non-Color » dans ses propriétés d'image, sinon Blender interprète mal les valeurs de relief.</p></details>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">20 min</span></div>
+                    <h5>Dépliage complet de l'objet du Module 5</h5>
+                    <p>Reprends la table ou la chaise du TP mobilier. Marque des coutures propres sur chaque partie (plateau, pieds), déplie avec Unwrap, et corrige dans l'UV Editor tout étirement visible. Cet UV propre servira directement à l'export du Module 9.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Sélectionne une île UV dans l'UV Editor et regarde si ses proportions ressemblent à la face du mesh d'origine — une île très écrasée dans un sens signale un étirement à corriger.</p></details>
                   </div>
                 </div>
 
@@ -822,42 +815,31 @@
         <div class="module-head" role="button" tabindex="0" aria-expanded="false">
           <span class="module-num">08</span>
           <div class="module-titles">
-            <h3>Éclairage et rendu (Cycles / Eevee)</h3>
-            <p>Les 4 lampes et le montage lumière à 3 points</p>
+            <h3>Animation et rig basique</h3>
+            <p>Clés d'animation et une première armature, avec les limites de l'export vers Roblox</p>
           </div>
-          <span class="module-meta">50 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
+          <span class="module-meta">45 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
           <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="module-body">
           <div class="module-body-inner">
             <div class="lesson-block">
-              <h4>Les 4 types de lampe</h4>
-              <ul>
-                <li><strong>Point</strong> — une ampoule : éclaire dans toutes les directions depuis un point.</li>
-                <li><strong>Sun</strong> — rayons parallèles, intensité indépendante de la distance : simule le soleil.</li>
-                <li><strong>Spot</strong> — un cône de lumière, avec angle et adoucissement réglables.</li>
-                <li><strong>Area</strong> — une surface qui émet de la lumière : ombres douces et réalistes, idéale pour un éclairage studio ou simuler une fenêtre.</li>
-              </ul>
-              <h4>Le schéma 3 points (studio)</h4>
-              <ul>
-                <li><strong>Key light</strong> — lumière principale, la plus forte, à 45° de la caméra.</li>
-                <li><strong>Fill light</strong> — plus faible, adoucit les ombres du côté opposé.</li>
-                <li><strong>Rim / Back light</strong> — derrière le sujet, détache la silhouette du fond.</li>
-              </ul>
+              <h4>Clés d'animation (keyframes)</h4>
+              <div class="kbd-row"><span class="lbl">Insérer une clé (position/rotation/échelle)</span><kbd>I</kbd></div>
+              <div class="kbd-row"><span class="lbl">Supprimer une clé</span><kbd>Alt+I</kbd></div>
+              <div class="kbd-row"><span class="lbl">Image suivante / précédente</span><kbd>→</kbd> / <kbd>←</kbd></div>
+              <div class="kbd-row"><span class="lbl">Lire l'animation</span><kbd>Alt+A</kbd> (ou barre espace)</div>
+              <p style="font-size:13.5px;color:var(--ink-3);margin:10px 0;">Principe : se placer sur une image, poser une clé, avancer dans le temps, changer la valeur, poser une nouvelle clé. Blender interpole automatiquement entre les deux. Ce principe (poser des états clés dans le temps) est le même que celui que tu retrouveras dans l'Animation Editor de Roblox Studio.</p>
             </div>
             <div class="lesson-block">
-              <h4>Cycles vs Eevee Next</h4>
+              <h4>Armature simple (rig)</h4>
               <ul>
-                <li><strong>Eevee Next</strong> — moteur temps réel, rapide, idéal pour itérer et pour le motion design ; qualité désormais très proche de Cycles.</li>
-                <li><strong>Cycles</strong> — moteur par lancer de rayons (path tracing), le plus réaliste, plus lent, avec accélération GPU (OptiX / CUDA / HIP / Metal).</li>
+                <li><kbd>Shift+A</kbd> → Armature : ajoute un premier os.</li>
+                <li>En Mode Édition d'armature, extruder (<kbd>E</kbd>) pour chaîner les os d'un squelette basique.</li>
+                <li>Sélectionner le mesh puis l'armature (<kbd>Maj</kbd>), <kbd>Ctrl+P</kbd> → <strong>With Automatic Weights</strong> : Blender calcule automatiquement quelle partie du maillage suit quel os.</li>
+                <li>En <strong>Pose Mode</strong>, tourner les os anime l'objet sans déformer sa géométrie de base.</li>
               </ul>
-              <h4>Paramètres de rendu essentiels</h4>
-              <ul>
-                <li><strong>Résolution</strong> et <strong>Samples</strong> (nombre d'échantillons — plus = moins de grain, plus lent).</li>
-                <li><strong>Denoising</strong> — active un débruitage IA pour réduire les samples nécessaires.</li>
-                <li><strong>World</strong> — le fond de scène et son éclairage ambiant ; un <strong>HDRI</strong> (image panoramique) donne un éclairage réaliste en un clic.</li>
-              </ul>
-              <p class="note">Pour un rendu final propre en Cycles : 128 à 512 samples selon la scène, denoising activé, résolution ×2 pour de l'impression.</p>
+              <p class="note">Important pour Roblox : exporter une armature Blender personnalisée directement utilisable en jeu est avancé (contraintes de nommage d'os, rigs R6/R15). Pour cette formation, l'objectif est de comprendre le principe du rig — les vrais personnages animés dans Roblox utilisent le plus souvent son propre système de rig, que tu scripteras à partir du Module 12.</p>
             </div>
 
             <div class="lesson-block lesson-block-full exo-path" data-exo-module="m8">
@@ -871,19 +853,19 @@
                   <label class="exo-check"><input type="checkbox" data-exo-checkbox="m8-e1"><span class="exo-box"></span></label>
                   <div>
                     <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">10 min</span></div>
-                    <h5>Comparer les 4 types de lampe</h5>
-                    <p>Sur une même scène (un objet + un sol), ajoute successivement une lampe Point, Sun, Spot puis Area (en supprimant la précédente à chaque fois). Observe à chaque fois la douceur et la direction des ombres en Rendered View.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Augmente la taille (Size) de la lampe Area pour voir directement son effet sur la douceur des ombres — plus la source est grande, plus l'ombre est douce.</p></details>
+                    <h5>Deux clés, un premier mouvement</h5>
+                    <p>Sur l'image 1, pose une clé de position (I → Location) sur un cube. Avance à l'image 50, déplace le cube et pose une nouvelle clé. Lis l'animation avec Alt+A ou la barre espace.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si le cube ne bouge pas à la lecture, vérifie que tu es bien revenu à l'image 1 avant de lancer la lecture — Blender lit à partir de la position actuelle de la timeline.</p></details>
                   </div>
                 </div>
 
                 <div class="exo-card" data-exo-id="m8-e2">
                   <label class="exo-check"><input type="checkbox" data-exo-checkbox="m8-e2"><span class="exo-box"></span></label>
                   <div>
-                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">20 min</span></div>
-                    <h5>Monter un éclairage 3 points</h5>
-                    <p>Reprends l'objet du Module 5 ou 6. Place une lampe Key à 45° de la caméra, une lampe Fill plus faible du côté opposé, et une lampe Rim derrière l'objet. Ajuste les puissances jusqu'à obtenir un rendu équilibré.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Commence toujours par régler la Key light seule, puis ajoute la Fill à environ un tiers de sa puissance — c'est plus facile que de régler les trois lampes en même temps.</p></details>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">15 min</span></div>
+                    <h5>Adoucir le mouvement dans le Graph Editor</h5>
+                    <p>Reprends l'animation précédente. Ouvre le Graph Editor, sélectionne les clés et change le type d'interpolation en Bézier avec Easing (Ease In/Out) pour obtenir un mouvement qui accélère puis ralentit, au lieu d'une vitesse constante.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Le raccourci T dans le Graph Editor ouvre le menu d'interpolation directement sur les clés sélectionnées, sans passer par un menu déroulant.</p></details>
                   </div>
                 </div>
 
@@ -891,9 +873,9 @@
                   <label class="exo-check"><input type="checkbox" data-exo-checkbox="m8-e3"><span class="exo-box"></span></label>
                   <div>
                     <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">20 min</span></div>
-                    <h5>Rendu Cycles + HDRI propre</h5>
-                    <p>Ajoute un HDRI dans les propriétés World. Passe en moteur Cycles, règle les Samples et active le Denoising. Sors un rendu final F12 en haute résolution et enregistre-le (F3).</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Si le rendu Cycles est trop bruité même à 512 samples, vérifie que le Denoising est bien activé dans l'onglet Rendu — il réduit énormément le grain sans augmenter le temps de calcul.</p></details>
+                    <h5>Rig et pose sur un objet du Module 5</h5>
+                    <p>Sur un objet articulé simple (par exemple une chaise avec un dossier séparé), ajoute une armature simple (2 os), parente le mesh avec Automatic Weights, puis pose 2 poses différentes en Pose Mode avec une clé sur chacune pour créer un petit mouvement.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>En Pose Mode, insère la clé avec I → Rotation directement sur l'os sélectionné, pas sur l'objet mesh entier.</p></details>
                   </div>
                 </div>
 
@@ -908,38 +890,42 @@
         <div class="module-head" role="button" tabindex="0" aria-expanded="false">
           <span class="module-num">09</span>
           <div class="module-titles">
-            <h3>Courbes, texte 3D et TP personnage stylisé</h3>
-            <p>Sortir du tout-polygone et modéliser un petit personnage</p>
+            <h3>Export FBX/OBJ optimisé pour Roblox</h3>
+            <p>Le geste le plus important de la journée : sortir un mesh propre de Blender</p>
           </div>
-          <span class="module-meta">65 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
+          <span class="module-meta">40 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
           <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="module-body">
           <div class="module-body-inner">
             <div class="lesson-block">
-              <h4>Modélisation par courbes</h4>
+              <h4>FBX ou OBJ ?</h4>
               <ul>
-                <li><kbd>Shift+A</kbd> → Courbe → <strong>Bézier</strong> : les poignées se manipulent comme les sommets d'un mesh (G, R, S).</li>
-                <li><strong>Extrude</strong> (dans Object Data Properties) — donne de l'épaisseur à la courbe (tubes, câbles, néons).</li>
-                <li><strong>Bevel Depth</strong> — arrondit la section pour un rendu tube parfait.</li>
-                <li><strong>Bevel Object</strong> — extrude une seconde courbe le long de la première : idéal pour des moulures ou rampes complexes.</li>
-                <li><strong>Alt+C → Mesh from Curve</strong> — convertit en mesh classique pour appliquer ensuite des modificateurs polygonaux.</li>
+                <li><strong>FBX</strong> — le format à privilégier pour Roblox : il conserve les hiérarchies d'objets, les UV et, si besoin, les armatures/animations.</li>
+                <li><strong>OBJ</strong> — plus simple, très fiable pour un mesh statique unique (props, décor) sans animation, mais ne transporte ni squelette ni hiérarchie.</li>
+                <li>Pour cette formation : exporte tes props (Module 5) en <strong>OBJ</strong>, et tout objet avec armature (Module 8) en <strong>FBX</strong>.</li>
               </ul>
-              <h4>Outil texte 3D</h4>
-              <p style="font-size:13.5px;color:var(--ink-3);">
-                <kbd>Shift+A</kbd> → Texte, puis <kbd>Tab</kbd> pour taper. Réglages de police, alignement, épaisseur dans Object Data Properties. « Text on Curve » permet de faire suivre le texte le long d'une courbe (logo, titre animé).
-              </p>
+              <h4>Avant d'exporter : préparer le mesh</h4>
+              <ul>
+                <li><kbd>Ctrl</kbd>+<kbd>A</kbd> → <strong>Apply → All Transforms</strong> : repartir sur une échelle et une rotation propres (0,0,0 / échelle 1) évite les surprises à l'import.</li>
+                <li>Placer l'<strong>origine de l'objet</strong> là où tu veux que Roblox le manipule (clic droit → Set Origin → Origin to Geometry, ou au centre de la base pour un prop posé au sol).</li>
+                <li>Vérifier le nombre de triangles (bandeau du haut, Statistics) : reste raisonnable sur un prop de jeu (quelques centaines à low quelques milliers, pas des dizaines de milliers) pour de bonnes performances en jeu.</li>
+              </ul>
             </div>
             <div class="lesson-block">
-              <h4>TP : petit personnage stylisé</h4>
+              <h4>Échelle : le piège n°1</h4>
+              <p style="font-size:13.5px;color:var(--ink-3);margin-bottom:10px;">Blender travaille en mètres, Roblox travaille en <strong>studs</strong> (1 stud ≈ 0,28 mètre, et un personnage Roblox standard mesure environ 5 studs de haut). Un objet modélisé « à la bonne taille » dans Blender peut donc arriver minuscule ou énorme une fois importé.</p>
               <ul>
-                <li>Partir d'une sphère UV pour la tête, d'un cube pour le corps.</li>
-                <li>Appliquer le modificateur <strong>Mirror</strong> pour ne modéliser qu'une moitié du corps.</li>
-                <li>Utiliser <strong>Subdivision Surface</strong> pour un rendu doux type « cartoon ».</li>
-                <li>Assigner un matériau différent par zone (peau, vêtements, yeux) via Assign en Mode Édition.</li>
-                <li>Cadrer, éclairer (schéma 3 points) et sortir un rendu final avec <kbd>F12</kbd>.</li>
+                <li>Avant d'exporter, compare mentalement la taille de ton objet à un cube de ~1,5 unité Blender (grossièrement la hauteur d'un personnage Roblox).</li>
+                <li>Dans la fenêtre d'export FBX/OBJ, le champ <strong>Scale</strong> permet d'ajuster un facteur global si l'objet arrive trop petit ou trop grand — mieux vaut cependant modéliser directement à la bonne échelle dès le Module 4.</li>
               </ul>
-              <p class="note">Objectif réaliste pour un premier personnage : silhouette simple et lisible plutôt que détails anatomiques précis. La stylisation pardonne les imperfections.</p>
+              <h4>Étapes d'export</h4>
+              <ul>
+                <li>Sélectionner uniquement l'objet à exporter (les objets non sélectionnés ne sortent pas si l'option correspondante est cochée).</li>
+                <li>Fichier → Export → <strong>FBX (.fbx)</strong> ou <strong>Wavefront (.obj)</strong>.</li>
+                <li>Dans le panneau d'options : cocher <strong>Selected Objects Only</strong>, garder l'orientation par défaut (Y Forward / Z Up fonctionne bien avec l'import Roblox), et inclure les UV.</li>
+              </ul>
+              <p class="note">Une fois exporté, le fichier est prêt pour l'import dans Roblox Studio via le Toolbox ou un glisser-déposer.</p>
             </div>
 
             <div class="lesson-block lesson-block-full exo-path" data-exo-module="m9">
@@ -952,189 +938,30 @@
                 <div class="exo-card" data-exo-id="m9-e1">
                   <label class="exo-check"><input type="checkbox" data-exo-checkbox="m9-e1"><span class="exo-box"></span></label>
                   <div>
-                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">15 min</span></div>
-                    <h5>Un câble en courbe Bézier</h5>
-                    <p>Ajoute une courbe Bézier, déplace ses poignées avec G/R/S pour lui donner une forme sinueuse. Dans Object Data Properties, augmente le Bevel Depth pour lui donner l'épaisseur d'un câble ou d'un tube néon.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Les points de contrôle d'une courbe se sélectionnent et se déplacent exactement comme des sommets de mesh — les mêmes raccourcis G/R/S s'appliquent.</p></details>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">10 min</span></div>
+                    <h5>Nettoyer les transforms</h5>
+                    <p>Sur un objet quelconque, applique Ctrl+A → All Transforms. Vérifie dans le panneau latéral (N) que Location est à 0, Rotation à 0 et Scale à 1 — le signe qu'il est prêt à exporter proprement.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si Scale affiche autre chose que 1.0 sur les 3 axes après Apply All Transforms, c'est qu'un parent ou un modificateur non appliqué influence encore l'objet.</p></details>
                   </div>
                 </div>
 
                 <div class="exo-card" data-exo-id="m9-e2">
                   <label class="exo-check"><input type="checkbox" data-exo-checkbox="m9-e2"><span class="exo-box"></span></label>
                   <div>
-                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">15 min</span></div>
-                    <h5>Un titre en texte 3D</h5>
-                    <p>Ajoute un objet Texte (Shift+A → Texte), entre en édition (Tab) pour taper ton prénom, règle la police et l'épaisseur (Extrude) dans Object Data Properties, puis essaie « Text on Curve » avec une courbe Bézier créée à côté.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>« Text on Curve » se règle dans Object Data Properties → Paragraph → en indiquant la courbe cible dans le champ prévu.</p></details>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">10 min</span></div>
+                    <h5>Exporter la table du Module 5 en OBJ</h5>
+                    <p>Sélectionne uniquement la table, Fichier → Export → Wavefront (.obj), coche Selected Objects Only. Rouvre le fichier dans un nouveau projet Blender vide (Fichier → Import) pour vérifier que la géométrie et l'échelle sont intactes.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si l'objet importé apparaît décalé de l'origine, c'est que son origine n'était pas centrée avant l'export — reviens la corriger dans le fichier source.</p></details>
                   </div>
                 </div>
 
                 <div class="exo-card" data-exo-id="m9-e3">
                   <label class="exo-check"><input type="checkbox" data-exo-checkbox="m9-e3"><span class="exo-box"></span></label>
                   <div>
-                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">40 min</span></div>
-                    <h5>Le TP personnage stylisé complet</h5>
-                    <p>Réalise l'intégralité du TP décrit ci-dessus : sphère + cube, Mirror, Subdivision Surface, matériaux multiples par zone, éclairage 3 points et rendu final F12. C'est le deuxième des 3 projets de la formation.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Modélise d'abord uniquement la moitié droite du corps avec le modificateur Mirror actif en aperçu — tu verras l'ensemble en temps réel sans avoir à dupliquer manuellement.</p></details>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- MODULE 10 -->
-      <div class="module">
-        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
-          <span class="module-num">10</span>
-          <div class="module-titles">
-            <h3>Animation et rig basique</h3>
-            <p>Clés d'animation, courbes F-Curve, et une première armature</p>
-          </div>
-          <span class="module-meta">60 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
-          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="module-body">
-          <div class="module-body-inner">
-            <div class="lesson-block">
-              <h4>Clés d'animation (keyframes)</h4>
-              <div class="kbd-row"><span class="lbl">Insérer une clé (position/rotation/échelle)</span><kbd>I</kbd></div>
-              <div class="kbd-row"><span class="lbl">Supprimer une clé</span><kbd>Alt+I</kbd></div>
-              <div class="kbd-row"><span class="lbl">Image suivante / précédente</span><kbd>→</kbd> / <kbd>←</kbd></div>
-              <div class="kbd-row"><span class="lbl">Lire l'animation</span><kbd>Alt+A</kbd> (ou barre espace)</div>
-              <p style="font-size:13.5px;color:var(--ink-3);margin:10px 0;">Principe : se placer sur une image, poser une clé, avancer dans le temps, changer la valeur, poser une nouvelle clé. Blender interpole automatiquement entre les deux.</p>
-              <h4>Affiner avec le Graph Editor</h4>
-              <p style="font-size:13.5px;color:var(--ink-3);">Les courbes F-Curve montrent l'évolution de chaque valeur dans le temps. On y règle le type d'interpolation (Bézier, Linéaire, Constant) pour contrôler l'accélération et la décélération — la clé d'une animation qui « a du poids ».</p>
-            </div>
-            <div class="lesson-block">
-              <h4>Armature simple (rig)</h4>
-              <ul>
-                <li><kbd>Shift+A</kbd> → Armature : ajoute un premier os.</li>
-                <li>En Mode Édition d'armature, extruder (<kbd>E</kbd>) pour chaîner les os d'un squelette basique.</li>
-                <li>Sélectionner le mesh puis l'armature (<kbd>Maj</kbd>), <kbd>Ctrl+P</kbd> → <strong>With Automatic Weights</strong> : Blender calcule automatiquement quelle partie du maillage suit quel os.</li>
-                <li>En <strong>Pose Mode</strong>, tourner les os anime le personnage sans déformer sa géométrie de base.</li>
-              </ul>
-              <p class="note">Le poids automatique (« skinning ») fait 80% du travail correctement sur une forme simple ; on peint ensuite les 20% restants dans Weight Paint pour les zones problématiques (aisselles, articulations).</p>
-            </div>
-
-            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m10">
-              <div class="exo-path-head">
-                <h4>Parcours d'exercices</h4>
-                <span class="exo-progress" data-exo-progress="m10">0/3 fait</span>
-              </div>
-              <div class="exo-grid">
-
-                <div class="exo-card" data-exo-id="m10-e1">
-                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m10-e1"><span class="exo-box"></span></label>
-                  <div>
-                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">10 min</span></div>
-                    <h5>Deux clés, un premier mouvement</h5>
-                    <p>Sur l'image 1, pose une clé de position (I → Location) sur un cube. Avance à l'image 50, déplace le cube et pose une nouvelle clé. Lis l'animation avec Alt+A ou la barre espace.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Si le cube ne bouge pas à la lecture, vérifie que tu es bien revenu à l'image 1 avant de lancer la lecture — Blender lit à partir de la position actuelle de la timeline.</p></details>
-                  </div>
-                </div>
-
-                <div class="exo-card" data-exo-id="m10-e2">
-                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m10-e2"><span class="exo-box"></span></label>
-                  <div>
-                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">15 min</span></div>
-                    <h5>Adoucir le mouvement dans le Graph Editor</h5>
-                    <p>Reprends l'animation précédente. Ouvre le Graph Editor, sélectionne les clés et change le type d'interpolation en Bézier avec Easing (Ease In/Out) pour obtenir un mouvement qui accélère puis ralentit, au lieu d'une vitesse constante.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Le raccourci T dans le Graph Editor ouvre le menu d'interpolation directement sur les clés sélectionnées, sans passer par un menu déroulant.</p></details>
-                  </div>
-                </div>
-
-                <div class="exo-card" data-exo-id="m10-e3">
-                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m10-e3"><span class="exo-box"></span></label>
-                  <div>
-                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">30 min</span></div>
-                    <h5>Rig et pose sur le personnage stylisé</h5>
-                    <p>Sur le personnage du Module 9, ajoute une armature simple (2-3 os), parente le mesh avec Automatic Weights, puis pose 2 poses différentes en Pose Mode (ex. bras levé / bras baissé) avec une clé sur chacune pour créer un petit mouvement.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>En Pose Mode, insère la clé avec I → Rotation directement sur l'os sélectionné, pas sur l'objet mesh entier.</p></details>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- MODULE 11 -->
-      <div class="module">
-        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
-          <span class="module-num">11</span>
-          <div class="module-titles">
-            <h3>Geometry Nodes et export final</h3>
-            <p>La génération procédurale, la grande force de Blender moderne</p>
-          </div>
-          <span class="module-meta">50 min <span class="badge-level lvl-avance">Avancé (découverte)</span></span>
-          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="module-body">
-          <div class="module-body-inner">
-            <div class="lesson-block">
-              <h4>C'est quoi les Geometry Nodes ?</h4>
-              <p style="font-size:13.5px;color:var(--ink-3);margin-bottom:10px;">Un système de nœuds qui génère et modifie de la géométrie de façon procédurale et non-destructive — au lieu de placer 200 arbres à la main, on décrit une règle (« disperser des instances sur cette surface, avec cette variation d'échelle ») et Blender l'exécute.</p>
-              <ul>
-                <li>Onglet <strong>Geometry Nodes</strong> → New crée un modificateur + un graphe de nœuds vide.</li>
-                <li><strong>Distribute Points on Faces</strong> — sème des points sur une surface.</li>
-                <li><strong>Instance on Points</strong> — place une copie d'un objet à chaque point (herbe, rochers, foule).</li>
-                <li><strong>Random Value</strong> — ajoute de la variation (taille, rotation) pour casser la répétition.</li>
-              </ul>
-              <p class="note">Usage typique débutant : disperser des instances de rochers ou d'herbe sur un terrain en quelques nœuds, plutôt que de dupliquer à la main pendant une heure.</p>
-            </div>
-            <div class="lesson-block">
-              <h4>Exporter ton travail</h4>
-              <ul>
-                <li><strong>Rendu image</strong> — <kbd>F12</kbd> puis <kbd>F3</kbd> pour enregistrer en PNG/JPEG.</li>
-                <li><strong>Animation vidéo</strong> — Propriétés de sortie → format FFmpeg (.mp4), puis Rendu → <strong>Render Animation</strong>.</li>
-                <li><strong>Modèle 3D</strong> — Fichier → Export → glTF (jeux vidéo/web), FBX (autres logiciels 3D), OBJ (impression 3D et échange universel).</li>
-              </ul>
-              <h4>Et après cette journée ?</h4>
-              <ul>
-                <li>Le <strong>Sculpting</strong> pour les formes organiques détaillées (visages, créatures).</li>
-                <li>La <strong>simulation physique</strong> (tissu, fluides, particules) pour des effets dynamiques.</li>
-                <li>Le <strong>Compositing</strong> (nœuds post-rendu) pour retoucher l'image finale sans ressortir de Blender.</li>
-              </ul>
-            </div>
-
-            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m11">
-              <div class="exo-path-head">
-                <h4>Parcours d'exercices</h4>
-                <span class="exo-progress" data-exo-progress="m11">0/3 fait</span>
-              </div>
-              <div class="exo-grid">
-
-                <div class="exo-card" data-exo-id="m11-e1">
-                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m11-e1"><span class="exo-box"></span></label>
-                  <div>
-                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">10 min</span></div>
-                    <h5>Premiers pas en Geometry Nodes</h5>
-                    <p>Sur un plan, ajoute un modificateur Geometry Nodes → New. Branche Distribute Points on Faces puis Instance on Points avec un cube réduit comme instance. Observe la grille de cubes générée automatiquement.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Augmente le paramètre « Density » de Distribute Points on Faces pour voir immédiatement plus ou moins d'instances apparaître.</p></details>
-                  </div>
-                </div>
-
-                <div class="exo-card" data-exo-id="m11-e2">
-                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m11-e2"><span class="exo-box"></span></label>
-                  <div>
-                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">15 min</span></div>
-                    <h5>Casser la répétition avec Random Value</h5>
-                    <p>Ajoute un node Random Value branché sur l'échelle et la rotation des instances, pour que chaque copie soit légèrement différente. Compare le rendu avant/après pour voir l'effet sur le réalisme perçu.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Utilise un intervalle Random Value assez resserré (ex. 0.8 à 1.2 pour l'échelle) — une variation trop large donne un résultat chaotique plutôt que naturel.</p></details>
-                  </div>
-                </div>
-
-                <div class="exo-card" data-exo-id="m11-e3">
-                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m11-e3"><span class="exo-box"></span></label>
-                  <div>
-                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">40 min</span></div>
-                    <h5>Le 3ᵉ projet complet : scène animée + export</h5>
-                    <p>Anime le personnage du Module 10 sur quelques images clés, ajoute un sol avec un champ d'herbe généré en Geometry Nodes en arrière-plan, puis exporte une courte vidéo (Render Animation → .mp4). C'est le dernier des 3 projets de la formation.</p>
-                    <details class="exo-hint"><summary>Indice</summary><p>Vérifie d'abord le rendu d'une seule image (F12) avant de lancer le rendu de toute l'animation — repérer un problème d'éclairage ou de cadrage prend quelques secondes en image fixe, contre plusieurs minutes en vidéo complète.</p></details>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">20 min</span></div>
+                    <h5>Export FBX avec vérification d'échelle</h5>
+                    <p>Exporte l'objet animé du Module 8 en FBX (avec son armature). Dans la fenêtre d'export, compare sa hauteur estimée à 5 studs (~1,5 unité Blender) et ajuste le facteur Scale si besoin avant l'export final. Ce fichier est alors prêt pour l'import dans Roblox Studio.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Ajoute temporairement un cube de 1,5 unité de haut à côté de ton objet dans la scène : ça donne une référence visuelle rapide de l'échelle Roblox avant même d'exporter.</p></details>
                   </div>
                 </div>
 
@@ -1158,39 +985,34 @@
         <span class="section-tag">// La chaîne de production</span>
         <h2>Le même pipeline que<br>les studios professionnels.</h2>
       </div>
-      <p class="section-desc">Chaque module de cette formation correspond à un maillon de cette chaîne — dans le même ordre que celui qu'utilisent les productions réelles.</p>
+      <p class="section-desc">Les modules de cette formation suivent cette chaîne — dans le même ordre que celui qu'utilisent les productions réelles.</p>
     </div>
 
     <div class="pipeline">
       <div class="pipe-step reveal">
         <div class="n">01</div>
         <h5>Modélisation</h5>
-        <p>Construire la géométrie : mesh, courbes, modificateurs.</p>
+        <p>Construire la géométrie en Mode Édition, low-poly et propre.</p>
       </div>
       <div class="pipe-step reveal">
         <div class="n">02</div>
-        <h5>UV & Texturing</h5>
-        <p>Déplier et habiller la surface avec des images.</p>
+        <h5>Matériaux</h5>
+        <p>Couleurs et propriétés simples, compatibles Roblox Studio.</p>
       </div>
       <div class="pipe-step reveal">
         <div class="n">03</div>
-        <h5>Shading</h5>
-        <p>Définir les propriétés physiques de la matière.</p>
+        <h5>UV & Textures</h5>
+        <p>Déplier et habiller la surface avec des images.</p>
       </div>
       <div class="pipe-step reveal">
         <div class="n">04</div>
-        <h5>Éclairage</h5>
-        <p>Poser les lumières et composer l'ambiance.</p>
+        <h5>Animation</h5>
+        <p>Rig basique et keyframes, dans les contraintes du rig Roblox.</p>
       </div>
       <div class="pipe-step reveal">
         <div class="n">05</div>
-        <h5>Animation</h5>
-        <p>Rig, clés, courbes de mouvement.</p>
-      </div>
-      <div class="pipe-step reveal">
-        <div class="n">06</div>
-        <h5>Rendu & Export</h5>
-        <p>Cycles / Eevee, puis livraison finale.</p>
+        <h5>Export</h5>
+        <p>FBX/OBJ optimisé, puis import direct dans Roblox Studio.</p>
       </div>
     </div>
   </div>
@@ -1289,14 +1111,14 @@
         </div>
         <div class="tp-body">
           <h3>Le mobilier de base</h3>
-          <p>Table et chaise entièrement modélisées par extrusion, premier rendu Cycles avec une lampe Sun. L'exercice fondateur pour ancrer G/R/S et le Mode Édition.</p>
-          <div class="tp-skills"><span>Extrusion</span><span>Duplication</span><span>Rendu F12</span></div>
+          <p>Table et chaise entièrement modélisées par extrusion, premier aperçu en Eevee dans le viewport. L'exercice fondateur pour ancrer G/R/S et le Mode Édition.</p>
+          <div class="tp-skills"><span>Extrusion</span><span>Duplication</span><span>Mode Édition</span></div>
         </div>
       </div>
 
       <div class="tp-card reveal">
         <div class="tp-thumb">
-          <span class="difficulty">Modules 6–9</span>
+          <span class="difficulty">Modules 6–7</span>
           <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
             <circle cx="50" cy="36" r="20" fill="#2c2e38" stroke="#f08a34" stroke-width="1.4"/>
             <rect x="34" y="54" width="32" height="34" rx="8" fill="#23242f" stroke="#5c9cff" stroke-width="1.2"/>
@@ -1306,14 +1128,14 @@
         </div>
         <div class="tp-body">
           <h3>Personnage stylisé texturé</h3>
-          <p>Sphères et cubes assemblés en personnage cartoon, symétrie via Mirror, matériaux multiples par zone, éclairage 3 points pour un rendu présentable.</p>
-          <div class="tp-skills"><span>Mirror</span><span>Shading</span><span>Éclairage studio</span></div>
+          <p>Sphères et cubes assemblés en personnage cartoon, symétrie via Mirror, matériaux multiples par zone et UV proprement dépliés pour Roblox Studio.</p>
+          <div class="tp-skills"><span>Mirror</span><span>Matériaux</span><span>UV Unwrap</span></div>
         </div>
       </div>
 
       <div class="tp-card reveal">
         <div class="tp-thumb">
-          <span class="difficulty">Modules 10–11</span>
+          <span class="difficulty">Modules 8–9</span>
           <svg width="110" height="100" viewBox="0 0 110 100" fill="none">
             <line x1="55" y1="20" x2="55" y2="50" stroke="#ff5d5d" stroke-width="2"/>
             <line x1="55" y1="50" x2="40" y2="80" stroke="#8bdc63" stroke-width="2"/>
@@ -1325,9 +1147,9 @@
           </svg>
         </div>
         <div class="tp-body">
-          <h3>Animation + variation procédurale</h3>
-          <p>Une armature basique fait bouger le personnage sur quelques images clés, puis un champ d'herbe généré en Geometry Nodes complète le décor. Export en .mp4.</p>
-          <div class="tp-skills"><span>Rig & Pose Mode</span><span>Keyframes</span><span>Geometry Nodes</span></div>
+          <h3>Animation et export final</h3>
+          <p>Une armature basique fait bouger le personnage sur quelques images clés, dans les contraintes du rig Roblox, puis export FBX optimisé prêt pour l'import dans Roblox Studio.</p>
+          <div class="tp-skills"><span>Rig & Pose Mode</span><span>Keyframes</span><span>Export FBX</span></div>
         </div>
       </div>
     </div>
@@ -1402,31 +1224,25 @@
         <div class="res-link-row"><span>Poly Haven — HDRI, textures PBR, modèles</span><span class="tag">Web</span></div>
         <div class="res-link-row"><span>ambientCG — textures PBR libres de droit</span><span class="tag">Web</span></div>
         <div class="res-link-row"><span>Extensions Platform — le store officiel intégré</span><span class="tag">Blender 5.x</span></div>
-        <div class="res-link-row"><span>Node Wrangler — raccourcis Shader Editor (inclus)</span><span class="tag">Add-on</span></div>
       </div>
 
       <div class="res-card reveal">
-        <h4>Végétation & environnement</h4>
-        <div class="res-link-row"><span>Botaniq — bibliothèque d'arbres et plantes</span><span class="tag">Payant</span></div>
-        <div class="res-link-row"><span>GrassBlade — herbe procédurale réaliste</span><span class="tag">Payant</span></div>
-        <div class="res-link-row"><span>Gardener — dispersion végétale avancée</span><span class="tag">Payant</span></div>
-        <div class="res-link-row"><span>Forestation — génération de forêts</span><span class="tag">Payant</span></div>
-        <div class="res-link-row"><span>Alpha Trees — arbres en cartes alpha optimisées</span><span class="tag">Payant</span></div>
+        <h4>Textures low-poly & UV</h4>
+        <div class="res-link-row"><span>ambientCG — textures libres de droit, légères</span><span class="tag">Web</span></div>
+        <div class="res-link-row"><span>UVPackmaster — optimisation automatique des UV</span><span class="tag">Payant</span></div>
+        <div class="res-link-row"><span>Texel Density Checker — cohérence des textures</span><span class="tag">Add-on</span></div>
       </div>
 
       <div class="res-card reveal">
-        <h4>Matériaux & éclairage</h4>
-        <div class="res-link-row"><span>Materialiq — bibliothèque de shaders prêts à l'emploi</span><span class="tag">Payant</span></div>
-        <div class="res-link-row"><span>Real Wood Textures — essences de bois PBR</span><span class="tag">Payant</span></div>
-        <div class="res-link-row"><span>Gobos — textures de lumière projetée (gobos)</span><span class="tag">Payant</span></div>
-        <div class="res-link-row"><span>Glare / Flared — effets d'éclat et flares réalistes</span><span class="tag">Payant</span></div>
+        <h4>Export & intégration Roblox</h4>
+        <div class="res-link-row"><span>Roblox Studio — documentation import FBX/OBJ</span><span class="tag">Web</span></div>
+        <div class="res-link-row"><span>DevForum Roblox — support communautaire création 3D</span><span class="tag">Communauté</span></div>
+        <div class="res-link-row"><span>Roblox Creator Hub — guides officiels de contenu</span><span class="tag">Web</span></div>
       </div>
 
       <div class="res-card reveal">
-        <h4>Personnages & apprentissage continu</h4>
-        <div class="res-link-row"><span>Human Generator — création rapide de personnages</span><span class="tag">Payant</span></div>
+        <h4>Apprentissage continu</h4>
         <div class="res-link-row"><span>blender.org/manual — documentation officielle FR/EN</span><span class="tag">Web</span></div>
-        <div class="res-link-row"><span>Blender Studio — courts-métrages et fichiers sources</span><span class="tag">Web</span></div>
         <div class="res-link-row"><span>r/blenderhelp & forums FR — support communautaire</span><span class="tag">Communauté</span></div>
       </div>
     </div>
@@ -1448,19 +1264,19 @@
     <div class="faq-list" id="faqList">
       <div class="faq-item">
         <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span>Faut-il un ordinateur puissant pour commencer ?</span><span class="faq-plus" aria-hidden="true"></span></div>
-        <div class="faq-a"><div class="faq-a-inner">Non. Blender tourne sur des machines modestes pour tout ce qui est modélisation et Eevee. Une carte graphique dédiée devient utile surtout pour accélérer les rendus Cycles — mais rien n'empêche d'apprendre sur un CPU classique en attendant.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Non. Blender tourne sur des machines modestes pour tout ce qui est modélisation low-poly et navigation dans le viewport Eevee. Une carte graphique dédiée n'est pas indispensable pour cette formation, orientée Roblox plutôt que rendu final.</div></div>
       </div>
       <div class="faq-item">
         <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span>« Devenir pro en 1 jour », c'est vraiment réaliste ?</span><span class="faq-plus" aria-hidden="true"></span></div>
-        <div class="faq-a"><div class="faq-a-inner">En un jour, tu peux devenir <strong>autonome</strong> : comprendre l'interface, modéliser, texturer, éclairer, animer et exporter sans être bloqué. La maîtrise professionnelle (anatomie, hard-surface avancé, simulation) demande des mois de pratique régulière — mais le socle technique, lui, tient dans une journée bien structurée.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">En un jour, tu peux devenir <strong>autonome</strong> : comprendre l'interface, modéliser, texturer, animer et exporter vers Roblox Studio sans être bloqué. La maîtrise professionnelle (anatomie, hard-surface avancé, simulation) demande des mois de pratique régulière — mais le socle technique, lui, tient dans une journée bien structurée.</div></div>
       </div>
       <div class="faq-item">
         <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span>Pourquoi l'interface reste-t-elle en anglais dans le cours ?</span><span class="faq-plus" aria-hidden="true"></span></div>
         <div class="faq-a"><div class="faq-a-inner">Parce que 100% des tutoriels vidéo, forums et extensions utilisent les noms anglais des menus et outils. Apprendre directement avec ce vocabulaire te permet de suivre n'importe quelle ressource après cette formation, sans traduction mentale.</div></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span>Cycles ou Eevee, lequel apprendre en premier ?</span><span class="faq-plus" aria-hidden="true"></span></div>
-        <div class="faq-a"><div class="faq-a-inner">Commence par Eevee Next pour itérer vite pendant l'apprentissage (retour visuel immédiat), puis passe en Cycles pour ton rendu final quand le réalisme compte vraiment. Les réglages de matériaux sont quasiment identiques entre les deux moteurs.</div></div>
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span>Mes modèles s'importeront-ils vraiment sans problème dans Roblox Studio ?</span><span class="faq-plus" aria-hidden="true"></span></div>
+        <div class="faq-a"><div class="faq-a-inner">Oui, à condition de suivre les réglages d'export du module 9 (échelle, orientation, format FBX). C'est précisément pour éviter les mauvaises surprises à l'import que ce module est traité comme la pièce centrale de la formation.</div></div>
       </div>
       <div class="faq-item">
         <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span>Dois-je apprendre le sculpting et les simulations dès le premier jour ?</span><span class="faq-plus" aria-hidden="true"></span></div>
@@ -1477,7 +1293,7 @@
     <h2>Ouvre Blender.<br>La formation commence <span class="accent" style="color:var(--blender-orange)">maintenant</span>.</h2>
     <p>Reviens à cette page à chaque module — elle reste ta référence pendant toute ta progression, pas seulement pour cette première journée.</p>
     <div class="hero-ctas" style="justify-content:center;">
-      <a href="#modules" class="btn btn-primary">Revoir les 11 modules</a>
+      <a href="#modules" class="btn btn-primary">Revoir les 9 modules</a>
       <a href="#raccourcis" class="btn btn-ghost">Ouvrir l'aide-mémoire</a>
     </div>
   </div>
