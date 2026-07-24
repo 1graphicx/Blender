@@ -60,14 +60,14 @@
           Commencer la formation
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="#modules" class="btn btn-ghost">Voir les 12 modules</a>
+        <a href="#modules" class="btn btn-ghost">Voir les 13 modules</a>
       </div>
       <div class="hero-meta">
-        <div class="hero-meta-item"><span class="num">12</span><span class="lbl">Modules complets</span></div>
+        <div class="hero-meta-item"><span class="num">13</span><span class="lbl">Modules complets</span></div>
         <div class="hero-meta-item"><span class="num">7–9h</span><span class="lbl">Programme sur 1 jour</span></div>
         <div class="hero-meta-item"><span class="num">50+</span><span class="lbl">Raccourcis & instructions Lua</span></div>
-        <div class="hero-meta-item"><span class="num">3</span><span class="lbl">Projets guidés</span></div>
-        <div class="hero-meta-item"><span class="num">34</span><span class="lbl">Exercices progressifs</span></div>
+        <div class="hero-meta-item"><span class="num">4</span><span class="lbl">Projets guidés</span></div>
+        <div class="hero-meta-item"><span class="num">39</span><span class="lbl">Exercices progressifs</span></div>
       </div>
     </div>
 
@@ -145,7 +145,7 @@
         <h2>Le planning pour tenir<br>l'objectif « autonome en 1 jour ».</h2>
       </div>
       <p class="section-desc">
-        4 phases, chacune avec un objectif concret. Adapte les horaires à ton rythme :
+        5 phases, chacune avec un objectif concret. Adapte les horaires à ton rythme :
         ce qui compte, c'est l'ordre — tout Blender avant tout Roblox Studio — et de ne
         jamais passer à la suite sans avoir pratiqué le geste.
       </p>
@@ -195,10 +195,20 @@
       <div class="day-block reveal">
         <div class="day-rail"><div class="time-tag">16h30</div></div>
         <div class="day-content">
-          <span class="phase-label p-maitrise">Phase 4 — Roblox Studio (16h30–19h30)</span>
-          <h3>Importer, comprendre l'interface et scripter en Lua</h3>
-          <p>Import de ton mesh Blender dans Roblox Studio, tour de l'interface (Explorer, Properties, Workspace), bases du langage Lua (variables, fonctions, conditions, boucles), puis tes premiers scripts pour faire réagir l'objet que tu as toi-même modélisé.</p>
-          <div class="day-tags"><span>Modules 10–12</span><span>Import Blender→Roblox</span><span>Bases Lua</span><span>Premier script</span></div>
+          <span class="phase-label p-maitrise">Phase 4 — Import Roblox Studio (16h30–17h30)</span>
+          <h3>Ton mesh dans Roblox Studio, prêt à jouer</h3>
+          <p>Import du FBX exporté en Phase 3 via Import 3D, vérification de l'échelle et des composants séparés, coloration et matériaux directement dans Studio.</p>
+          <div class="day-tags"><span>Module 9</span><span>Import 3D</span><span>Matériaux Studio</span></div>
+        </div>
+      </div>
+
+      <div class="day-block reveal">
+        <div class="day-rail"><div class="time-tag">Session 2</div></div>
+        <div class="day-content">
+          <span class="phase-label p-maitrise">Phase 5 — Projets concrets (à ton rythme)</span>
+          <h3>Modéliser de vrais personnages Roblox</h3>
+          <p>Les 4 modules avancés de cette partie représentent à eux seuls 4 à 5h de pratique guidée : mieux vaut les répartir sur une ou deux sessions supplémentaires plutôt que de les enchaîner en fin de journée 1. On y modélise un personnage complet par tracé, on ancre les 4 réflexes d'un aller-retour Blender ↔ Roblox propre, on isole les 5 outils qui suffisent à presque tout faire, puis on modélise un personnage low-poly façon « brain rot » avec la technique Remesh en mode Block.</p>
+          <div class="day-tags"><span>Modules 10–13</span><span>Perso par tracé</span><span>Réflexes import</span><span>Low-poly Remesh</span></div>
         </div>
       </div>
 
@@ -214,7 +224,7 @@
     <div class="section-head">
       <div>
         <span class="section-tag">// Programme complet</span>
-        <h2>9 modules, du premier<br>clic à l'export Roblox.</h2>
+        <h2>13 modules, du premier<br>clic à des projets concrets.</h2>
       </div>
       <p class="section-desc">Clique sur un module pour dérouler le contenu détaillé : ce que tu apprends, les gestes précis, et les pièges à éviter. Chaque module se termine par un <strong>parcours d'exercices</strong> en 3 temps (Échauffement → Application → Défi) pour ancrer réellement le geste.</p>
     </div>
@@ -971,6 +981,324 @@
         </div>
       </div>
 
+      <!-- MODULE 10 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">10</span>
+          <div class="module-titles">
+            <h3>TP guidé — Modéliser un personnage Roblox par tracé</h3>
+            <p>La méthode « block avatar » : un gabarit propre plutôt qu'un mesh Studio récupéré tel quel</p>
+          </div>
+          <span class="module-meta">90 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Le principe : tracer plutôt que réutiliser</h4>
+              <ul>
+                <li>Exporter directement le mesh d'un rig Studio en .obj donne une topologie sale (faces mal orientées, triangles bizarres) : ce mesh ne doit servir que de <strong>gabarit visuel</strong>, jamais de mesh final.</li>
+                <li>Préparer le gabarit dans Roblox Studio : panneau <strong>Avatar</strong>, appliquer un rig R6 « block », régler la distance de déplacement sur <strong>1 stud</strong> pour des mouvements précis.</li>
+                <li>Sur ce rig, ne garder que le torse et les membres, puis remplacer sa tête par celle d'un rig R15 (silhouette plus lisible à tracer).</li>
+                <li>Supprimer la baseplate et remettre la position du rig à <strong>0, 0, 0</strong> — un point de départ propre évite des décalages plus tard.</li>
+                <li>Exporter le tout via <strong>File → Advanced → Export as OBJ</strong>, puis importer ce fichier dans Blender comme simple guide en arrière-plan.</li>
+              </ul>
+              <p class="note">On ne va jamais exporter ce gabarit vers Roblox : il reste dans le fichier Blender de travail, juste pour caler les proportions du vrai mesh qu'on construit par-dessus.</p>
+            </div>
+            <div class="lesson-block">
+              <h4>Reconstruire le mesh, un composant à la fois</h4>
+              <ul>
+                <li>Un personnage = 4 composants : <strong>torse</strong>, <strong>jambes</strong>, <strong>bras</strong>, <strong>tête</strong>. Travailler un seul à la fois : masquer les autres avec <kbd>H</kbd>, les faire réapparaître via l'icône « afficher les objets cachés » dans l'Outliner.</li>
+                <li>Bras / jambes / torse : partir d'un cube, <kbd>Ctrl</kbd>+<kbd>R</kbd> pour ajouter des loop cuts (plus de géométrie à travailler), sélectionner un groupe de faces puis <strong>Extrude Along Normals</strong> pour donner du volume, ajuster à la main avec les poignées de déplacement.</li>
+                <li>Symétrie : supprimer une moitié du composant, recentrer l'origine sur le curseur 3D, puis ajouter un modificateur <strong>Mirror</strong>. Sur le torse, cocher <strong>Clipping</strong> pour éviter que la couture centrale ne s'ouvre pendant l'édition.</li>
+                <li>Adoucir : tout sélectionner en mode édition puis <kbd>Ctrl</kbd>+<kbd>B</kbd> (bevel) sur les arêtes, puis clic droit → <strong>Shade Smooth</strong> + activer <strong>Auto Smooth</strong> dans l'onglet Object Data pour un rendu propre sans ajouter de géométrie.</li>
+                <li>Tête : partir d'un cylindre à la bonne taille, extruder/scaler en mode édition pour suivre le gabarit ; utiliser le couteau (<kbd>K</kbd>) pour trancher le haut et le bas en deux et permettre le Mirror. Pour les yeux : supprimer des faces, sélectionner les sommets autour du trou puis <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>B</kbd> pour arrondir le contour.</li>
+                <li>Activer le <strong>Proportional Editing</strong> (touche <kbd>O</kbd>) pour rattraper en douceur les zones du masque qui débordent, puis ajouter un modificateur <strong>Solidify</strong> pour donner de l'épaisseur à la tête.</li>
+              </ul>
+              <p class="note">Piège fréquent : oublier d'appliquer le modificateur Mirror avant d'exporter (Module 9) — le composant paraîtrait alors « à moitié plein » une fois dans Roblox.</p>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m10">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m10">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m10-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m10-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">20 min</span></div>
+                    <h5>Préparer et exporter le gabarit</h5>
+                    <p>Dans Roblox Studio, insère un rig R6 block, règle la distance de déplacement à 1 stud, supprime tout sauf torse et membres, remplace la tête par une tête R15. Remets la position à 0,0,0, supprime la baseplate, puis exporte en OBJ via File → Advanced → Export as OBJ.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si l'export échoue ou paraît vide, vérifie que le rig est bien sélectionné (ou que rien d'autre n'est sélectionné dans la scène) avant de lancer Export as OBJ.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m10-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m10-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">40 min</span></div>
+                    <h5>Tracer un bras complet avec Mirror</h5>
+                    <p>Importe le gabarit OBJ dans un nouveau fichier Blender. Par-dessus, construis un bras à partir d'un cube : loop cuts, extrude along normals, ajuste au gabarit. Supprime la moitié inutile, recentre l'origine, ajoute un modificateur Mirror, puis Ctrl+B pour arrondir les arêtes et Shade Smooth + Auto Smooth pour finir.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si le Mirror duplique le bras du mauvais côté, vérifie l'axe du modificateur (X/Y/Z) et la position de l'origine par rapport au centre du gabarit.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m10-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m10-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">30 min</span></div>
+                    <h5>Modéliser la tête avec trous pour les yeux</h5>
+                    <p>Pars d'un cylindre, découpe-le en deux au couteau, mirrore-le, puis sculpte le volume par extrusions successives jusqu'à suivre le gabarit. Supprime des faces pour créer deux trous d'yeux, sélectionne les sommets autour et applique Ctrl+Maj+B pour arrondir le contour. Termine par un modificateur Solidify.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si le contour des yeux reste anguleux après le bevel de sommets, augmente le nombre de segments du bevel dans le panneau en bas à gauche du viewport (F6 / redo panel).</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 11 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">11</span>
+          <div class="module-titles">
+            <h3>4 réflexes concrets pour un aller-retour Blender ↔ Roblox propre</h3>
+            <p>Séparer, exporter, alléger, tracer une référence — les gestes qui évitent 90% des galères d'import</p>
+          </div>
+          <span class="module-meta">70 min <span class="badge-level lvl-inter">Intermédiaire</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Réflexe 1 — Séparer par matériau avant d'exporter</h4>
+              <ul>
+                <li>Chaque partie qui doit porter une couleur différente une fois dans Roblox doit être un <strong>mesh séparé</strong> dès Blender.</li>
+                <li>Ajoute des loop cuts pour délimiter la zone, sélectionne les faces concernées en mode édition, puis clic droit → <strong>Separate → Selection</strong>.</li>
+                <li>Une fois tous les morceaux séparés, sélectionne-les tous (box select) et déplace-les un instant pour vérifier qu'aucun n'a été oublié.</li>
+                <li>Exporte en <strong>FBX</strong>, avec une échelle réduite (souvent autour de <strong>0.2</strong> dans le champ Scale du panneau d'export) car Blender travaille en valeurs bien plus grandes que les studs Roblox, et coche <strong>Selected Objects Only</strong>.</li>
+              </ul>
+              <p class="note">Dans Roblox Studio, l'import se fait via le bouton <strong>Import 3D</strong> en haut de l'écran : vérifie dans la barre latérale que chaque composant séparé apparaît bien — s'il en manque un, c'est probablement une sélection oubliée à l'export.</p>
+            </div>
+            <div class="lesson-block">
+              <h4>Réflexe 2 — Colorer, puis alléger le mesh</h4>
+              <ul>
+                <li>Une fois importé, chaque mesh part se colore directement dans Roblox Studio : clique la pièce, change sa couleur et son matériau (Plastic, Neon...) dans le panneau latéral.</li>
+                <li>Limite technique à connaître : un mesh ne devrait pas dépasser environ <strong>10 000 triangles</strong> pour rester performant dans Roblox.</li>
+                <li>Le modificateur <strong>Decimate</strong> (modes Collapse / Unsubdivide / Planar) réduit fortement le nombre de triangles sans casser la silhouette générale — pense à re-shader smooth après coup pour masquer les petits défauts de géométrie qu'il peut laisser.</li>
+                <li>Réflexes en amont pour éviter d'avoir à décimer : utiliser des <strong>Ico Sphere</strong> (moins de faces qu'une UV Sphere) shadées smooth, et réduire le nombre de segments des cylindres à 10-12 côtés avec Auto Smooth activé.</li>
+              </ul>
+            </div>
+            <div class="lesson-block">
+              <h4>Réflexe 3 — Modéliser à partir d'une image de référence</h4>
+              <ul>
+                <li>Passer en vue 2D (<kbd>Num 1</kbd>), puis <kbd>Maj</kbd>+<kbd>A</kbd> → <strong>Image → Reference</strong> pour placer une image dans le viewport, à repositionner et redimensionner.</li>
+                <li>Ajouter un mesh de départ (souvent un cube) et le faire correspondre à la silhouette : extrude, bevel, loop cut, déplacement de sommets, jusqu'à coller à l'image.</li>
+                <li>Sur une forme organique, un modificateur <strong>Subdivision Surface</strong> appliqué au mesh de départ peut donner une courbure de base plus proche de la référence, avant les retouches manuelles.</li>
+                <li>Un tracé n'est jamais parfait au pixel près : ajuster les proportions à l'œil une fois la base posée fait gagner beaucoup de temps par rapport à une modélisation « à l'aveugle ».</li>
+              </ul>
+              <p class="note">Ces trois réflexes s'enchaînent naturellement : on trace une référence pour construire vite un mesh propre, on le sépare par matériau, on l'allège, puis on l'exporte (Module 9) prêt pour l'import.</p>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m11">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m11">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m11-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m11-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">15 min</span></div>
+                    <h5>Séparer un objet en plusieurs mesh parts</h5>
+                    <p>Reprends la table du Module 5. En mode édition, sélectionne le plateau, clic droit → Separate → Selection. Fais de même pour un pied. Vérifie dans l'Outliner que tu as bien deux objets distincts, prêts à recevoir des couleurs différentes.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si « Separate » ne fait rien, vérifie que tu es bien en mode édition (Tab) avec des faces sélectionnées, pas en mode objet.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m11-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m11-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">25 min</span></div>
+                    <h5>Décimer un mesh trop lourd</h5>
+                    <p>Crée un objet volontairement dense (par exemple une UV Sphere à 32 segments avec un modificateur Subdivision Surface). Vérifie son nombre de triangles dans le bandeau Statistics, puis ajoute un modificateur Decimate en mode Collapse jusqu'à passer sous 2000 triangles. Shade smooth le résultat.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si la forme se déforme trop, réduis moins agressivement le ratio du Decimate — un Collapse à 0.3-0.5 suffit souvent pour un gain énorme sans dégât visible.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m11-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m11-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">30 min</span></div>
+                    <h5>Tracer un objet simple depuis une image</h5>
+                    <p>Trouve une image de silhouette simple (un vase, un outil, un accessoire). Place-la en Image Reference en vue 2D, puis modélise un mesh basique par-dessus en suivant les contours (extrude, bevel, loop cut). Sépare-le en 2-3 parties par matériau et exporte-le en FBX à l'échelle 0.2, Selected Objects Only.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si l'image de référence ne s'affiche pas dans le bon plan, vérifie que tu es bien passé en vue orthographique (Num 5) avant de la positionner.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 12 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">12</span>
+          <div class="module-titles">
+            <h3>Les 5 outils qui suffisent à (presque) tout modéliser</h3>
+            <p>E, S, R, Ctrl+B, Ctrl+R : oublie les dizaines de boutons, ce sont eux qui font 90% du travail</p>
+          </div>
+          <span class="module-meta">60 min <span class="badge-level lvl-debutant">Débutant</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Pourquoi se limiter à si peu de boutons</h4>
+              <ul>
+                <li>L'interface de Blender affiche des dizaines d'onglets et de menus, mais la quasi-totalité de la modélisation low-poly repose sur une poignée de gestes appris une bonne fois pour toutes.</li>
+                <li><kbd>Maj</kbd>+<kbd>A</kbd> pour ajouter un objet, <kbd>Tab</kbd> pour entrer en mode édition, puis en mode édition : <kbd>E</kbd> (extrude), <kbd>S</kbd> (scale), <kbd>R</kbd> (rotate), <kbd>Ctrl</kbd>+<kbd>B</kbd> (bevel).</li>
+                <li><kbd>Ctrl</kbd>+<kbd>R</kbd> (loop cut) complète ce socle en donnant plus de géométrie à travailler quand une forme le demande.</li>
+                <li><kbd>Alt</kbd>+<kbd>E</kbd> ouvre un sous-menu d'extrusion très utile : extruder le long des normales de chaque face, ou extruder chaque face sélectionnée individuellement plutôt qu'en bloc.</li>
+              </ul>
+              <p class="note">Le but n'est pas de connaître tous les outils de Blender, mais de rester fluide sur ceux-là : c'est cette fluidité qui permet de modéliser vite sans réfléchir à chaque clic.</p>
+            </div>
+            <div class="lesson-block">
+              <h4>Trois formes pour ancrer le geste</h4>
+              <ul>
+                <li><strong>Fleur</strong> — à partir d'un cube : sélectionner des faces, <kbd>Ctrl</kbd>+<kbd>B</kbd> pour arrondir les angles, <kbd>Alt</kbd>+<kbd>E</kbd> pour extruder chaque pétale individuellement, puis <kbd>R</kbd> pour donner une légère rotation à chacun et casser la symétrie parfaite.</li>
+                <li><strong>Maison</strong> — <kbd>Ctrl</kbd>+<kbd>R</kbd> pour ajouter des loop cuts, monter le haut du volume pour amorcer un toit, <kbd>Alt</kbd>+<kbd>E</kbd> pour extruder les pans du toit le long de leur normale, puis répéter le procédé sur un pan latéral pour ajouter un garage.</li>
+                <li><strong>Arbre</strong> — partir d'un cylindre, <kbd>S</kbd> puis <kbd>Z</kbd> pour l'étirer sur un seul axe (le tronc), <kbd>Ctrl</kbd>+<kbd>R</kbd> pour le subdiviser, <kbd>Maj</kbd>+<kbd>D</kbd> pour dupliquer des branches, puis combiner <kbd>E</kbd>/<kbd>S</kbd>/<kbd>R</kbd> sur les faces du sommet pour former un feuillage ; maintenir <kbd>Maj</kbd> permet de sélectionner plusieurs faces à la fois et de toutes les extruder ensemble.</li>
+              </ul>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m12">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m12">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m12-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m12-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">15 min</span></div>
+                    <h5>5 minutes de E/S/R/Ctrl+B en boucle</h5>
+                    <p>Sur un cube frais, enchaîne librement extrude (E), scale (S), rotate (R) et bevel (Ctrl+B) pendant 5 minutes sans objectif précis, juste pour sentir la manipulation. Termine par un Shade Smooth pour voir l'effet du bevel sur le rendu.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Après avoir pressé E, S ou R, tu peux taper un axe (X, Y ou Z) puis une valeur au clavier pour un mouvement précis plutôt qu'à la souris.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m12-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m12-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">20 min</span></div>
+                    <h5>Modéliser une fleur</h5>
+                    <p>À partir d'un cube, sélectionne toutes les faces et applique Ctrl+B. Sélectionne un anneau de faces sur le dessus, Alt+E pour extruder chaque face individuellement en pétales, puis R sur chacune pour varier légèrement leur angle.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si Alt+E extrude tout en bloc au lieu de chaque face séparément, vérifie que tu as bien choisi « Extrude Individual Faces » dans le sous-menu et pas « Extrude Along Normals ».</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m12-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m12-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">25 min</span></div>
+                    <h5>Modéliser une maison avec garage, puis un arbre à côté</h5>
+                    <p>Construis une petite maison low-poly avec un toit extrudé le long des normales et un garage sur le côté. Ajoute ensuite un arbre à côté : tronc en cylindre étiré, feuillage formé de faces extrudées et tournées. Objectif : n'utiliser que Shift+A, Tab, E, S, R, Ctrl+B et Ctrl+R du début à la fin.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si le toit « flotte » au-dessus des murs, c'est presque toujours un problème d'origine ou de sommets non soudés — vérifie avec un léger zoom que les arêtes se touchent bien.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 13 -->
+      <div class="module">
+        <div class="module-head" role="button" tabindex="0" aria-expanded="false">
+          <span class="module-num">13</span>
+          <div class="module-titles">
+            <h3>TP guidé — Personnage low-poly façon « brain rot »</h3>
+            <p>La technique cubes + Remesh « Block » pour un rendu pixelisé assumé</p>
+          </div>
+          <span class="module-meta">75 min <span class="badge-level lvl-avance">Avancé</span></span>
+          <svg class="module-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="module-body">
+          <div class="module-body-inner">
+            <div class="lesson-block">
+              <h4>Préparer la référence et le bloc de base</h4>
+              <ul>
+                <li>Trouver une image nette du personnage à recréer et l'enregistrer sur le disque.</li>
+                <li>Passer en vue 2D (<kbd>Num 1</kbd>), <kbd>Maj</kbd>+<kbd>A</kbd> → <strong>Image → Reference</strong> pour la faire apparaître dans le viewport.</li>
+                <li>Ajouter un cube (<kbd>Maj</kbd>+<kbd>A</kbd> → Mesh → Cube), lui donner un modificateur <strong>Subdivision Surface</strong> (niveau viewport 3) pour pouvoir le déformer en douceur ensuite.</li>
+                <li><kbd>Tab</kbd> en mode édition, activer la <strong>sélection de sommets</strong> (pas arêtes, pas faces) en haut à gauche du viewport, ajouter des loop cuts et déplacer les sommets pour suivre grossièrement la silhouette de la référence — maintenir <kbd>Maj</kbd> pour sélectionner plusieurs sommets à la fois.</li>
+              </ul>
+            </div>
+            <div class="lesson-block">
+              <h4>Le look pixelisé : le modificateur Remesh en mode Block</h4>
+              <ul>
+                <li>Retour en mode objet (<kbd>Tab</kbd>), ajouter un modificateur <strong>Remesh</strong> et choisir le réglage <strong>Block</strong> : c'est ce réglage qui transforme la forme lissée en gros voxels cubiques — la signature visuelle du style « brain rot ».</li>
+                <li><strong>Accessoires</strong> : simplement empiler des cubes les uns sur les autres (chaussures, bras, jambes), redimensionnés/déplacés/tournés avec <kbd>S</kbd>, <kbd>G</kbd>, <kbd>R</kbd> — pas besoin de modélisation fine, l'esthétique recherchée est justement brute.</li>
+                <li>Pour une pièce à géométrie plus travaillée (par exemple la poignée d'un objet tenu en main), sélectionner les arêtes concernées, <kbd>Ctrl</kbd>+<kbd>B</kbd> pour un léger bevel, puis appliquer un Remesh dessus aussi pour garder une pixelisation cohérente avec le reste du personnage.</li>
+                <li><strong>Yeux</strong> : ajouter un plan (Mesh → Plane), <kbd>Tab</kbd> en édition, clic droit → <strong>Subdivide</strong> plusieurs fois de suite pour obtenir assez de géométrie, <kbd>E</kbd> pour extruder légèrement en volume, sélectionner les faces qui dessinent la forme de l'œil puis clic droit → <strong>Separate → Selection</strong> pour en faire un objet à part (pratique pour lui donner ensuite une couleur/matériau différent).</li>
+                <li>Dupliquer (<kbd>Maj</kbd>+<kbd>D</kbd>) les éléments symétriques (bras, jambes, yeux) plutôt que de les remodeler un par un.</li>
+              </ul>
+              <p class="note">Piège fréquent : appliquer le Remesh trop tôt, avant d'avoir fini de placer les sommets sur la silhouette — mieux vaut caler la forme générale d'abord, puis n'ajouter le modificateur Remesh qu'à la fin, une fois satisfait des proportions.</p>
+            </div>
+
+            <div class="lesson-block lesson-block-full exo-path" data-exo-module="m13">
+              <div class="exo-path-head">
+                <h4>Parcours d'exercices</h4>
+                <span class="exo-progress" data-exo-progress="m13">0/3 fait</span>
+              </div>
+              <div class="exo-grid">
+
+                <div class="exo-card" data-exo-id="m13-e1">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m13-e1"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-warmup">Échauffement</span><span class="exo-time">15 min</span></div>
+                    <h5>Tester le Remesh Block seul</h5>
+                    <p>Sur une Ico Sphere, ajoute un modificateur Remesh en mode Block et augmente progressivement l'Octree Depth. Observe comment la forme lissée devient un bloc de plus en plus détaillé de cubes. Note à quel niveau le résultat te semble le plus proche du style « brain rot ».</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Un Octree Depth trop élevé fait perdre l'effet pixelisé recherché (le résultat redevient presque lisse) — reste autour de 5-6 pour un rendu clairement voxelisé.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m13-e2">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m13-e2"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-application">Application</span><span class="exo-time">30 min</span></div>
+                    <h5>Sculpter un corps sur référence</h5>
+                    <p>Place une image de référence simple en fond de scène. Pars d'un cube avec Subdivision Surface, déplace les sommets en mode édition pour suivre la silhouette (tête + torse uniquement), puis ajoute le modificateur Remesh Block une fois la forme calée.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si tu n'arrives pas à sélectionner un sommet précis, zoome davantage : les sommets trop proches les uns des autres se chevauchent à l'écran et sélectionnent le mauvais.</p></details>
+                  </div>
+                </div>
+
+                <div class="exo-card" data-exo-id="m13-e3">
+                  <label class="exo-check"><input type="checkbox" data-exo-checkbox="m13-e3"><span class="exo-box"></span></label>
+                  <div>
+                    <div class="exo-top"><span class="exo-tag tag-challenge">Défi</span><span class="exo-time">30 min</span></div>
+                    <h5>Personnage complet avec accessoire et yeux séparés</h5>
+                    <p>Termine le personnage du module : empile des cubes pour bras, jambes et un accessoire simple (une arme ou un objet tenu). Ajoute des yeux à partir d'un plan subdivisé, extrudé puis séparé en objet à part. Applique le Remesh Block sur l'ensemble du corps pour une pixelisation cohérente.</p>
+                    <details class="exo-hint"><summary>Indice</summary><p>Si l'accessoire empilé en cubes ressort trop lisse après le Remesh du corps, garde-le en objet séparé sans Remesh — le contraste net/pixelisé peut même renforcer le style.</p></details>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1293,7 +1621,7 @@
     <h2>Ouvre Blender.<br>La formation commence <span class="accent" style="color:var(--blender-orange)">maintenant</span>.</h2>
     <p>Reviens à cette page à chaque module — elle reste ta référence pendant toute ta progression, pas seulement pour cette première journée.</p>
     <div class="hero-ctas" style="justify-content:center;">
-      <a href="#modules" class="btn btn-primary">Revoir les 9 modules</a>
+      <a href="#modules" class="btn btn-primary">Revoir les 13 modules</a>
       <a href="#raccourcis" class="btn btn-ghost">Ouvrir l'aide-mémoire</a>
     </div>
   </div>
