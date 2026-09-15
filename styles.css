@@ -1916,6 +1916,33 @@ footer {
   flex-wrap: wrap;
   margin-bottom: 32px;
 }
+.filter-actions-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.weapon-action-btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  padding: 8px 16px;
+  border-radius: var(--radius-m);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.weapon-action-btn:hover {
+  background: var(--bg-raised);
+  border-color: var(--blender-orange);
+  color: var(--ink-1);
+  transform: translateY(-1px);
+}
 .weapon-filter-btn {
   background: var(--bg-panel);
   border: 1px solid var(--line);
@@ -1967,8 +1994,28 @@ footer {
   display: none !important;
 }
 
+/* Collapsible / Accordion weapon cards */
+.weapon-card.collapsed {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  border-color: var(--line-soft);
+}
+.weapon-card.collapsed:hover {
+  border-color: var(--blender-orange-dim);
+  transform: translateY(-2px);
+}
+.weapon-card.collapsed .weapon-card-head {
+  border-bottom: none;
+  background: var(--bg-panel);
+}
+.weapon-card.collapsed .weapon-blueprint-stage,
+.weapon-card.collapsed .weapon-steps-container,
+.weapon-card.collapsed .weapon-card-foot,
+.weapon-card.collapsed .weapon-roblox-tip {
+  display: none !important;
+}
+
 .weapon-card-head {
-  padding: 24px;
+  padding: 22px 24px;
   border-bottom: 1px solid var(--line-soft);
   background: var(--bg-panel-2);
   display: flex;
@@ -1976,6 +2023,48 @@ footer {
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.weapon-card-head:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.weapon-collapse-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(240, 138, 52, 0.12);
+  border: 1px solid rgba(240, 138, 52, 0.35);
+  color: var(--blender-orange);
+  padding: 5px 12px;
+  border-radius: var(--radius-s);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.weapon-collapse-btn:hover {
+  background: var(--accent-soft);
+  border-color: var(--blender-orange);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(240, 138, 52, 0.25);
+}
+.weapon-card.collapsed .weapon-collapse-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--line);
+  color: var(--ink-2);
+}
+.weapon-card.collapsed:hover .weapon-collapse-btn {
+  border-color: var(--blender-orange-dim);
+  color: var(--ink-1);
+}
+.weapon-collapse-btn .collapse-icon {
+  font-size: 10px;
+  transition: transform 0.2s ease;
 }
 .weapon-title-area {
   flex: 1 1 240px;

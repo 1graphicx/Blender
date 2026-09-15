@@ -16,6 +16,49 @@ window.switchWeaponView = function(btn, mode) {
   }
 };
 
+// Accordion toggle for individual weapon card
+window.toggleWeaponCard = function(trigger) {
+  const card = trigger.closest('.weapon-card');
+  if (!card) return;
+  card.classList.toggle('collapsed');
+  const isCollapsed = card.classList.contains('collapsed');
+  const btn = card.querySelector('.weapon-collapse-btn');
+  if (btn) {
+    const icon = btn.querySelector('.collapse-icon');
+    const label = btn.querySelector('.collapse-label');
+    if (icon) icon.textContent = isCollapsed ? '▼' : '▲';
+    if (label) label.textContent = isCollapsed ? 'Déplier' : 'Réduire';
+  }
+  if (!isCollapsed) {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 60);
+  }
+};
+
+// Global toggle for all weapon cards
+window.toggleAllWeapons = function(expand) {
+  document.querySelectorAll('.weapon-card').forEach(card => {
+    if (expand) {
+      card.classList.remove('collapsed');
+    } else {
+      card.classList.add('collapsed');
+    }
+    const btn = card.querySelector('.weapon-collapse-btn');
+    if (btn) {
+      const icon = btn.querySelector('.collapse-icon');
+      const label = btn.querySelector('.collapse-label');
+      if (icon) icon.textContent = expand ? '▲' : '▼';
+      if (label) label.textContent = expand ? 'Réduire' : 'Déplier';
+    }
+  });
+  if (expand) {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 60);
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- Multi-page Topnav Active State ---------- */
@@ -1130,6 +1173,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     updateWeaponProgress();
+  });
+
+  // Click on weapon card header toggles collapse/expand
+  document.querySelectorAll('.weapon-card-head').forEach(head => {
+    head.addEventListener('click', (e) => {
+      if (!e.target.closest('.weapon-collapse-btn')) {
+        window.toggleWeaponCard(head);
+      }
+    });
   });
 
   /* ---------- THREE.JS INTERACTIVE 3D WEAPON ENGINE (PHOTOREALISTIC AAA) ---------- */
