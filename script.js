@@ -1178,9 +1178,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Click on weapon card header toggles collapse/expand
   document.querySelectorAll('.weapon-card-head').forEach(head => {
     head.addEventListener('click', (e) => {
-      if (!e.target.closest('.weapon-collapse-btn')) {
-        window.toggleWeaponCard(head);
+      if (e.target.closest('a') || e.target.closest('button')) {
+        return;
       }
+      window.toggleWeaponCard(head);
     });
   });
 
