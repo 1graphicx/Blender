@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn Blender</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<!-- Three.js CDN pour le rendu 3D interactif des armes -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ============ TOPBAR ============ -->
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="15" stroke="#f08a34" stroke-width="1.4"/>
+        <circle cx="16" cy="12" r="6.2" fill="#f08a34"/>
+        <path d="M9 26 C9 19 13 16 16 16 C19 16 23 19 23 26" fill="none" stroke="#f08a34" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-stack">
+        <span>LEARN BLENDER</span>
+        <small>Formation FR · Modélisation 3D & Export Moteurs</small>
+      </div>
+    </a>
+    <nav class="topnav">
+      <a href="index.html">Accueil & Planning</a>
+      <a href="modules.html">Modules (13)</a>
+      <a href="raccourcis.html">Raccourcis</a>
+      <a href="armes.html" class="weapons-topnav-link active">Atelier Armes ⚔️</a>
+      <a href="quiz.html" class="quiz-topnav-link">Quiz Express ⚡</a>
+      <a href="projets.html">Projets & Pièges</a>
+    </nav>
+    <div class="progress-pill">
+      <span class="dot"></span>
+      <span id="topProgress">Atelier Armes 3D</span>
+    </div>
+  </div>
+</header>
+
+<section id="armes-page" style="padding-top:40px;">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">// Conception 3D — Armurerie, Anatomie Mécanique & Export Moteurs</span>
+        <h2>Atelier de Modélisation d'Armes</h2>
+      </div>
+      <p class="section-desc">
+        Visualise le <strong>résultat final en 3D temps réel</strong> pour chaque arme (glisse la souris pour faire pivoter le modèle sous tous les angles).
+        Chaque tutoriel détaille le pipeline complet, du blockout aux finitions PBR, optimisé pour l'export en moteur de jeu (Roblox Studio, Unity, Unreal).
+      </p>
+    </div>
+
+    <!-- GUIDE METHODE : DE L'IMAGE 2D AU MODELE 3D -->
+    <div class="blueprint-guide-card">
+      <div class="blueprint-guide-head">
+        <div>
+          <span class="blueprint-tag">🎯 MÉTHODOLOGIE TECHNIQUE</span>
+          <h3 style="margin-top:8px;">Modéliser un asset 3D complet d'après une référence 2D unique</h3>
+        </div>
+        <p>
+          Déduire la géométrie 3D à partir d'une seule image ou d'un concept art sans blueprint orthogonal grâce aux <strong>règles d'échelle mécanique</strong> et au <strong>Camera Projection Mapping</strong>.
+        </p>
+      </div>
+
+      <div class="blueprint-steps-grid">
+        <div class="blueprint-step-box">
+          <span class="blueprint-step-num">Règle 1</span>
+          <h4>L'Étalon d'Échelle Humain</h4>
+          <p>Une image 2D n'a pas de dimensions. Crée un cylindre de <strong>3cm de diamètre</strong> (<kbd>Maj+A</kbd> → Cylinder) représentant la prise en main d'un poing humain. Cale la poignée de ton image sur ce cylindre (<kbd>S</kbd>) : toute l'arme est maintenant à l'échelle 1:1 exacte !</p>
+        </div>
+
+        <div class="blueprint-step-box">
+          <span class="blueprint-step-num">Règle 2</span>
+          <h4>Blockout Primitif Multi-Pièces</h4>
+          <p>Ne modélise <strong>JAMAIS</strong> l'arme en un seul bloc. Découpe mentalement l'image : la lame/canon en acier plein, les plaquettes de manche en G10/bois rapportées, les vis Torx. Chaque pièce est un objet indépendant superposé.</p>
+        </div>
+
+        <div class="blueprint-step-box">
+          <span class="blueprint-step-num">Règle 3</span>
+          <h4>Déduire la Profondeur Inconnue</h4>
+          <p>Pour les lames : dos épais (4mm, <kbd>G+Y 0.2cm</kbd>), fil du tranchant effilé à 0.1mm (<kbd>S+Y 0.02</kbd>). Pour les crosses : épaisseur paume standard de 2.2cm avec biseau franc (<kbd>Ctrl+B</kbd>). Les highlights lumineux trahissent les arêtes vives.</p>
+        </div>
+
+        <div class="blueprint-step-box">
+          <span class="blueprint-step-num">Règle 4</span>
+          <h4>Camera Projection Mapping</h4>
+          <p>Bascule en vue de face (<kbd>Pavé 1</kbd>), sélectionne tout (<kbd>A</kbd>) et fais <kbd>U</kbd> → <strong>Project from View</strong>. Branche l'image 2D sur le canal <em>Base Color</em> : le modèle 3D hérite instantanément à 100% des textures et marquages de la photo originale !</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barre de filtrage -->
+    <div class="weapons-filter-bar">
+      <button type="button" class="weapon-filter-btn active" data-wfilter="all">Toutes les Armes (8)</button>
+      <button type="button" class="weapon-filter-btn" data-wfilter="tir">Feu & Tactique</button>
+      <button type="button" class="weapon-filter-btn" data-wfilter="lame">Épées & Katanas</button>
+      <button type="button" class="weapon-filter-btn" data-wfilter="masse">Masses & Haches</button>
+    </div>
+
+    <div class="weapons-grid">
+
+      <!-- ARME 1 : FUSIL D'ASSAUT AK-47 -->
+      <div class="weapon-card" data-wcat="tir" data-weapon-id="w-m4a1">
+        <div class="weapon-card-head">
+          <div class="weapon-title-area">
+            <h3>Fusil d'Assaut AK-47 Tactique</h3>
+            <p>Conception complète composant par composant : Receiver, Bois garde-main, Chargeur courbé 7.62mm, Crosse, Canon et Piston gaz</p>
+          </div>
+          <div class="weapon-meta-pills">
+            <span class="weapon-pill lvl-badge">PBR Haute Définition</span>
+            <span class="weapon-pill">⏱️ 75 min</span>
+            <span class="weapon-pill">8 Composants</span>
+          </div>
+        </div>
+
+        <div class="weapon-blueprint-stage">
+          <div class="stage-view-tabs">
+            <button type="button" class="view-tab-btn active" onclick="switchWeaponView(this, 'blueprint')">📐 Blueprint / Concept 2D</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'render')">📸 Rendu Studio Cycles</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'webgl')">🎮 Viewport 3D Temps Réel</button>
+          </div>
+          <div class="stage-content blueprint-view active">
+            <img src="img/ak47_2d_concept.jpg" alt="Blueprint Technique Fusil d'Assaut AK-47" class="weapon-blueprint-img">
+            <span class="blueprint-tag">Plan Technique CAD · Schéma Écorché & Cotes 1:5</span>
+          </div>
+          <div class="stage-content render-view">
+            <img src="img/ak47_tactique_3d.jpg" alt="Rendu Final 3D Fusil d'Assaut" class="weapon-render-img">
+            <span class="render-tag-badge">Blender 4.2 Cycles · Éclairage Studio HDR</span>
+          </div>
+          <div class="stage-content webgl-view">
+            <div class="weapon-3d-stage" data-3d-model="m4a1"></div>
+            <span class="hint-3d">🖱️ Glisse pour pivoter · Molette pour zoomer</span>
+          </div>
+        </div>
+
+        <div class="weapon-steps-container">
+
+          <div class="weapon-step-item" data-wstep="0">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">0</span></label>
+              <span class="step-title-text">Étape 0 — Préparation du fichier Blender</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Supprimer le cube par défaut</strong> : Sélectionne le cube (<kbd>Clic Gauche</kbd>) et supprime-le (<kbd>X</kbd> → <em>Delete</em>).</li>
+                <li><strong>Configurer les unités</strong> : <kbd>N</kbd> → onglet <em>Scene</em> → <em>Unit System: Metric</em>, <em>Unit Scale: 0.01</em> (1 unité Blender = 1cm).</li>
+                <li><strong>Activer les Addons utiles</strong> : <em>Edit → Preferences → Add-ons</em> → active <em>LoopTools</em> et <em>Bool Tool</em>.</li>
+                <li><strong>Smooth Shading par défaut</strong> : Après chaque nouvel objet, <kbd>Clic Droit</kbd> → <em>Shade Smooth</em>. Active <em>Auto Smooth</em> à 30° dans les propriétés Object Data (icône triangle vert).</li>
+                <li><strong>Subdivision Surface</strong> : Ajoute le modificateur <em>Subdivision Surface</em> (Level Viewport: 1, Render: 2) sur chaque pièce pour lisser les formes arrondies.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="1">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">1</span></label>
+              <span class="step-title-text">Composant 1 — Boîtier Receiver en tôle emboutie & Capot Dust Cover</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Boîtier inférieur (Receiver)</strong> : Pars d'un cube (<kbd>Maj+A</kbd>) ajusté à 26cm x 4.5cm x 3.8cm. En Mode Édition (<kbd>Tab</kbd>), creuse le canal intérieur (<kbd>I 0.2cm</kbd> puis <kbd>E -4.2cm</kbd>) pour former les parois minces en tôle emboutie de 1.5mm.</li>
+                <li><strong>Capot supérieur amovible (Dust Cover)</strong> : Ajoute un demi-cylindre (<kbd>Maj+A</kbd> → Cylinder, 16 segments, ouvert en bas) de 22cm x 3.8cm de rayon 1.9cm. Applique 3 rainures horizontales de renfort estampées sur les flancs avec <kbd>Ctrl+R</kbd> (Loop Cut) et Inset négatif (<kbd>I</kbd> puis <kbd>E -0.15cm</kbd>).</li>
+                <li><strong>Bouton de verrouillage & Rivets</strong> : À l'arrière du Dust Cover, modélise le bouton poussoir carré de verrouillage de la tige guide. Sur les flancs du receiver, ajoute les 6 rivets d'assemblage en relief avec de petites demi-sphères (<kbd>Maj+A</kbd> → UV Sphere).</li>
+                <li><strong>Levier d'armement & Fenêtre d'éjection</strong> : Sur le flanc droit, découpe la fente horizontale de coulissement de la culasse et modélise le crochet massif du levier d'armement solidaire du porte-culasse.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="2">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">2</span></label>
+              <span class="step-title-text">Composant 2 — Garde-main supérieur et inférieur en bois de noyer verni</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Garde-main inférieur galbé</strong> : Pars d'un cylindre à 12 côtés (<kbd>Maj+A</kbd>) de 16.5cm de long et 4.2cm de diamètre. Aplatis les flancs avec <kbd>S+X 0.85</kbd> et crée le renflement ergonomique palm swell caractéristique au centre (<kbd>Ctrl+R</kbd> puis <kbd>S</kbd>).</li>
+                <li><strong>Ouïes d'aération longitudinales</strong> : Sur chaque flanc du garde-main inférieur, trace et extrude 3 fentes d'aération oblongues (4cm x 0.5cm) pour ventiler le canon lors des tirs nourris.</li>
+                <li><strong>Garde-main supérieur tubulaire</strong> : Modélise le demi-fourreau de bois recouvrant le tube des gaz (14cm de long x 3.2cm de large). Ajuste les arêtes de raccordement avec le biseau <kbd>Ctrl+B</kbd>.</li>
+                <li><strong>Frettes d'assemblage métalliques</strong> : Modélise les deux viroles en acier bronzé enserrant l'avant et l'arrière des boiseries, avec le petit levier excentrique de déverrouillage pour le démontage de campagne.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="3">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">3</span></label>
+              <span class="step-title-text">Composant 3 — Canon rayé 16.3" chromé, Bloc d'emprunt de gaz & Compensateur</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Canon forgé martelé à froid</strong> : Extrude un cylindre à 16 faces de 41.5cm de long (calibre 7.62mm, diamètre externe 1.55cm). Creuse la bouche à l'extrémité (<kbd>I</kbd> puis <kbd>E -1.5cm</kbd>).</li>
+                <li><strong>Bloc de prise des gaz à 45°</strong> : À 28cm de la carcasse, modélise la frette de gaz inclinée à 45° qui redirige les gaz de combustion du canon vers le cylindre supérieur. Ajoute l'oeilleton d'attache de grenadière sur le flanc gauche.</li>
+                <li><strong>Tube de piston à gaz</strong> : Au-dessus du canon, insère le cylindre de guidage du piston de gaz de 18cm reliant le bloc de gaz au boîtier de culasse.</li>
+                <li><strong>Compensateur de recul biseauté (Slanted Muzzle Brake)</strong> : Au bout du canon, visse le compensateur d'acier biseauté à 45° vers le haut à droite pour contrer le relèvement de l'arme en tir automatique.</li>
+                <li><strong>Baguette de nettoyage sous canon</strong> : Glisse la tige fine en acier de 40cm (<kbd>Maj+A</kbd> → Cylinder 8 faces, rayon 0.25cm) dans les anneaux de maintien sous le canon.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="4">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">4</span></label>
+              <span class="step-title-text">Composant 4 — Crosse en bois massif, Plaque de couche & Trappe à kit</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Profil de crosse tombante</strong> : Pars d'un cube (<kbd>Maj+A</kbd>). Extrude vers l'arrière sur 26cm avec une pente inclinée de -12° vers le bas. Élargis le talon à 11cm de haut sur 3.6cm d'épaisseur.</li>
+                <li><strong>Galbe ergonomique</strong> : Arrondis le dos de crosse (comb) avec un biseau doux (<kbd>Ctrl+B</kbd> 3 segments) pour un appui-joue confortable.</li>
+                <li><strong>Plaque de couche estampée</strong> : Modélise la plaque métallique en tôle vissée au dos du talon par 2 grosses vis à tête fendue.</li>
+                <li><strong>Trappe du kit de nettoyage</strong> : Au centre de la plaque de couche, modélise la trappe circulaire sur ressort permettant d'insérer l'étui à outils cylindrique dans le corps de la crosse.</li>
+                <li><strong>Passant de bretelle gauche</strong> : Sur le flanc gauche de la crosse, incruste l'anneau métallique mobile de fixation de la sangle en toile.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="5">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">5</span></label>
+              <span class="step-title-text">Composant 5 — Chargeur banane 30 coups 7.62x39mm & Nervures embouties</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Courbure banane à 24°</strong> : Modélise le corps du magasin en tôle d'acier avec une courbure parabolique prononcée de 24° requise par l'épaisseur conique des cartouches 7.62x39mm.</li>
+                <li><strong>Nervures de renfort transversales</strong> : Sur chaque face latérale du chargeur, modélise les 5 rainures horizontales embouties en relief et la longue arête verticale dorsale qui rigidifient la tôle fine.</li>
+                <li><strong>Lèvres d'alimentation et poussoir</strong> : Au sommet du magasin, façonne les deux lèvres de guidage en acier trempé et le poussoir d'élévation profilé.</li>
+                <li><strong>Ergot de verrouillage & Semelle</strong> : À l'arrière haut, modélise l'ergot d'accrochage qui s'enclenche dans le levier de verrouillage du pontet. À la base, modélise la plaque de fond amovible glissée sur glissière.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="6">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">6</span></label>
+              <span class="step-title-text">Composant 6 — Poignée pistolet en bois, Pontet & Sélecteur de tir</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Poignée pistolet en bois lamellé</strong> : Pars d'un cube (<kbd>Maj+A</kbd>). Incline la poignée vers l'arrière à 105°. Modélise le profil galbé arrondi tenant dans la paume (10.5cm de haut x 3cm d'épaisseur).</li>
+                <li><strong>Embout métallique et vis traversante</strong> : Modélise la virole supérieure en acier et la vis traversante qui fixe la poignée sous le receiver.</li>
+                <li><strong>Pontet et détente</strong> : Modélise l'arc de pontet en acier riveté sous la carcasse. À l'intérieur, extrude la gâchette courbée au profil effilé. Juste devant, modélise le levier poussoir d'éjection du chargeur.</li>
+                <li><strong>Grand levier sélecteur de tir</strong> : Sur le flanc droit du boîtier, modélise la longue lame en tôle d'acier avec ses 3 crans : position haute = Sûreté (bloque la culasse), position médiane = Automatique (AV), position basse = Semi-automatique (OD).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="7">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">7</span></label>
+              <span class="step-title-text">Composant 7 — Organes de visée de combat (Hausse tangentielle & Guidon)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Embase de hausse sur le canon</strong> : À la sortie du receiver, modélise le bloc massif recevant la rampe de mire.</li>
+                <li><strong>Planchette de hausse tangentielle</strong> : Modélise la réglette métallique pivotante graduée de 1 à 10 (100 à 1000 mètres) avec le cran de mire en U à l'arrière.</li>
+                <li><strong>Curseur à ressort cranté</strong> : Modélise le poussoir coulissant à cliquet qui bloque la hausse sur la distance de tir choisie.</li>
+                <li><strong>Support de guidon avant sous tunnel</strong> : Près de la bouche du canon, modélise la tour de guidon triangulaire avec les deux oreilles circulaires de protection formant un tunnel ouvert, et la tige de guidon filetée réglable au centre.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="8">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">8</span></label>
+              <span class="step-title-text">Composant 8 — Textures PBR, Baking de Normal Map & Export Moteur (FBX)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Baking High-Poly vers Low-Poly</strong> : Modélise le High-Poly avec un modificateur <kbd>Subdivision Surface (Level 3)</kbd> et des boucles de soutien (<kbd>Ctrl+R</kbd>) sur tous les rivets et nervures pour cuire une Normal Map 2K ultra-nette.</li>
+                <li><strong>Matériau Acier bronzé (Receiver & Canon)</strong> : BaseColor sombre (#1e2026), Roughness (0.28 avec micro-rayures et usure métallique blanche sur les arêtes saillantes), Metallic (0.92).</li>
+                <li><strong>Matériau Bois de noyer verni (Crosse & Garde-main)</strong> : BaseColor brun chaud avec veinage bois prononcé, Roughness (0.35 avec éclats de vernis matifiés à 0.65), Metallic (0.0).</li>
+                <li><strong>UV Unwrap complet</strong> : Sélectionne tout (<kbd>A</kbd>), marque les coutures (<kbd>Ctrl+E</kbd> → <em>Mark Seam</em>) le long des arêtes cachées (sous le garde-main, intérieur du receiver, sous la crosse). Puis <kbd>U</kbd> → <em>Unwrap</em>. Vérifie dans l'UV Editor que les îlots ne se chevauchent pas.</li>
+                <li><strong>Résolution texture</strong> : Exporte les cartes PBR en 2048x2048 (ColorMap, RoughnessMap, MetalnessMap, NormalMap).</li>
+                <li><kbd>Ctrl+A</kbd> → <strong>All Transforms</strong> → Exporte en FBX (Scale 0.2). Dans Roblox Studio, importe sous un objet <code>MeshPart</code> configuré avec <code>SurfaceAppearance</code>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-roblox-tip">
+            <strong>⚙️ Intégration Moteur (Roblox Studio) :</strong>
+            <span>Dans Roblox Studio, regroupe le Receiver, le chargeur amovible et la culasse sous un seul modèle <code>Tool</code> liés par des objets <code>WeldConstraint</code>. Tu pourras animer l'éjection du chargeur courbé et le réarmement massif de l'AK-47 !</span>
+          </div>
+
+        </div>
+
+        <div class="weapon-card-foot">
+          <span class="weapon-progress-badge" data-wprog="w-m4a1">0/9 étapes validées</span>
+        </div>
+      </div>
+
+      <!-- ARME 2 : KATANA TRADITIONNEL MURAMASA -->
+      <div class="weapon-card" data-wcat="lame" data-weapon-id="w-katana-aaa">
+        <div class="weapon-card-head">
+          <div class="weapon-title-area">
+            <h3>Katana Traditionnel Muramasa</h3>
+            <p>Conception détaillée pièce par pièce : Lame Nagasa, Pointe Kissaki, Collet Habaki, Garde Tsuba, Samegawa et Tressage Tsuka-ito</p>
+          </div>
+          <div class="weapon-meta-pills">
+            <span class="weapon-pill lvl-badge">PBR Haute Définition</span>
+            <span class="weapon-pill">⏱️ 70 min</span>
+            <span class="weapon-pill">8 Composants</span>
+          </div>
+        </div>
+
+        <div class="weapon-blueprint-stage">
+          <div class="stage-view-tabs">
+            <button type="button" class="view-tab-btn active" onclick="switchWeaponView(this, 'blueprint')">📐 Blueprint / Concept 2D</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'render')">📸 Rendu Studio Cycles</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'webgl')">🎮 Viewport 3D Temps Réel</button>
+          </div>
+          <div class="stage-content blueprint-view active">
+            <img src="img/katana_2d_concept.jpg" alt="Blueprint Technique Katana Muramasa" class="weapon-blueprint-img">
+            <span class="blueprint-tag">Plan Technique CAD · Vues Cotées & Assemblage Koshirae</span>
+          </div>
+          <div class="stage-content render-view">
+            <img src="img/katana_shinogi_3d.jpg" alt="Rendu Final 3D Katana Muramasa" class="weapon-render-img">
+            <span class="render-tag-badge">Blender 4.2 Cycles · Éclairage Studio HDR</span>
+          </div>
+          <div class="stage-content webgl-view">
+            <div class="weapon-3d-stage" data-3d-model="katana-aaa"></div>
+            <span class="hint-3d">🖱️ Glisse pour pivoter · Molette pour zoomer</span>
+          </div>
+        </div>
+
+        <div class="weapon-steps-container">
+
+          <div class="weapon-step-item" data-wstep="0">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">0</span></label>
+              <span class="step-title-text">Étape 0 — Préparation du fichier Blender</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Supprimer le cube par défaut</strong> : Sélectionne le cube (<kbd>Clic Gauche</kbd>) et supprime-le (<kbd>X</kbd> → <em>Delete</em>).</li>
+                <li><strong>Configurer les unités</strong> : <kbd>N</kbd> → onglet <em>Scene</em> → <em>Unit System: Metric</em>, <em>Unit Scale: 0.01</em> (1 unité Blender = 1cm).</li>
+                <li><strong>Activer les Addons utiles</strong> : <em>Edit → Preferences → Add-ons</em> → active <em>LoopTools</em> et <em>Bool Tool</em>.</li>
+                <li><strong>Smooth Shading par défaut</strong> : Après chaque nouvel objet, <kbd>Clic Droit</kbd> → <em>Shade Smooth</em>. Active <em>Auto Smooth</em> à 30° dans les propriétés Object Data (icône triangle vert).</li>
+                <li><strong>Subdivision Surface</strong> : Ajoute le modificateur <em>Subdivision Surface</em> (Level Viewport: 1, Render: 2) sur chaque pièce pour lisser les formes arrondies.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="1">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">1</span></label>
+              <span class="step-title-text">Composant 1 — Lame Nagasa & Profil diamant Shinogi-Zukuri</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Géométrie Shinogi-Zukuri</strong> : Modélise la section transversale à 6 facettes de la lame (dos plat Mune, flancs inclinés Shinogi-Ji, ligne d'arête centrale Shinogi et tranchant biseauté Ha).</li>
+                <li><strong>Courbure Sori de 1.8cm</strong> : Extrude la lame sur 75cm de long. À chaque segment (<kbd>E</kbd>), applique une rotation progressive de <kbd>R+X (2.2°)</kbd> pour dessiner la courbure parabolique traditionnelle Sori.</li>
+                <li><strong>Soie cachée (Nakago)</strong> : Extrude la languette de soie non polie qui s'insère à l'intérieur de la poignée de bois.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="2">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">2</span></label>
+              <span class="step-title-text">Composant 2 — Pointe Kissaki & Arête transversale Yokote</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Pointe tronquée d'estoc Kissaki</strong> : À l'extrémité supérieure de la lame, découpe la pointe inclinée à 45°.</li>
+                <li><strong>Ligne d'arête Yokote</strong> : Trace la ligne d'arête transversale nette qui sépare la pointe du corps de la lame. Les facettes de la pointe doivent converger au sommet Ko-Shinogi sans déformer les normales.</li>
+                <li><strong>Affûtage du fil Ha</strong> : Resserre les sommets du tranchant avant à <kbd>S+X (0.02)</kbd> sur toute la longueur de la lame.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="3">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">3</span></label>
+              <span class="step-title-text">Composant 3 — Collet Habaki & Rondelles d'étanchéité Seppa</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Collet Habaki en laiton</strong> : Modélise le manchon de blocage de 2.5cm qui enserre la base de la lame. Ce composant verrouille le katana dans son fourreau Saya.</li>
+                <li><strong>Striage d'ajustement</strong> : Extrude des stries diagonales d'usinage au burin sur les flancs du Habaki.</li>
+                <li><strong>Rondelles d'espacement Seppa</strong> : Modélise les deux rondelles d'or/cuivre biseautées placées de chaque côté de la garde Tsuba pour éliminer tout jeu mécanique.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="4">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">4</span></label>
+              <span class="step-title-text">Composant 4 — Garde Tsuba gravée à jour (Hitsu-Ana)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Disque d'acier forgé ovale</strong> : Pars d'un cylindre plat à 32 côtés, déforme-le en ellipse (<kbd>S+Y 1.3</kbd>).</li>
+                <li><strong>Ouvertures décoratives (Hitsu-Ana)</strong> : Découpe les deux ouvertures traditionnelles à flanc de garde (ouvertures pour le petit couteau Kozuka et la broche Kogai).</li>
+                <li><strong>Biseau de bordure (Kowari)</strong> : Applique un biseau complexe à 3 segments (<kbd>Ctrl+B</kbd>) sur la tranche extérieure de la Tsuba.</li>
+                <li><strong>Gravure relief de dragon</strong> : Prépare la géométrie pour recevoir les motifs d'acier martelé.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="5">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">5</span></label>
+              <span class="step-title-text">Composant 5 — Ame en bois & Peau de raie granuleuse Samegawa</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Ame en bois de magnolia (Ho-no-ki)</strong> : Modélise les deux demi-coquilles de bois ajustées autour de la soie Nakago.</li>
+                <li><strong>Peau de raie Samegawa</strong> : Recouvre la poignée d'une enveloppe avec Normal Map de relief granuleux 3D représentant les nodules calcaires d'astérie de raie.</li>
+                <li><strong>Cheville de bambou Mekugi-Ana</strong> : Perce le trou cylindrique de 0.5cm traversant la poignée et la soie pour insérer la cheville de bambou Mekugi.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="6">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">6</span></label>
+              <span class="step-title-text">Composant 6 — Tressage Tsuka-ito & Ornaments sculptés Menuki</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Tressage de soie Tsuka-ito (Hishigami)</strong> : Crée un ruban plat (Plane mis à l'échelle à 0.8cm x 30cm).</li>
+                <li><strong>Motif répété</strong> : Ajoute un modificateur <em>Array</em> (Count: 14) avec <em>Object Offset</em> pour tourner chaque copie.</li>
+                <li><strong>Enroulement</strong> : Utilise un modificateur <em>Curve</em> le long d'une courbe Bezier enroulée autour du cylindre de la tsuka.</li>
+                <li><strong>Symétrie et Forme</strong> : Modificateur <em>Mirror</em> pour le côté opposé. Ajuste l'échelle de chaque croisement pour créer la forme de diamant.</li>
+                <li><strong>Ornements sculptés Menuki</strong> : Modélise les deux petites sculptures dorées en bronze glissées sous le tressage.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="7">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">7</span></label>
+              <span class="step-title-text">Composant 7 — Embouts métalliques Fuchi, Kashira & Fourreau Saya</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Bague d'amorce Fuchi</strong> : Modélise la virole en fer gravé au sommet de la poignée sous la Tsuba.</li>
+                <li><strong>Embout de pommeau Kashira</strong> : Modélise le chapeau métallique bombé fermant le bas de la poignée avec les deux trous de passage du ruban Shitodome.</li>
+                <li><strong>Fourreau Saya en bois laqué</strong> : Modélise le fourreau courbe assorti avec le cordon de soie Sageo noué sur l'anneau Kurikata.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="8">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">8</span></label>
+              <span class="step-title-text">Composant 8 — Shader Hamon PBR, Dépliage UV & Export Moteur (FBX)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Shader Hamon PBR</strong> : Utilise une texture de masque de trempe ondulée (*Gunome-Midare*) pour séparer le fil tranchant poli miroir (Roughness: 0.08, Metallic: 0.95) du corps de la lame dépoli nacré (Roughness: 0.35, Metallic: 0.85).</li>
+                <li><strong>Cartes PBR Tsuba & Tsuka</strong> : Cuis les Normal Maps du fer martelé patiné de la Tsuba et du relief des grains de peau de raie Samegawa.</li>
+                <li><strong>UV Unwrap complet</strong> : Sélectionne tout (<kbd>A</kbd>), marque les coutures (<kbd>Ctrl+E</kbd> → <em>Mark Seam</em>) le long des arêtes cachées (sous les composants, jonctions). Puis <kbd>U</kbd> → <em>Unwrap</em>. Vérifie dans l'UV Editor que les îlots ne se chevauchent pas.</li>
+                <li><strong>Résolution texture</strong> : Crée une image 2048x2048 (2K) dans l'UV Editor pour chaque carte (Color, Roughness, Metallic, Normal).</li>
+                <li><kbd>Ctrl+A</kbd> → <strong>All Transforms</strong> → Export FBX. Importation dans Roblox Studio avec <code>SurfaceAppearance</code>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-roblox-tip">
+            <strong>⚙️ Configuration Gameplay & Dégainage (Roblox) :</strong>
+            <span>Dans Roblox Studio, sépare le Katana et son Fourreau Saya en deux MeshParts distincts. Lors de l'animation de dégainage scriptée, le Katana glissera hors du Saya maintenu à la ceinture du joueur !</span>
+          </div>
+
+        </div>
+
+        <div class="weapon-card-foot">
+          <span class="weapon-progress-badge" data-wprog="w-katana-aaa">0/9 étapes validées</span>
+        </div>
+      </div>
+
+      <!-- ARME 3 : PISTOLET AUTOMATIQUE 9mm -->
+      <div class="weapon-card" data-wcat="tir" data-weapon-id="w-pistolet-aaa">
+        <div class="weapon-card-head">
+          <div class="weapon-title-area">
+            <h3>Pistolet Semi-Automatique 9mm</h3>
+            <p>Modélisation mécanique précise : Carcasse polymère ergonomique, Culasse usinée, Canon flottant et Chargeur 17 coups</p>
+          </div>
+          <div class="weapon-meta-pills">
+            <span class="weapon-pill lvl-badge">PBR Haute Définition</span>
+            <span class="weapon-pill">⏱️ 60 min</span>
+            <span class="weapon-pill">7 Composants</span>
+          </div>
+        </div>
+
+        <div class="weapon-blueprint-stage">
+          <div class="stage-view-tabs">
+            <button type="button" class="view-tab-btn active" onclick="switchWeaponView(this, 'blueprint')">📐 Blueprint / Concept 2D</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'render')">📸 Rendu Studio Cycles</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'webgl')">🎮 Viewport 3D Temps Réel</button>
+          </div>
+          <div class="stage-content blueprint-view active">
+            <img src="img/pistolet_2d_concept.jpg" alt="Blueprint Technique Pistolet 9mm" class="weapon-blueprint-img">
+            <span class="blueprint-tag">Plan Technique CAD · Schéma Mécanique Échelle 1:1</span>
+          </div>
+          <div class="stage-content render-view">
+            <img src="img/pistolet_tactique_3d.jpg" alt="Rendu Final 3D Pistolet Glock 19" class="weapon-render-img">
+            <span class="render-tag-badge">Blender 4.2 Cycles · Éclairage Studio HDR</span>
+          </div>
+          <div class="stage-content webgl-view">
+            <div class="weapon-3d-stage" data-3d-model="pistolet-aaa"></div>
+            <span class="hint-3d">🖱️ Glisse pour pivoter · Molette pour zoomer</span>
+          </div>
+        </div>
+
+        <div class="weapon-steps-container">
+
+          <div class="weapon-step-item" data-wstep="0">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">0</span></label>
+              <span class="step-title-text">Étape 0 — Préparation du fichier Blender</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Supprimer le cube par défaut</strong> : Sélectionne le cube (<kbd>Clic Gauche</kbd>) et supprime-le (<kbd>X</kbd> → <em>Delete</em>).</li>
+                <li><strong>Configurer les unités</strong> : <kbd>N</kbd> → onglet <em>Scene</em> → <em>Unit System: Metric</em>, <em>Unit Scale: 0.01</em> (1 unité Blender = 1cm).</li>
+                <li><strong>Activer les Addons utiles</strong> : <em>Edit → Preferences → Add-ons</em> → active <em>LoopTools</em> et <em>Bool Tool</em>.</li>
+                <li><strong>Smooth Shading par défaut</strong> : Après chaque nouvel objet, <kbd>Clic Droit</kbd> → <em>Shade Smooth</em>. Active <em>Auto Smooth</em> à 30° dans les propriétés Object Data (icône triangle vert).</li>
+                <li><strong>Subdivision Surface</strong> : Ajoute le modificateur <em>Subdivision Surface</em> (Level Viewport: 1, Render: 2) sur chaque pièce pour lisser les formes arrondies.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="1">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">1</span></label>
+              <span class="step-title-text">Composant 1 — Carcasse en polymère & Inclinaison ergonomique à 111°</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Carcasse moulée</strong> : Pars d'un cube (<kbd>Maj+A</kbd>). Redimensionne aux dimensions exactes : carcasse 19.2cm x 3.8cm x 3cm, poignée 10.5cm (<kbd>S</kbd>). Modélise le corps inférieur du pistolet en polymère renforcé.</li>
+                <li><strong>Inclinaison de crosse à 111°</strong> : Fais pivoter la poignée de <kbd>R+X (-21°)</kbd> pour obtenir l'angle de visée instinctif naturel.</li>
+                <li><strong>Puits de chargeur (Magwell)</strong> : Evide le bas de la poignée (<kbd>I</kbd> puis <kbd>E</kbd>) avec un chanfrein interne guidant les rechargements rapides.</li>
+                <li><strong>Rail d'accessoire sous canon</strong> : Découpe les 2 encoches Picatinny sous le nez de la carcasse (<kbd>Ctrl+R</kbd> puis <kbd>E</kbd>) pour fixer des lasers tactiques.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="2">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">2</span></label>
+              <span class="step-title-text">Composant 2 — Culasse usinée en acier nitruré & Stries d'armement</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Bloc de culasse (Slide)</strong> : Modélise la culasse supérieure coulissante (18.5cm x 3.6cm x 2.8cm, avec 16 segments pour les arrondis cylindriques) avec ses chanfreins latéraux à 45° (<kbd>Ctrl+B</kbd>).</li>
+                <li><strong>Stries d'armement antidérapantes (Serrations)</strong> : Découpe 6 rainures verticalement inclinées à l'avant et 8 à l'arrière avec l'outil Inset (<kbd>I</kbd>) et extrusion négative (<kbd>E -0.15cm</kbd>).</li>
+                <li><strong>Fenêtre d'éjection & Extracteur</strong> : Perce la fenêtre d'éjection supérieure droite (<kbd>X</kbd> → <em>Faces</em>) et modélise la griffe d'extracteur d'étuis séparée.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="3">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">3</span></label>
+              <span class="step-title-text">Composant 3 — Canon flottant 9x19mm & Tige guide de ressort</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Canon en acier forgé</strong> : Modélise le canon 9x19mm Parabellum (longueur 10.2cm, diamètre 1.1cm, 16 segments) (<kbd>Maj+A</kbd> → <em>Cylinder</em>) avec son bloc de culasse quadrangulaire verrouillé dans la fenêtre d'éjection.</li>
+                <li><strong>Trous d'alésage & Rayures</strong> : Creuse la bouche du canon (<kbd>I</kbd> puis <kbd>E</kbd>) et ajoute le renforcement de la couronne de sortie.</li>
+                <li><strong>Tige guide & Ressort de rappel</strong> : Sous le canon, modélise la tige métallique de guidage et les spires du ressort de rappel hélicoïdal (<kbd>Maj+A</kbd> → <em>Curve</em> → <em>Spiral</em>).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="4">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">4</span></label>
+              <span class="step-title-text">Composant 4 — Détente à sécurité intégrée & Pontet ergonomique</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Pontet double courbe</strong> : Modélise le pontet proéminent avec sa face avant quadrillée pour la prise à deux mains.</li>
+                <li><strong>Détente à double pédale</strong> : Modélise la gâchette en polymère avec sa pédale de sécurité centrale articulée qui empêche le départ de coup involontaire.</li>
+                <li><strong>Loquet de démontage rapide</strong> : Modélise la barrette traversante de démontage de culasse située au-dessus du pontet.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="5">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">5</span></label>
+              <span class="step-title-text">Composant 5 — Organes de visée 3-Points au Tritium</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Hausse arrière à cran carré</strong> : Modélise la hausse métallique montée en queue d'aronde à l'arrière de la culasse.</li>
+                <li><strong>Guidon avant fixe</strong> : Modélise le guidon rectangulaire à l'avant.</li>
+                <li><strong>Pastilles luminescentes Tritium</strong> : Insère 2 pastilles d'optique sur la hausse et 1 sur le guidon avec un matériau vert phosphorescent émissif.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="6">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">6</span></label>
+              <span class="step-title-text">Composant 6 — Chargeur Amovible 17 Coups & Arrêt de culasse</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Magasin en tôle d'acier</strong> : Modélise le corps du chargeur 17 coups (10cm x 2.2cm x 3cm) perforé d'orifices de comptage de munitions au dos (<kbd>Ctrl+B</kbd> puis <kbd>X</kbd>).</li>
+                <li><strong>Talon de chargeur en polymère</strong> : Modélise la base épaisse protégeant le magasin contre les chutes au sol.</li>
+                <li><strong>Arrêt de culasse ambidextre</strong> : Modélise la manette en acier qui bloque la culasse en position arrière lorsque le chargeur est vide.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="7">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">7</span></label>
+              <span class="step-title-text">Composant 7 — Normal Map Stippling, Finition PBR & Export Moteur (FBX)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Normal Map Stippling 3D</strong> : Génère une texture Normal Map haute densité reproduisant le grip antidérapant stipplé sur les 4 faces de la poignée polymère.</li>
+                <li><strong>Cartes PBR</strong> : Culasse acier nitruré (Roughness: 0.28, Metallic: 0.9), Carcasse polymère (Roughness: 0.65, Metallic: 0.0).</li>
+                <li><strong>UV Unwrap complet</strong> : Sélectionne tout (<kbd>A</kbd>), marque les coutures (<kbd>Ctrl+E</kbd> → <em>Mark Seam</em>) le long des arêtes cachées (sous les composants, jonctions). Puis <kbd>U</kbd> → <em>Unwrap</em>. Vérifie dans l'UV Editor que les îlots ne se chevauchent pas.</li>
+                <li><strong>Résolution texture</strong> : Crée une image 2048x2048 (2K) dans l'UV Editor pour chaque carte (Color, Roughness, Metallic, Normal).</li>
+                <li><kbd>Ctrl+A</kbd> → <strong>All Transforms</strong> → Export FBX (Scale 0.2). Configuration de l'objet `Handle` dans Roblox Studio.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-roblox-tip">
+            <strong>⚙️ Mécanique de Recul & Animation (Roblox) :</strong>
+            <span>Dans Roblox Studio, sépare la culasse du corps du pistolet. Un simple script Lua décalera la culasse de 3cm vers l'arrière pendant 0.05s lors du tir pour un réalisme saisissant !</span>
+          </div>
+
+        </div>
+
+        <div class="weapon-card-foot">
+          <span class="weapon-progress-badge" data-wprog="w-pistolet-aaa">0/8 étapes validées</span>
+        </div>
+      </div>
+
+      <!-- ARME 4 : ÉPÉE LONGSWORD XVa -->
+      <div class="weapon-card" data-wcat="lame" data-weapon-id="w-epee-aaa">
+        <div class="weapon-card-head">
+          <div class="weapon-title-area">
+            <h3>Épée Longue Médiévale (Type XVa)</h3>
+            <p>Armurerie historique composant par composant : Lame à section diamant, Gouttière d'allègement, Garde forgée, Fusée cuir et Pommeau</p>
+          </div>
+          <div class="weapon-meta-pills">
+            <span class="weapon-pill lvl-badge">PBR Haute Définition</span>
+            <span class="weapon-pill">⏱️ 50 min</span>
+            <span class="weapon-pill">6 Composants</span>
+          </div>
+        </div>
+
+        <div class="weapon-blueprint-stage">
+          <div class="stage-view-tabs">
+            <button type="button" class="view-tab-btn active" onclick="switchWeaponView(this, 'blueprint')">📐 Blueprint / Concept 2D</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'render')">📸 Rendu Studio Cycles</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'webgl')">🎮 Viewport 3D Temps Réel</button>
+          </div>
+          <div class="stage-content blueprint-view active">
+            <img src="img/epee_2d_concept.jpg" alt="Blueprint Technique Épée Longue Médiévale" class="weapon-blueprint-img">
+            <span class="blueprint-tag">Plan Technique CAD · Section Diamant & Cotes Historiques</span>
+          </div>
+          <div class="stage-content render-view">
+            <img src="img/epee_longue_3d.jpg" alt="Rendu Final 3D Épée Longue Médiévale" class="weapon-render-img">
+            <span class="render-tag-badge">Blender 4.2 Cycles · Éclairage Studio HDR</span>
+          </div>
+          <div class="stage-content webgl-view">
+            <div class="weapon-3d-stage" data-3d-model="epee-aaa"></div>
+            <span class="hint-3d">🖱️ Glisse pour pivoter · Molette pour zoomer</span>
+          </div>
+        </div>
+
+        <div class="weapon-steps-container">
+
+          <div class="weapon-step-item" data-wstep="0">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">0</span></label>
+              <span class="step-title-text">Étape 0 — Préparation du fichier Blender</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Supprimer le cube par défaut</strong> : Sélectionne le cube (<kbd>Clic Gauche</kbd>) et supprime-le (<kbd>X</kbd> → <em>Delete</em>).</li>
+                <li><strong>Configurer les unités</strong> : <kbd>N</kbd> → onglet <em>Scene</em> → <em>Unit System: Metric</em>, <em>Unit Scale: 0.01</em> (1 unité Blender = 1cm).</li>
+                <li><strong>Activer les Addons utiles</strong> : <em>Edit → Preferences → Add-ons</em> → active <em>LoopTools</em> et <em>Bool Tool</em>.</li>
+                <li><strong>Smooth Shading par défaut</strong> : Après chaque nouvel objet, <kbd>Clic Droit</kbd> → <em>Shade Smooth</em>. Active <em>Auto Smooth</em> à 30° dans les propriétés Object Data (icône triangle vert).</li>
+                <li><strong>Subdivision Surface</strong> : Ajoute le modificateur <em>Subdivision Surface</em> (Level Viewport: 1, Render: 2) sur chaque pièce pour lisser les formes arrondies.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="1">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">1</span></label>
+              <span class="step-title-text">Composant 1 — Lame à section diamant rigide d'estoc (Type XVa)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Profil de section diamant (Losange)</strong> : Pars d'un plan (<kbd>Maj+A</kbd> → Mesh → Plane). En Mode Édition (<kbd>Tab</kbd>), façonne les 4 sommets pour créer le losange de base : 4cm de large sur 1.2cm d'épaisseur au centre, avec une arête médiane vive.</li>
+                <li><strong>Extrusion progressive en 8 segments</strong> : Extrude (<kbd>E</kbd>) le profil le long de l'axe Z sur une longueur totale de 95cm en 8 segments successifs. Réduis l'échelle progressivement (<kbd>S</kbd>) à chaque niveau pour dessiner l'amincissement triangulaire distal.</li>
+                <li><strong>Ricasso renforcé</strong> : Conserve les 6 premiers centimètres au-dessus de la garde épais et sans tranchant pour permettre la prise de main avancée.</li>
+                <li><strong>Pointe diamant perforante</strong> : Fais converger les 4 facettes à l'extrémité en une pointe d'estoc acérée conçue pour percer les armures de plaques.</li>
+                <li><strong>Soie traversante (Tang)</strong> : Sous la garde, extrude un méplat rectangulaire de 18cm de long (1cm x 0.4cm) qui traversera la poignée et le pommeau.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="2">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">2</span></label>
+              <span class="step-title-text">Composant 2 — Double gouttière centrale d'allègement (Fullers)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Tracé des gorges parallèles</strong> : Sur le premier tiers de la lame (35cm), insère 4 boucles de découpe (<kbd>Ctrl+R</kbd>) pour délimiter les deux gouttières jumelles de 0.6cm de large.</li>
+                <li><strong>Creusement contrôlé</strong> : Sélectionne les bandes de faces, applique un Inset (<kbd>I 0.05cm</kbd>) puis extrude vers l'intérieur (<kbd>E -0.15cm</kbd>) avec un chanfrein doux pour alléger la lame de 25% sans altérer sa rigidité axiale.</li>
+                <li><strong>Affûtage du tranchant biconvexe</strong> : Resserre les arêtes extérieures du fil sur toute la longueur avec <kbd>S+Y 0.04</kbd> pour obtenir un tranchant de 0.15mm poli miroir.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="3">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">3</span></label>
+              <span class="step-title-text">Composant 3 — Garde croisée d'acier à quillons torsadés</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Quillons octogonaux</strong> : Ajoute un cylindre à 8 faces (<kbd>Maj+A</kbd> → Cylinder, Vertices: 8) de 1.8cm de diamètre. Extrude-le le long de l'axe X pour atteindre 22cm d'envergure.</li>
+                <li><strong>Torsion mécanique à 90°</strong> : Active l'Édition Proportionnelle (<kbd>O</kbd>), sélectionne les extrémités des quillons et applique une rotation vrillée de <kbd>R+X 90°</kbd> pour imprimer la torsade forgée d'époque.</li>
+                <li><strong>Écusson central bombé</strong> : Au centre de la garde, élargis la section pour former le capuchon losangique qui vient coiffer le ricasso de la lame.</li>
+                <li><strong>Passage de soie</strong> : Évide la fente centrale avec un cylindre booléen ou découpe directe (<kbd>K</kbd>) pour permettre l'insertion de la soie de la lame.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="4">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">4</span></label>
+              <span class="step-title-text">Composant 4 — Fusée de poignée en bois gainé de cuir ficelé</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Ame en bois d'orme galbée</strong> : Ajoute un cylindre à 12 faces (<kbd>Maj+A</kbd>) de 24cm de haut et 1.5cm de rayon. Ajoute un renflement central doux avec un Loop Cut (<kbd>Ctrl+R</kbd> puis <kbd>S 1.15</kbd>) pour épouser la paume des deux mains.</li>
+                <li><strong>Nervures de ficelage sous cuir</strong> : Modélise un tore (<kbd>Maj+A</kbd> → Torus) et applique un modificateur <kbd>Array (Count: 12)</kbd> le long de l'axe Z pour créer les cannelures en relief du cordon de lin tressé sous le cuir.</li>
+                <li><strong>Gaine de cuir cousue</strong> : Recouvre la poignée d'une enveloppe de cuir marron patiné avec Normal Map de couture 3D longitudinale sur la face arrière.</li>
+                <li><strong>Canal de soie intérieur</strong> : Creuse le canal intérieur cylindrique pour accueillir la soie d'acier avec le modificateur Booléen.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="5">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">5</span></label>
+              <span class="step-title-text">Composant 5 — Pommeau octogonal lourd (Type I1) & Rivetier</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Pommeau lesteur octogonal</strong> : Ajoute un cylindre à 8 côtés (<kbd>Maj+A</kbd>) de 4cm de haut et 2.8cm de rayon. Applique un biseau franc à 3 segments (<kbd>Ctrl+B</kbd>) sur toutes les arêtes pour sculpter les facettes de diamant.</li>
+                <li><strong>Équilibrage de masse</strong> : Ce bloc massif en acier forgé fait contrepoids aux 95cm de lame pour ramener le centre de gravité à 8cm de la garde.</li>
+                <li><strong>Pommette d'araser (Peen block)</strong> : Au sommet du pommeau, modélise un petit cylindre de 0.8cm de haut où l'extrémité de la soie de la lame est matée au marteau à chaud pour solidariser l'ensemble.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="6">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">6</span></label>
+              <span class="step-title-text">Composant 6 — Textures Acier Forgé Martelé & Export Moteur (FBX)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>UV Unwrap complet</strong> : Sélectionne tout (<kbd>A</kbd>), marque les coutures (<kbd>Ctrl+E</kbd> → <em>Mark Seam</em>) le long des arêtes cachées (sous les composants, jonctions). Puis <kbd>U</kbd> → <em>Unwrap</em>. Vérifie dans l'UV Editor que les îlots ne se chevauchent pas.</li>
+                <li><strong>Résolution texture</strong> : Crée une image 2048x2048 (2K) dans l'UV Editor pour chaque carte (Color, Roughness, Metallic, Normal).</li>
+                <li><strong>Cartes PBR Métal</strong> : Acier poli avec micro-rayures d'aiguisage (Roughness: 0.18, Metallic: 0.92) et cuir (Roughness: 0.7).</li>
+                <li><strong>Centrage du pivot</strong> : Positionne l'origine (0, 0, 0) au centre exact de la poignée sous la garde.</li>
+                <li>Exporte en FBX et importe avec <code>SurfaceAppearance</code> dans Roblox Studio.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-roblox-tip">
+            <strong>⚙️ Équilibrage & Physique d'Impact (Roblox) :</strong>
+            <span>Grâce au pommeau lourd modélisé, le centre de masse de l'épée se situe exactement à 8cm devant la garde, ce qui donnera un mouvement de swing naturel lors des attaques scriptées dans Roblox !</span>
+          </div>
+
+        </div>
+
+        <div class="weapon-card-foot">
+          <span class="weapon-progress-badge" data-wprog="w-epee-aaa">0/7 étapes validées</span>
+        </div>
+      </div>
+
+      <!-- ARME 5 : MARTEAU DE GUERRE DAMASSÉ -->
+      <div class="weapon-card" data-wcat="masse" data-weapon-id="w-marteau-aaa">
+        <div class="weapon-card-head">
+          <div class="weapon-title-area">
+            <h3>Marteau de Guerre Damassé</h3>
+            <p>Arme de choc détaillée composant par composant : Manche d'ébène, Langets rivetés, Tête à ergots pyramidaux, Bec de corbin et Pointe</p>
+          </div>
+          <div class="weapon-meta-pills">
+            <span class="weapon-pill lvl-badge">PBR Haute Définition</span>
+            <span class="weapon-pill">⏱️ 50 min</span>
+            <span class="weapon-pill">6 Composants</span>
+          </div>
+        </div>
+
+        <div class="weapon-blueprint-stage">
+          <div class="stage-view-tabs">
+            <button type="button" class="view-tab-btn active" onclick="switchWeaponView(this, 'blueprint')">📐 Blueprint / Concept 2D</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'render')">📸 Rendu Studio Cycles</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'webgl')">🎮 Viewport 3D Temps Réel</button>
+          </div>
+          <div class="stage-content blueprint-view active">
+            <img src="img/marteau_2d_concept.jpg" alt="Blueprint Technique Marteau de Guerre" class="weapon-blueprint-img">
+            <span class="blueprint-tag">Plan Technique CAD · Bec de Corbin & Tête Pyramidale</span>
+          </div>
+          <div class="stage-content render-view">
+            <img src="img/marteau_guerre_3d.jpg" alt="Rendu Final 3D Marteau de Guerre" class="weapon-render-img">
+            <span class="render-tag-badge">Blender 4.2 Cycles · Éclairage Studio HDR</span>
+          </div>
+          <div class="stage-content webgl-view">
+            <div class="weapon-3d-stage" data-3d-model="marteau-aaa"></div>
+            <span class="hint-3d">🖱️ Glisse pour pivoter · Molette pour zoomer</span>
+          </div>
+        </div>
+
+        <div class="weapon-steps-container">
+
+          <div class="weapon-step-item" data-wstep="0">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">0</span></label>
+              <span class="step-title-text">Étape 0 — Préparation du fichier Blender</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Supprimer le cube par défaut</strong> : Sélectionne le cube (<kbd>Clic Gauche</kbd>) et supprime-le (<kbd>X</kbd> → <em>Delete</em>).</li>
+                <li><strong>Configurer les unités</strong> : <kbd>N</kbd> → onglet <em>Scene</em> → <em>Unit System: Metric</em>, <em>Unit Scale: 0.01</em> (1 unité Blender = 1cm).</li>
+                <li><strong>Activer les Addons utiles</strong> : <em>Edit → Preferences → Add-ons</em> → active <em>LoopTools</em> et <em>Bool Tool</em>.</li>
+                <li><strong>Smooth Shading par défaut</strong> : Après chaque nouvel objet, <kbd>Clic Droit</kbd> → <em>Shade Smooth</em>. Active <em>Auto Smooth</em> à 30° dans les propriétés Object Data (icône triangle vert).</li>
+                <li><strong>Subdivision Surface</strong> : Ajoute le modificateur <em>Subdivision Surface</em> (Level Viewport: 1, Render: 2) sur chaque pièce pour lisser les formes arrondies.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="1">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">1</span></label>
+              <span class="step-title-text">Composant 1 — Manche octogonal en bois d'ébène & Anneau de dragonne</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Fût octogonal en bois d'ébène</strong> : Ajoute un cylindre à 8 côtés (<kbd>Maj+A</kbd> → Cylinder, Vertices: 8) de 65cm de haut et 2cm de diamètre. Ajuste les proportions avec <kbd>S</kbd>.</li>
+                <li><strong>Galbe et effilement ergonomique</strong> : Sélectionne l'anneau de sommets inférieur et applique un léger rétrécissement (<kbd>S 0.9</kbd>) pour former le talon de prise.</li>
+                <li><strong>Ferrure et anneau de dragonne</strong> : À la base du manche, modélise la bague métallique de renfort en acier et ajoute un tore (<kbd>Maj+A</kbd> → Torus, rayon majeur 1.2cm, rayon mineur 0.15cm) traversant pour fixer la dragonne en cuir.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="2">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">2</span></label>
+              <span class="step-title-text">Composant 2 — Platines d'acier de renfort (Langets) & Rivets en laiton</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Bandes métalliques d'armature (Langets)</strong> : Modélise deux longues bandes d'acier forgé de 25cm de long sur 1.8cm de large et 0.3cm d'épaisseur plaquées sur les flancs latéraux du manche sous la tête pour absorber les contrecoups d'impact.</li>
+                <li><strong>Rivets traversants en laiton</strong> : Insère 4 rivets de laiton à tête bombée (<kbd>Maj+A</kbd> → UV Sphere aplatie) traversant de part en part le bois du manche et les deux platines d'acier.</li>
+                <li><strong>Frette de serrage supérieure</strong> : Ajoute la bague d'acier rectangulaire qui enserre le haut du bois juste sous la tête du marteau.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="3">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">3</span></label>
+              <span class="step-title-text">Composant 3 — Tête de marteau & 16 Ergots pyramidaux brise-casque</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Bloc de tête en acier Damas</strong> : Pars d'un cube (<kbd>Maj+A</kbd>) ajusté à 7cm x 5.5cm x 5cm. Applique un biseau doux à 2 segments (<kbd>Ctrl+B</kbd>) sur toutes les arêtes de contour.</li>
+                <li><strong>Quadrillage 4x4 de la face de frappe</strong> : Sur la face avant, trace une grille de 3x3 coupes en boucle (<kbd>Ctrl+R</kbd>) pour obtenir 16 sous-carreaux individuels réguliers.</li>
+                <li><strong>Extrusion des 16 pyramides de frappe</strong> : Sélectionne les 16 faces individuelles, effectue une extrusion individuelle (<kbd>Alt+E</kbd> → <em>Extrude Individual Faces</em>) de 0.6cm vers l'extérieur, puis réduis l'échelle à zéro (<kbd>S 0</kbd>) pour faire converger chaque face en une pyramide pointue brise-armure.</li>
+                <li><strong>Oeil d'emmanchement</strong> : Évide le trou central rectangulaire traversant la tête avec un cylindre/cube booléen pour y insérer l'extrémité du manche en ébène.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="4">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">4</span></label>
+              <span class="step-title-text">Composant 4 — Pic Corbin arrière perforateur d'armure</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Bec de corbin forgé (*Corbin*)</strong> : Sélectionne la face arrière de la tête de marteau et extrude (<kbd>E</kbd>) vers l'arrière sur 8cm en 4 segments successifs.</li>
+                <li><strong>Affinement progressif</strong> : Réduis l'échelle de la pointe progressivement (<kbd>S 0.15</kbd>) pour former un poinçon acéré capable de percer les plaques d'acier médiévales.</li>
+                <li><strong>Courbure descendante anti-rebond</strong> : Applique une rotation vers le bas de <kbd>R+X -15°</kbd> sur les 3 derniers segments pour dessiner la courbure caractéristique du bec de corbin.</li>
+                <li><strong>Arête dorsale vive</strong> : Ajoute une boucle d'arête médiane (<kbd>Ctrl+R</kbd>) sur le dessus du pic pour créer une nervure de renfort résistant à la torsion à l'impact.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="5">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">5</span></label>
+              <span class="step-title-text">Composant 5 — Pointe d'estoc supérieure quadrangulaire</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Dague d'estoc sommitale</strong> : Depuis la face supérieure de la tête du marteau, extrude (<kbd>E</kbd>) verticalement sur 10cm en 4 segments successifs.</li>
+                <li><strong>Facettes losangiques effilées</strong> : Resserre progressivement chaque segment (<kbd>S 0.6</kbd>) et affine l'arête centrale (<kbd>Ctrl+R</kbd>) pour obtenir une dague d'estoc à section carrée/losangique très pénétrante.</li>
+                <li><strong>Embase moulurée</strong> : Applique un léger élargissement biseauté à la jonction entre la tête du marteau et la dague pour renforcer la résistance mécanique.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="6">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">6</span></label>
+              <span class="step-title-text">Composant 6 — Texture Acier Damassé & Export Moteur (FBX)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>UV Unwrap complet</strong> : Sélectionne tout (<kbd>A</kbd>), marque les coutures (<kbd>Ctrl+E</kbd> → <em>Mark Seam</em>) le long des arêtes cachées (sous les composants, jonctions). Puis <kbd>U</kbd> → <em>Unwrap</em>. Vérifie dans l'UV Editor que les îlots ne se chevauchent pas.</li>
+                <li><strong>Résolution texture</strong> : Crée une image 2048x2048 (2K) dans l'UV Editor pour chaque carte (Color, Roughness, Metallic, Normal).</li>
+                <li><strong>Texture Damas PBR</strong> : Carte Normal Map de feuilletage d'acier damassé 512 couches révélé à l'acide.</li>
+                <li><kbd>Ctrl+A</kbd> → <strong>All Transforms</strong> → Export FBX et `SurfaceAppearance` Roblox.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-roblox-tip">
+            <strong>⚙️ Déclenchement d'Impact & Particules (Roblox) :</strong>
+            <span>Associe un son d'impact lourd et un composant <code>ParticleEmitter</code> d'étincelles métalliques déclenché au point d'impact de la face de frappe du marteau !</span>
+          </div>
+
+        </div>
+
+        <div class="weapon-card-foot">
+          <span class="weapon-progress-badge" data-wprog="w-marteau-aaa">0/7 étapes validées</span>
+        </div>
+      </div>
+
+      <!-- ARME 6 : HACHE DE COMBAT SCANDINAVE -->
+      <div class="weapon-card" data-wcat="masse" data-weapon-id="w-hache-aaa">
+        <div class="weapon-card-head">
+          <div class="weapon-title-area">
+            <h3>Hache de Combat Scandinave</h3>
+            <p>Forge traditionnelle scandinave : Manche en frêne galbé, Douille forgée, Fer barbu, Tranchant biconvexe et Runes gravées</p>
+          </div>
+          <div class="weapon-meta-pills">
+            <span class="weapon-pill lvl-badge">PBR Haute Définition</span>
+            <span class="weapon-pill">⏱️ 50 min</span>
+            <span class="weapon-pill">6 Composants</span>
+          </div>
+        </div>
+
+        <div class="weapon-blueprint-stage">
+          <div class="stage-view-tabs">
+            <button type="button" class="view-tab-btn active" onclick="switchWeaponView(this, 'blueprint')">📐 Blueprint / Concept 2D</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'render')">📸 Rendu Studio Cycles</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'webgl')">🎮 Viewport 3D Temps Réel</button>
+          </div>
+          <div class="stage-content blueprint-view active">
+            <img src="img/hache_2d_concept.jpg" alt="Blueprint Technique Hache Scandinave" class="weapon-blueprint-img">
+            <span class="blueprint-tag">Plan Technique CAD · Fer Barbu & Runes Futhark</span>
+          </div>
+          <div class="stage-content render-view">
+            <img src="img/hache_scandinave_3d.jpg" alt="Rendu Final 3D Hache Viking Berserker" class="weapon-render-img">
+            <span class="render-tag-badge">Blender 4.2 Cycles · Éclairage Studio HDR</span>
+          </div>
+          <div class="stage-content webgl-view">
+            <div class="weapon-3d-stage" data-3d-model="hache-aaa"></div>
+            <span class="hint-3d">🖱️ Glisse pour pivoter · Molette pour zoomer</span>
+          </div>
+        </div>
+
+        <div class="weapon-steps-container">
+
+          <div class="weapon-step-item" data-wstep="0">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">0</span></label>
+              <span class="step-title-text">Étape 0 — Préparation du fichier Blender</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Supprimer le cube par défaut</strong> : Sélectionne le cube (<kbd>Clic Gauche</kbd>) et supprime-le (<kbd>X</kbd> → <em>Delete</em>).</li>
+                <li><strong>Configurer les unités</strong> : <kbd>N</kbd> → onglet <em>Scene</em> → <em>Unit System: Metric</em>, <em>Unit Scale: 0.01</em> (1 unité Blender = 1cm).</li>
+                <li><strong>Activer les Addons utiles</strong> : <em>Edit → Preferences → Add-ons</em> → active <em>LoopTools</em> et <em>Bool Tool</em>.</li>
+                <li><strong>Smooth Shading par défaut</strong> : Après chaque nouvel objet, <kbd>Clic Droit</kbd> → <em>Shade Smooth</em>. Active <em>Auto Smooth</em> à 30° dans les propriétés Object Data (icône triangle vert).</li>
+                <li><strong>Subdivision Surface</strong> : Ajoute le modificateur <em>Subdivision Surface</em> (Level Viewport: 1, Render: 2) sur chaque pièce pour lisser les formes arrondies.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="1">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">1</span></label>
+              <span class="step-title-text">Composant 1 — Manche galbé en frêne & Lanières de cuir ficelé</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Bois de frêne ergonomique</strong> : Ajoute un cylindre à 12 faces (<kbd>Maj+A</kbd> → Cylinder, Vertices: 12) de 70cm de haut et 1.5cm de rayon.</li>
+                <li><strong>Courbure anatomique scandinave</strong> : Sélectionne les sommets centraux, active l'Édition Proportionnelle (<kbd>O</kbd>, mode Connecté) et déplace (<kbd>G</kbd>) pour donner une courbure en S naturelle favorisant l'effet de levier à l'impact.</li>
+                <li><strong>Effilement progressif</strong> : Élargis la base du manche (<kbd>S 1.1</kbd>) pour la butée de paume et rétrécis le sommet sous la tête (<kbd>S 0.85</kbd>).</li>
+                <li><strong>Lanières de cuir croisées</strong> : Crée une courbe hélicoïdale (<kbd>Maj+A</kbd> → Curve → Bezier) enroulée autour de la zone de prise en main. Règle le biseau de la courbe (Bevel Depth: 0.15cm) pour lui donner l'épaisseur d'une lanière de cuir brut ligaturée en croix.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="2">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">2</span></label>
+              <span class="step-title-text">Composant 2 — Douille de forge & Coins de retenue en fer</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Douille renforcée conique</strong> : Ajoute un cylindre à 16 faces (<kbd>Maj+A</kbd>) de 6cm de haut et 2.5cm de rayon. Resserre l'anneau supérieur à 2.2cm pour épouser la conicité du haut du manche.</li>
+                <li><strong>Oeil traversant</strong> : Évide l'intérieur avec une découpe booléenne pour permettre le passage du bois de frêne.</li>
+                <li><strong>Coins de retenue en fer forgé</strong> : Ajoute un cube biseauté en coin (<kbd>Maj+A</kbd> → Cube, 2cm x 0.3cm x 1cm) enfoncé au sommet du manche pour fendre et élargir le bois et verrouiller définitivement la tête de hache contre tout démanchement.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="3">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">3</span></label>
+              <span class="step-title-text">Composant 3 — Fer de hache à barbe viking (Bearded Axe)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Profil 2D du fer scandinave</strong> : Pars d'un plan (<kbd>Maj+A</kbd> → Mesh → Plane). En Mode Édition (<kbd>Tab</kbd>), trace la silhouette typique de la hache à barbe : arête supérieure horizontale de 8cm, tranchant avant courbe de 15cm évasé en arc convexe, barbe inférieure tombante s'étirant 6cm sous le niveau de la douille pour crocheter boucliers et armes adverses, puis retour incurvé vers l'oeil.</li>
+                <li><strong>Extrusion et amincissement distal</strong> : Extrude (<kbd>E</kbd>) le fer sur 1.8cm d'épaisseur au niveau de l'oeil, puis réduis l'épaisseur vers l'avant (<kbd>S+Y 0.55</kbd>) pour affiner la masse métallique vers le tranchant.</li>
+                <li><strong>Biseautage forgé</strong> : Applique un biseau doux à 2 segments (<kbd>Ctrl+B</kbd>) sur toutes les arêtes extérieures pour reproduire le martelage au billot.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="4">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">4</span></label>
+              <span class="step-title-text">Composant 4 — Fil du tranchant biconvexe poli miroir</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Géométrie biconvexe tranchante</strong> : Sélectionne la ligne de sommets avant du tranchant et resserre-la à <kbd>S+Y 0.05</kbd> pour créer le biseau d'affûtage rasoir.</li>
+                <li><strong>Micro-chanfrein d'aiguisage</strong> : Applique un biseau millimétrique (<kbd>Ctrl+B</kbd>, largeur 0.02, 1 segment) sur l'arête vive du fil pour simuler le passage à la pierre à huile.</li>
+                <li><strong>Slot de matériau miroir</strong> : Assigne aux faces de l'émouture avant un slot de matériau spécifique ultra-poli (Roughness: 0.05, Metallic: 0.98) contrastant nettement avec l'acier forgé noirci du corps de la lame.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="5">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">5</span></label>
+              <span class="step-title-text">Composant 5 — Gravures Runiques 3D (Elder Futhark) & Incrustations</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Tracé des glyphes runiques</strong> : Sur les flancs plats du fer de hache, trace les symboles scandinaves du vieux Futhark (ᚠ Fehu, ᚢ Uruz, ᚦ Thurisaz, ᚨ Ansuz, ᚱ Raido) avec l'outil Couteau (<kbd>K</kbd>).</li>
+                <li><strong>Gravure en creux 3D</strong> : Sélectionne les faces des glyphes, applique un Inset (<kbd>I 0.05cm</kbd>) puis une extrusion négative (<kbd>E -0.08cm</kbd>) pour creuser les incisions dans l'acier.</li>
+                <li><strong>Incrustation de bronze et d'or antique</strong> : Assigne aux faces du fond des gravures un matériau métallique précieux chaleureux (Color: #D4A843, Roughness: 0.22, Metallic: 0.92) reproduisant l'incrustation rituelle de métaux nobles dans le fer.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="6">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">6</span></label>
+              <span class="step-title-text">Composant 6 — Textures PBR & Export Moteur (FBX)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>UV Unwrap complet</strong> : Sélectionne tout (<kbd>A</kbd>), marque les coutures (<kbd>Ctrl+E</kbd> → <em>Mark Seam</em>) le long des arêtes cachées (sous les composants, jonctions). Puis <kbd>U</kbd> → <em>Unwrap</em>. Vérifie dans l'UV Editor que les îlots ne se chevauchent pas.</li>
+                <li><strong>Résolution texture</strong> : Crée une image 2048x2048 (2K) dans l'UV Editor pour chaque carte (Color, Roughness, Metallic, Normal).</li>
+                <li><strong>Cartes PBR</strong> : Acier martelé sombre, incrustation d'or/bronze dans les runes gravées.</li>
+                <li><kbd>Ctrl+A</kbd> → <strong>All Transforms</strong> → Export FBX et `SurfaceAppearance` Roblox.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-roblox-tip">
+            <strong>⚙️ Orientation du Grip (Roblox Tool) :</strong>
+            <span>Positionne le composant <code>Handle</code> avec l'axe Z orienté vers l'avant de la lame de hache pour un maniement à deux mains parfait dans Roblox Studio !</span>
+          </div>
+
+        </div>
+
+        <div class="weapon-card-foot">
+          <span class="weapon-progress-badge" data-wprog="w-hache-aaa">0/7 étapes validées</span>
+        </div>
+      </div>
+
+      <!-- ARME 7 : EPEE DE LEGENDE (MASTER SWORD) SUR BLUEPRINT -->
+      <div class="weapon-card" data-wcat="lame" data-weapon-id="w-master-sword">
+        <div class="weapon-card-head">
+          <div class="weapon-title-area">
+            <h3>Épée de Légende (Master Sword)</h3>
+            <p>Modélisation d'après plan technique 3 vues : Lame à double tranchant, Ailes de garde pourpre, Poignée ligaturée et Pommeau</p>
+          </div>
+          <div class="weapon-meta-pills">
+            <span class="weapon-pill lvl-badge" style="background:rgba(92,156,255,0.15); color:#5c9cff; border-color:#5c9cff;">Plan Technique CAD</span>
+            <span class="weapon-pill">⏱️ 65 min</span>
+            <span class="weapon-pill">8 Composants</span>
+          </div>
+        </div>
+
+        <div class="weapon-blueprint-stage">
+          <div class="stage-view-tabs">
+            <button type="button" class="view-tab-btn active" onclick="switchWeaponView(this, 'blueprint')">📐 Blueprint 3 Vues (CAD)</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'render')">📸 Rendu Studio Cycles</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'webgl')">🎮 Viewport 3D Temps Réel</button>
+          </div>
+          <div class="stage-content blueprint-view active">
+            <img src="img/blueprint_master_sword.png" alt="Blueprint Technique 3 Vues Épée de Légende" class="weapon-blueprint-img">
+            <span class="blueprint-tag">Blueprint Orthogonal CAD · Vues Face / Profil / Coupes</span>
+          </div>
+          <div class="stage-content render-view">
+            <img src="img/master_sword_3d.jpg" alt="Rendu Final 3D Épée de Légende Cycles" class="weapon-render-img">
+            <span class="render-tag-badge">Blender 4.2 Cycles · Éclairage Studio HDR</span>
+          </div>
+          <div class="stage-content webgl-view">
+            <div class="weapon-3d-stage" data-3d-model="master-sword"></div>
+            <span class="hint-3d">🖱️ Glisse pour pivoter · Molette pour zoomer</span>
+          </div>
+        </div>
+
+        <div class="weapon-steps-container">
+
+          <div class="weapon-step-item" data-wstep="0">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">0</span></label>
+              <span class="step-title-text">Étape 0 — Importation et alignement parfait du Blueprint</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Vue de Face Orthographique</strong> : Appuie sur <kbd>Pavé Num 1</kbd> pour verrouiller la vue strictement en 2D. Supprime le cube de départ (<kbd>X</kbd>).</li>
+                <li><strong>Import de l'Image de Référence</strong> : Fais <kbd>Maj+A</kbd> → <em>Image</em> → <em>Reference</em> et sélectionne le blueprint.</li>
+                <li><strong>Calibrage de Transparence & Centrage</strong> : Dans les propriétés Image à droite, coche <em>Opacity</em> (0.50), active <em>Only in Orthographic</em> et cale la pointe de la lame et l'axe central exactement sur l'axe Z (0, 0).</li>
+                <li><strong>Activation de la vue Rayons X</strong> : Active <kbd>Alt+Z</kbd> pour voir le plan en transparence continue sous tes sommets 3D.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="1">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">1</span></label>
+              <span class="step-title-text">Composant 1 — Tracé du contour de la lame avec Mirror</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Sommet unique d'amorce</strong> : Ajoute un plan (<kbd>Maj+A</kbd> → Mesh → Plane), passe en Mode Édition (<kbd>Tab</kbd>) et fusionne tous les sommets au centre (<kbd>M</kbd> → <em>At Center</em>).</li>
+                <li><strong>Modificateur Mirror automatique</strong> : Ajoute un modificateur <strong>Mirror</strong> sur l'axe X avec l'option <strong>Clipping</strong> activée (la moitié droite sera automatiquement reproduite à gauche sans couture).</li>
+                <li><strong>Extrusion le long du blueprint</strong> : Extrude le sommet (<kbd>E</kbd>) en suivant fidèlement la ligne extérieure du tranchant jusqu'à la pointe effilée supérieure.</li>
+                <li><strong>Arête médiane et gouttière (Fuller)</strong> : Extrude vers l'intérieur pour marquer l'arête centrale et la gouttière creuse visible sur la vue de face du plan.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="2">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">2</span></label>
+              <span class="step-title-text">Composant 2 — Donner l'épaisseur 3D en vue de Profil</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Bascule en vue latérale</strong> : Appuie sur <kbd>Pavé Num 3</kbd> (Right Orthographic). Remarque la tranche très fine de la lame sur le plan central du blueprint.</li>
+                <li><strong>Épaisseur losange en Y</strong> : Sélectionne les sommets de l'arête médiane centrale et avance-les en Y (<kbd>G+Y 0.6cm</kbd>) tout en maintenant les sommets du fil du tranchant très serrés (<kbd>G+Y 0.05cm</kbd>).</li>
+                <li><strong>Coupe en losange parfaite</strong> : Vérifie le schéma de coupe transversale situé au bas du blueprint pour respecter la cambrure diamantée.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="3">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">3</span></label>
+              <span class="step-title-text">Composant 3 — Sceau sacré de la Triforce & Élargissement du Ricasso</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Ricasso évasé</strong> : À la base de la lame juste avant la garde, modèle les deux décrochements latéraux en arc de cercle caractéristiques en étirant les sommets (<kbd>E</kbd> puis <kbd>G</kbd>).</li>
+                <li><strong>Gravure de la Triforce</strong> : Utilise l'outil Couteau (<kbd>K</kbd>) en suivant précisément le motif triangulaire sacré à 3 triangles imbriqués dessiné sur le blueprint.</li>
+                <li><strong>Creusement & Émission lumineuse</strong> : Sélectionne les faces du sceau, Inset (<kbd>I 0.04cm</kbd>), Extrude vers l'intérieur (<kbd>E -0.06cm</kbd>) et assigne un matériau or sacré phosphorescent émissif.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="4">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">4</span></label>
+              <span class="step-title-text">Composant 4 — Garde aux ailes déployées (Wings of the Goddess)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Tracé de l'aile maîtresse</strong> : Depuis le centre (<kbd>Pavé Num 1</kbd>), extrude le contour supérieur recourbé de l'aile pourpre en suivant le dessin technique.</li>
+                <li><strong>Plumes inférieures étagées</strong> : Extrude les 2 niveaux de plumes inférieures pointues qui s'étirent sous l'arc principal de la garde.</li>
+                <li><strong>Galbe 3D en vue latérale</strong> : En vue de profil (<kbd>Pavé Num 3</kbd>), extrude en Y pour donner 2.8cm d'épaisseur au centre de la garde et arrondis les bords avec le biseau <kbd>Ctrl+B</kbd>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="5">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">5</span></label>
+              <span class="step-title-text">Composant 5 — Gemme centrale losangique en or massif</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Octaèdre d'or pur</strong> : Au centre de la garde, ajoute un octaèdre (<kbd>Maj+A</kbd> → Mesh → Math Function / ou Cube subdivisé pivoté à 45°).</li>
+                <li><strong>Incrustation mécanique</strong> : Modèle la collerette métallique dorée qui sertit la gemme au coeur des ailes de la garde.</li>
+                <li><strong>Alignement recto-verso</strong> : Le modificateur Mirror assure une symétrie parfaite de la gemme sur les deux faces de l'épée.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="6">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">6</span></label>
+              <span class="step-title-text">Composant 6 — Poignée ergonomique vert émeraude & Sangles croisées</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Fût de poignée cylindrique</strong> : Pars d'un cylindre à 16 côtés (<kbd>Maj+A</kbd>) de 22cm de long descendant sous la garde. Resserre légèrement le centre pour créer le galbe de préhension.</li>
+                <li><strong>Bagues d'espacement dorées</strong> : Modélise les deux viroles ouvragées fermant le haut et le bas de la poignée.</li>
+                <li><strong>Sangles losangiques croisées</strong> : Crée les lanières de cuir croisées en relief visible sur la vue de face du blueprint en extrudant les arêtes diagonales avec un Inset (<kbd>Ctrl+R</kbd> + <kbd>Alt+E</kbd>).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="7">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">7</span></label>
+              <span class="step-title-text">Composant 7 — Pommeau cannelé à facettes & Écrou de soie</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Pommeau conique octogonal</strong> : Ajoute un cône inversé à 8 facettes (<kbd>Maj+A</kbd> → Cone, Vertices: 8) fermant la base de la poignée.</li>
+                <li><strong>Cannelures longitudinales</strong> : Enfonce légèrement les 8 facettes pour sculpter les gorges verticales visibles sur le profil du plan technique.</li>
+                <li><strong>Bouton de rivetage terminal</strong> : Coiffe l'extrémité inférieure par un petit dôme d'acier où vient s'araser la soie de la lame.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="8">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">8</span></label>
+              <span class="step-title-text">Composant 8 — Matériaux PBR, Dépliage UV & Export Moteur (FBX)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Cartes PBR Haute Fidélité</strong> : Acier poli trempé miroir sur la lame (Roughness: 0.08, Metallic: 0.98), émail royal pourpre sur les ailes (Roughness: 0.32, Metallic: 0.65), cuir vert émeraude patiné sur la poignée (Roughness: 0.72).</li>
+                <li><strong>UV Unwrap complet</strong> : Déplie les îlots UV (<kbd>U</kbd> → <em>Unwrap</em>) en séparant la lame, la garde et la poignée le long des seams intérieurs.</li>
+                <li><strong>Export FBX & SurfaceAppearance</strong> : Exporte le FBX nettoyé (<kbd>Ctrl+A</kbd> All Transforms), crée un objet <code>Tool</code> Roblox Studio avec le composant <code>Handle</code> calibré au centre de la poignée.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-roblox-tip">
+            <strong>⚙️ Effets Lumineux & Particules (Roblox) :</strong>
+            <span>Attache un composant <code>PointLight</code> (couleur cyan/or #5cd6ff) et un <code>Trail</code> lumineux au tranchant de la lame pour reproduire le célèbre rayon d'énergie céleste de l'Épée de Légende lors des attaques à pleine santé !</span>
+          </div>
+
+        </div>
+
+        <div class="weapon-card-foot">
+          <span class="weapon-progress-badge" data-wprog="w-master-sword">0/9 étapes validées</span>
+        </div>
+      </div>
+
+      <!-- ARME 8 : KARAMBIT TACTIQUE COMBAT -->
+      <div class="weapon-card" data-wcat="lame" data-weapon-id="w-karambit-aaa">
+        <div class="weapon-card-head">
+          <div class="weapon-title-area">
+            <h3>Couteau Karambit Tactique D2</h3>
+            <p>Modélisation d'après référence 2D unique : Lame Hawkbill courbe, Plaquettes G10, Anneau de rétention et Vis Torx</p>
+          </div>
+          <div class="weapon-meta-pills">
+            <span class="weapon-pill lvl-badge" style="background:rgba(255,93,93,0.15); color:#ff5d5d; border-color:#ff5d5d;">Référence 2D Unique</span>
+            <span class="weapon-pill">⏱️ 45 min</span>
+            <span class="weapon-pill">7 Composants</span>
+          </div>
+        </div>
+
+        <div class="weapon-blueprint-stage">
+          <div class="stage-view-tabs">
+            <button type="button" class="view-tab-btn active" onclick="switchWeaponView(this, 'blueprint')">🖼️ Concept 2D Source</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'render')">📸 Rendu Studio Cycles</button>
+            <button type="button" class="view-tab-btn" onclick="switchWeaponView(this, 'webgl')">🎮 Viewport 3D Temps Réel</button>
+          </div>
+          <div class="stage-content blueprint-view active">
+            <img src="img/karambit_2d_concept.jpg" alt="Concept Art 2D Plat Karambit" class="weapon-blueprint-img">
+            <span class="blueprint-tag">Image 2D Plate Unique · Vue de profil sans épaisseur</span>
+          </div>
+          <div class="stage-content render-view">
+            <img src="img/karambit_3d_render.jpg" alt="Rendu Final 3D Karambit Cycles" class="weapon-render-img">
+            <span class="render-tag-badge">Blender 4.2 Cycles · Éclairage Studio HDR</span>
+          </div>
+          <div class="stage-content webgl-view">
+            <div class="weapon-3d-stage" data-3d-model="karambit"></div>
+            <span class="hint-3d">🖱️ Glisse pour pivoter · Molette pour zoomer</span>
+          </div>
+        </div>
+
+        <div class="weapon-steps-container">
+
+          <div class="weapon-step-item" data-wstep="0">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">0</span></label>
+              <span class="step-title-text">Étape 0 — Calibrage d'échelle via l'étalon humain de 3cm</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Gabarit de proportion humaine</strong> : En vue de face (<kbd>Pavé Num 1</kbd>), ajoute un cylindre de 3.2cm de diamètre (<kbd>Maj+A</kbd> → <em>Cylinder</em>). C'est le diamètre interne standard de l'anneau pour passer l'index ganté.</li>
+                <li><strong>Importation de l'image unique</strong> : Fais glisser l'image 2D plate dans le viewport (<kbd>Maj+A</kbd> → <em>Image</em> → <em>Reference</em>).</li>
+                <li><strong>Redimensionnement à l'échelle 1:1</strong> : Ajuste la taille de l'image (<kbd>S</kbd>) pour que l'anneau du dessin coïncide exactement avec le cylindre 3D. La longueur totale (18.2cm) et la lame (7.8cm) sont désormais calibrées au millimètre.</li>
+                <li><strong>Mode Rayons X transparent</strong> : Active <kbd>Alt+Z</kbd> pour travailler en transparence au-dessus du concept art.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="1">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">1</span></label>
+              <span class="step-title-text">Composant 1 — Tracé de la silhouette de lame griffe (Hawkbill)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Sommet unique d'amorce</strong> : Pars d'un plan (<kbd>Maj+A</kbd> → Mesh → Plane), passe en Mode Édition (<kbd>Tab</kbd>) et fusionne au centre (<kbd>M</kbd> → <em>At Center</em>).</li>
+                <li><strong>Détourage par extrusion de sommets</strong> : Extrude (<kbd>E</kbd>) le sommet le long de la courbure agressive du dos de la lame jusqu'à la pointe courbée, puis remonte le long du tranchant intérieur concave.</li>
+                <li><strong>Création de la face 2D</strong> : Sélectionne la boucle de sommets fermée (<kbd>A</kbd>) et appuie sur <kbd>F</kbd> pour générer le polygone plat du profil.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="2">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">2</span></label>
+              <span class="step-title-text">Composant 2 — Donner l'épaisseur 3D & Émouture biconvexe</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Extrusion de l'épaisseur pleine (Full-Tang)</strong> : Extrude la face (<kbd>E 0.4cm</kbd>) le long de l'axe Y pour donner l'épaisseur de l'acier D2 (4mm d'épaisseur au dos).</li>
+                <li><strong>Tracé de la ligne d'émouture (Bevel line)</strong> : Avec le couteau (<kbd>K</kbd>), trace la ligne diagonale séparant le dos brut de la pente tranchante en observant les reflets de lumière de l'image 2D.</li>
+                <li><strong>Affûtage rasoir du tranchant</strong> : Sélectionne les arêtes du fil avant et resserre-les sur l'axe central avec <kbd>S+Y 0.05</kbd>. Le dos reste épais (4mm), la lame devient biseautée et coupante comme un scalpel.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="3">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">3</span></label>
+              <span class="step-title-text">Composant 3 — Anneau de sécurité de rétention (Safety Finger Ring)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Création du tore d'anneau</strong> : À l'arrière de la poignée, ajoute un tore (<kbd>Maj+A</kbd> → <em>Mesh</em> → <em>Torus</em>, rayon majeur 1.6cm, rayon mineur 0.35cm).</li>
+                <li><strong>Raccordement avec la soie d'acier</strong> : Fusionne les sommets avant de l'anneau avec le talon de la carcasse en acier (<kbd>Ctrl+J</kbd> pour joindre puis <kbd>Bridge Edge Loops</kbd>).</li>
+                <li><strong>Ergot brise-vitre extérieur</strong> : Sur la tranche arrière de l'anneau, extrude une pointe triangulaire émoussée servant d'impacteur tactique.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="4">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">4</span></label>
+              <span class="step-title-text">Composant 4 — Plaquettes de manche ergonomiques en polymère G10</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Détourage des 3 encoches de doigts</strong> : Trace les plaquettes de préhension comme un objet séparé en épousant les 3 vagues anatomiques du concept 2D.</li>
+                <li><strong>Volume et galbe de paume</strong> : Extrude la plaquette vers l'extérieur de 0.7cm de chaque côté de la soie. Applique un biseau doux (<kbd>Ctrl+B</kbd> 3 segments) sur toutes les bordures pour supprimer les arêtes vives douloureuses en main.</li>
+                <li><strong>Empreintes Torx de fixation</strong> : À l'aide de 3 petits cylindres booléens, perce les logements circulaires pour accueillir les vis d'assemblage en acier inox.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="5">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">5</span></label>
+              <span class="step-title-text">Composant 5 — Crénelage anti-dérapant (Jimping) & Dents de scie</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Crans d'appui du pouce (Jimping)</strong> : Sur le dos de la lame près du manche, insère 8 fentes transversales avec l'outil Inset (<kbd>I</kbd>) et extrusion négative (<kbd>E -0.1cm</kbd>) pour caler le pouce sans glisser.</li>
+                <li><strong>Dents de scie Tiger Serrations</strong> : Sur le premier tiers du tranchant concave, modélise les 12 dents triangulaires acérées en alternant les découpes au couteau (<kbd>K</kbd>).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="6">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">6</span></label>
+              <span class="step-title-text">Composant 6 — Camera Projection Mapping, UV Unwrap & Textures PBR</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Projection UV depuis l'image source</strong> : En vue de face (<kbd>Pavé Num 1</kbd>), sélectionne tout le modèle (<kbd>A</kbd>) et exécute <kbd>U</kbd> → <strong>Project from View</strong>. Les coordonnées UV épousent pixel par pixel l'image 2D du concept art pour récupérer les couleurs et marquages.</li>
+                <li><strong>UV Unwrap complet des tranches</strong> : Marque les arêtes cachées du pourtour (<kbd>Ctrl+E</kbd> → <em>Mark Seam</em>) et déplie la tranche (<kbd>U</kbd> → <em>Unwrap</em>) pour texturer l'épaisseur qui n'était pas visible sur la vue 2D.</li>
+                <li><strong>Résolution texture 2K</strong> : Crée une image 2048x2048 (2K) pour chaque carte PBR (Color, Roughness, Metallic, Normal).</li>
+                <li><strong>Shader PBR Titane Noir & G10</strong> : Assigne un revêtement PVD noir mat sur la lame (Roughness: 0.28, Metallic: 0.92) et un matériau composite texturé sur le manche (Roughness: 0.82, Metallic: 0.05).</li>
+                <li><strong>Normal Map haute définition</strong> : Cuis les micro-rainures usinées et le logo gravé au laser dans une Normal Map 2K.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-step-item" data-wstep="7">
+            <div class="step-header">
+              <label><input type="checkbox" class="wstep-checkbox"><span class="step-num-badge">7</span></label>
+              <span class="step-title-text">Composant 7 — Configuration du Pivot & Export Moteur (FBX)</span>
+            </div>
+            <div class="step-desc-content">
+              <ul>
+                <li><strong>Alignement du Handle</strong> : Positionne le point de pivot (0, 0, 0) au centre de la poignée avec la lame pointant vers le bas (prise en garde inversée traditionnelle du Karambit indonésien).</li>
+                <li><strong>Export FBX & SurfaceAppearance</strong> : Exporte en FBX (Scale 0.2), configure l'objet <code>Tool</code> Roblox Studio avec <code>RequiresHandle = true</code>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="weapon-roblox-tip">
+            <strong>⚙️ Animation & Maniement en Main (Roblox) :</strong>
+            <span>Grâce à l'anneau de sécurité modélisé, tu peux scripter une animation de pirouette (Karambit Spin) où le couteau tourne autour de l'index de l'avatar pendant la phase d'idle ou lors du dégainage !</span>
+          </div>
+
+        </div>
+
+        <div class="weapon-card-foot">
+          <span class="weapon-progress-badge" data-wprog="w-karambit-aaa">0/8 étapes validées</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-grid">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="15" stroke="#f08a34" stroke-width="1.4"/>
+        <circle cx="16" cy="12" r="6.2" fill="#f08a34"/>
+        <path d="M9 26 C9 19 13 16 16 16 C19 16 23 19 23 26" fill="none" stroke="#f08a34" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-stack">
+        <span>LEARN BLENDER</span>
+        <small>Formation FR · Zéro à Autonome</small>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="modules.html">Modules</a>
+      <a href="armes.html">Atelier Armes</a>
+      <a href="raccourcis.html">Raccourcis</a>
+      <a href="quiz.html">Quiz Express</a>
+      <a href="projets.html">Projets</a>
+    </div>
+    <div class="footer-note">Contenu pédagogique original · Blender® est une marque de la Blender Foundation.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+
