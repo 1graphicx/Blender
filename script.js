@@ -1693,8 +1693,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    /* ================================================================
-     DUEL 1V1 MULTIJOUEUR EN LIGNE (30 SECONDES CHRONO - 100% HUMAINS)
+      /* ================================================================
+     DUEL 1V1 MULTIJOUEUR EN LIGNE — PeerJS WebRTC
+     Système de matchmaking par créneau temporel (60s windows)
      ================================================================ */
 
   const DUEL_QUESTIONS = [
@@ -1702,447 +1703,395 @@ document.addEventListener('DOMContentLoaded', () => {
     { q: "Déplacer / Grab la sélection", correct: "G", options: ["G", "R", "S", "B"], cat: "Transformations" },
     { q: "Faire pivoter (Rotate)", correct: "R", options: ["R", "G", "X", "S"], cat: "Transformations" },
     { q: "Redimensionner (Scale)", correct: "S", options: ["S", "R", "Alt + S", "G"], cat: "Transformations" },
-    { q: "Biseauter / Chanfrein (Bevel)", correct: "Ctrl + B", options: ["Ctrl + B", "Ctrl + R", "I", "Alt + B"], cat: "Mode Édition" },
-    { q: "Ajouter une boucle de coupe (Loop Cut)", correct: "Ctrl + R", options: ["Ctrl + R", "Shift + L", "K", "E"], cat: "Mode Édition" },
+    { q: "Biseauter (Bevel)", correct: "Ctrl + B", options: ["Ctrl + B", "Ctrl + R", "I", "Alt + B"], cat: "Mode Édition" },
+    { q: "Boucle de coupe (Loop Cut)", correct: "Ctrl + R", options: ["Ctrl + R", "Shift + L", "K", "E"], cat: "Mode Édition" },
     { q: "Insertion de face (Inset)", correct: "I", options: ["I", "E", "F", "Ctrl + I"], cat: "Mode Édition" },
-    { q: "Menu d'ajout (Add Mesh / Curve)", correct: "Maj + A", options: ["Maj + A", "Ctrl + A", "Alt + A", "Tab"], cat: "Général" },
+    { q: "Menu d'ajout (Add Mesh)", correct: "Maj + A", options: ["Maj + A", "Ctrl + A", "Alt + A", "Tab"], cat: "Général" },
     { q: "Fusionner les sommets (Merge)", correct: "M", options: ["M", "Alt + M", "J", "F"], cat: "Mode Édition" },
-    { q: "Déplier les coordonnées UV (Unwrap)", correct: "U", options: ["U", "Ctrl + U", "Shift + U", "E"], cat: "UV & Textures" },
-    { q: "Basculer Mode Objet / Mode Édition", correct: "Tab", options: ["Tab", "Ctrl + Tab", "A", "Z"], cat: "Général" },
-    { q: "Activer la vue Rayons X (X-Ray)", correct: "Alt + Z", options: ["Alt + Z", "Shift + Z", "Z", "Ctrl + Z"], cat: "Vues & Shading" },
+    { q: "Déplier les UV (Unwrap)", correct: "U", options: ["U", "Ctrl + U", "Shift + U", "E"], cat: "UV & Textures" },
+    { q: "Basculer Objet / Mode Édition", correct: "Tab", options: ["Tab", "Ctrl + Tab", "A", "Z"], cat: "Général" },
+    { q: "Vue Rayons X (X-Ray)", correct: "Alt + Z", options: ["Alt + Z", "Shift + Z", "Z", "Ctrl + Z"], cat: "Vues & Shading" },
     { q: "Vue de face orthogonale", correct: "Pavé 1", options: ["Pavé 1", "Pavé 3", "Pavé 7", "Pavé 0"], cat: "Navigation 3D" },
     { q: "Vue de profil droite", correct: "Pavé 3", options: ["Pavé 3", "Pavé 1", "Pavé 7", "Ctrl + 3"], cat: "Navigation 3D" },
     { q: "Vue de dessus (Top View)", correct: "Pavé 7", options: ["Pavé 7", "Pavé 1", "Pavé 3", "Pavé 9"], cat: "Navigation 3D" },
     { q: "Vue Caméra active", correct: "Pavé 0", options: ["Pavé 0", "Pavé 5", "Pavé 1", "Ctrl + 0"], cat: "Navigation 3D" },
-    { q: "Bascule Perspective / Orthographique", correct: "Pavé 5", options: ["Pavé 5", "Pavé 1", "Pavé 9", "Pavé 0"], cat: "Navigation 3D" },
-    { q: "Tout sélectionner dans la scène", correct: "A", options: ["A", "Ctrl + A", "Alt + A", "B"], cat: "Sélections" },
+    { q: "Perspective / Orthographique", correct: "Pavé 5", options: ["Pavé 5", "Pavé 1", "Pavé 9", "Pavé 0"], cat: "Navigation 3D" },
+    { q: "Tout sélectionner", correct: "A", options: ["A", "Ctrl + A", "Alt + A", "B"], cat: "Sélections" },
     { q: "Tout désélectionner", correct: "Alt + A", options: ["Alt + A", "A", "Ctrl + D", "X"], cat: "Sélections" },
-    { q: "Appliquer Échelle et Rotation", correct: "Ctrl + A", options: ["Ctrl + A", "Maj + A", "Alt + A", "Ctrl + T"], cat: "Transformations" },
-    { q: "Dupliquer l'objet sélectionné", correct: "Maj + D", options: ["Maj + D", "Alt + D", "Ctrl + D", "D"], cat: "Transformations" },
-    { q: "Duplication liée (Linked Duplicate)", correct: "Alt + D", options: ["Alt + D", "Maj + D", "Ctrl + L", "Ctrl + D"], cat: "Transformations" },
-    { q: "Masquer la sélection (Hide)", correct: "H", options: ["H", "Alt + H", "Shift + H", "X"], cat: "Vues & Shading" },
-    { q: "Réafficher tout ce qui est masqué", correct: "Alt + H", options: ["Alt + H", "H", "Ctrl + H", "Shift + H"], cat: "Vues & Shading" },
-    { q: "Séparer en nouvel objet (Separate)", correct: "P", options: ["P", "Y", "V", "M"], cat: "Mode Édition" },
-    { q: "Rejoindre plusieurs objets (Join)", correct: "Ctrl + J", options: ["Ctrl + J", "J", "M", "Ctrl + P"], cat: "Général" },
+    { q: "Appliquer Échelle / Rotation", correct: "Ctrl + A", options: ["Ctrl + A", "Maj + A", "Alt + A", "Ctrl + T"], cat: "Transformations" },
+    { q: "Dupliquer l'objet", correct: "Maj + D", options: ["Maj + D", "Alt + D", "Ctrl + D", "D"], cat: "Transformations" },
+    { q: "Duplication liée (Linked)", correct: "Alt + D", options: ["Alt + D", "Maj + D", "Ctrl + L", "Ctrl + D"], cat: "Transformations" },
+    { q: "Masquer (Hide)", correct: "H", options: ["H", "Alt + H", "Shift + H", "X"], cat: "Vues & Shading" },
+    { q: "Réafficher tout", correct: "Alt + H", options: ["Alt + H", "H", "Ctrl + H", "Shift + H"], cat: "Vues & Shading" },
+    { q: "Séparer en objet (Separate)", correct: "P", options: ["P", "Y", "V", "M"], cat: "Mode Édition" },
+    { q: "Joindre plusieurs objets", correct: "Ctrl + J", options: ["Ctrl + J", "J", "M", "Ctrl + P"], cat: "Général" },
     { q: "Parenter des objets", correct: "Ctrl + P", options: ["Ctrl + P", "Alt + P", "P", "Shift + P"], cat: "Général" },
-    { q: "Outil Couteau de découpe libre", correct: "K", options: ["K", "C", "X", "V"], cat: "Mode Édition" },
-    { q: "Créer une face entre sommets (Fill)", correct: "F", options: ["F", "J", "M", "Alt + F"], cat: "Mode Édition" },
-    { q: "Relier deux sommets par une arête", correct: "J", options: ["J", "F", "V", "K"], cat: "Mode Édition" },
-    { q: "Activer l'Édition Proportionnelle", correct: "O", options: ["O", "P", "Alt + O", "Shift + O"], cat: "Transformations" },
-    { q: "Ouvrir la recherche globale d'outils", correct: "F3", options: ["F3", "Espace", "Ctrl + F", "Shift + F3"], cat: "Général" },
-    { q: "Isoler l'objet sélectionné (Vue locale)", correct: "Pavé /", options: ["Pavé /", "H", "Alt + Z", "Pavé ."], cat: "Navigation 3D" },
-    { q: "Centrer la vue sur l'objet sélectionné", correct: "Pavé .", options: ["Pavé .", "Pavé /", "C", "Home"], cat: "Navigation 3D" },
-    { q: "Marquer une couture UV (Mark Seam)", correct: "Ctrl + E", options: ["Ctrl + E", "U", "Alt + E", "Ctrl + S"], cat: "UV & Textures" },
-    { q: "Sélection d'une boucle complète (Loop)", correct: "Alt + Clic G", options: ["Alt + Clic G", "Ctrl + Clic G", "Shift + Clic G", "L"], cat: "Sélections" },
-    { q: "Inverser la sélection active", correct: "Ctrl + I", options: ["Ctrl + I", "Alt + I", "I", "Shift + I"], cat: "Sélections" },
-    { q: "Menu Supprimer (Delete)", correct: "X", options: ["X", "Delete", "Backspace", "Suppr"], cat: "Général" },
-    { q: "Menu Shading (Wireframe, Solid...)", correct: "Z", options: ["Z", "Alt + Z", "Shift + Z", "W"], cat: "Vues & Shading" },
-    { q: "Sélectionner les éléments reliés", correct: "L", options: ["L", "Alt + L", "Ctrl + L", "Shift + L"], cat: "Sélections" },
-    { q: "Biseau de sommet (Vertex Bevel)", correct: "Ctrl + Maj + B", options: ["Ctrl + Maj + B", "Ctrl + B", "Alt + B", "V"], cat: "Mode Édition" },
-    { q: "Menu Extrusion le long des normales", correct: "Alt + E", options: ["Alt + E", "Ctrl + E", "E", "Shift + E"], cat: "Mode Édition" },
+    { q: "Outil Couteau (Knife)", correct: "K", options: ["K", "C", "X", "V"], cat: "Mode Édition" },
+    { q: "Créer une face (Fill)", correct: "F", options: ["F", "J", "M", "Alt + F"], cat: "Mode Édition" },
+    { q: "Relier deux sommets", correct: "J", options: ["J", "F", "V", "K"], cat: "Mode Édition" },
+    { q: "Édition Proportionnelle", correct: "O", options: ["O", "P", "Alt + O", "Shift + O"], cat: "Transformations" },
+    { q: "Recherche globale d'outils", correct: "F3", options: ["F3", "Espace", "Ctrl + F", "Shift + F3"], cat: "Général" },
+    { q: "Vue locale (isoler objet)", correct: "Pavé /", options: ["Pavé /", "H", "Alt + Z", "Pavé ."], cat: "Navigation 3D" },
+    { q: "Centrer la vue sur la sélection", correct: "Pavé .", options: ["Pavé .", "Pavé /", "C", "Home"], cat: "Navigation 3D" },
+    { q: "Marquer une couture UV", correct: "Ctrl + E", options: ["Ctrl + E", "U", "Alt + E", "Ctrl + S"], cat: "UV & Textures" },
+    { q: "Sélectionner une boucle (Loop)", correct: "Alt + Clic G", options: ["Alt + Clic G", "Ctrl + Clic G", "Shift + Clic G", "L"], cat: "Sélections" },
+    { q: "Inverser la sélection", correct: "Ctrl + I", options: ["Ctrl + I", "Alt + I", "I", "Shift + I"], cat: "Sélections" },
+    { q: "Supprimer (Delete)", correct: "X", options: ["X", "Delete", "Backspace", "Suppr"], cat: "Général" },
+    { q: "Menu Shading (Wireframe...)", correct: "Z", options: ["Z", "Alt + Z", "Shift + Z", "W"], cat: "Vues & Shading" },
+    { q: "Sélectionner éléments reliés", correct: "L", options: ["L", "Alt + L", "Ctrl + L", "Shift + L"], cat: "Sélections" },
+    { q: "Biseauter un sommet (Vertex Bevel)", correct: "Ctrl + Maj + B", options: ["Ctrl + Maj + B", "Ctrl + B", "Alt + B", "V"], cat: "Mode Édition" },
+    { q: "Extrusion le long des normales", correct: "Alt + E", options: ["Alt + E", "Ctrl + E", "E", "Shift + E"], cat: "Mode Édition" },
     { q: "Glissement d'arête (Edge Slide)", correct: "G + G", options: ["G + G", "Alt + G", "Ctrl + G", "Shift + G"], cat: "Mode Édition" },
     { q: "Répéter la dernière action", correct: "Maj + R", options: ["Maj + R", "Ctrl + R", "R", "Alt + R"], cat: "Général" },
-    { q: "Mode de sélection Sommet (Vertex)", correct: "1", options: ["1", "2", "3", "Tab"], cat: "Mode Édition" },
+    { q: "Mode de sélection Sommet", correct: "1", options: ["1", "2", "3", "Tab"], cat: "Mode Édition" },
     { q: "Mode de sélection Arête (Edge)", correct: "2", options: ["2", "1", "3", "Tab"], cat: "Mode Édition" },
     { q: "Mode de sélection Face", correct: "3", options: ["3", "1", "2", "Tab"], cat: "Mode Édition" },
-    { q: "Ouvrir le panneau Propriétés (Sidebar)", correct: "N", options: ["N", "T", "P", "F4"], cat: "Navigation 3D" },
-    { q: "Ouvrir la barre d'outils (Toolbar)", correct: "T", options: ["T", "N", "W", "Tab"], cat: "Navigation 3D" }
+    { q: "Ouvrir le panneau Propriétés (N)", correct: "N", options: ["N", "T", "P", "F4"], cat: "Navigation 3D" },
+    { q: "Ouvrir la barre d'outils (T)", correct: "T", options: ["T", "N", "W", "Tab"], cat: "Navigation 3D" }
   ];
 
-  // Mode Switcher Solo vs Duel
+  /* ------------------------------------------------------------------
+     MODE SWITCHER
+  ------------------------------------------------------------------ */
   window.switchQuizMainMode = function(mode) {
     const tabDuel = document.getElementById('tabModeDuel');
     const tabSolo = document.getElementById('tabModeSolo');
     const cardDuel = document.getElementById('duelCard');
     const cardSolo = document.getElementById('quizCard');
-
     if (!tabDuel || !tabSolo || !cardDuel || !cardSolo) return;
-
     if (mode === 'duel') {
-      tabDuel.classList.add('active');
-      tabSolo.classList.remove('active');
-      cardDuel.classList.remove('hidden');
-      cardSolo.classList.add('hidden');
+      tabDuel.classList.add('active'); tabSolo.classList.remove('active');
+      cardDuel.classList.remove('hidden'); cardSolo.classList.add('hidden');
     } else {
-      tabSolo.classList.add('active');
-      tabDuel.classList.remove('active');
-      cardSolo.classList.remove('hidden');
-      cardDuel.classList.add('hidden');
+      tabSolo.classList.add('active'); tabDuel.classList.remove('active');
+      cardSolo.classList.remove('hidden'); cardDuel.classList.add('hidden');
     }
   };
 
-  // Duel State (100% Real Players Only)
+  /* ------------------------------------------------------------------
+     DUEL STATE
+  ------------------------------------------------------------------ */
   const duel = {
     playerName: localStorage.getItem('blender_duel_pseudo') || 'Joueur 3D',
-    opponentName: 'Adversaire',
+    opponentName: '???',
     opponentBadge: 'JOUEUR 2',
     isHost: false,
     roomCode: '',
     peer: null,
     conn: null,
-    bc: null,
-    
-    // In-game stats
-    score: 0,
-    streak: 0,
-    maxStreak: 0,
-    correctCount: 0,
-    wrongCount: 0,
-    mistakes: [],
-    
-    opponentScore: 0,
-    opponentStreak: 0,
-    opponentTotal: 0,
-
-    // Time
-    timeLeft: 30.0,
-    timerInterval: null,
-    isRunning: false,
-
-    // Questions pool for this match
-    shuffledQuestions: [],
-    currentIndex: 0,
-    isAnswerLocked: false
+    score: 0, streak: 0, maxStreak: 0,
+    correctCount: 0, wrongCount: 0, mistakes: [],
+    opponentScore: 0, opponentStreak: 0,
+    timeLeft: 30.0, timerInterval: null,
+    isRunning: false, isAnswerLocked: false,
+    shuffledQuestions: [], currentIndex: 0
   };
 
-  // Initialize Duel UI
-  function initDuelSystem() {
-    const duelCard = document.getElementById('duelCard');
-    if (!duelCard) return;
-
-    // Load stored player name and stats
-    const nameInput = document.getElementById('duelPlayerName');
-    if (nameInput) {
-      nameInput.value = duel.playerName;
-      nameInput.addEventListener('input', (e) => {
-        duel.playerName = e.target.value.trim() || 'Joueur 3D';
-        localStorage.setItem('blender_duel_pseudo', duel.playerName);
-      });
-    }
-
-    updateDuelStoredStats();
-
-    // BroadcastChannel for instant local 1V1 (e.g. 2 tabs or same browser)
-    try {
-      if (typeof BroadcastChannel !== 'undefined') {
-        duel.bc = new BroadcastChannel('learnblender_duel_bus');
-        duel.bc.onmessage = (event) => handleP2PMessage(event.data);
-      }
-    } catch (e) {
-      console.warn('BroadcastChannel not supported:', e);
-    }
-
-    // Buttons bindings
-    const btnQuickMatch = document.getElementById('btnQuickMatch');
-    const btnCreateRoom = document.getElementById('btnCreateRoom');
-    const btnJoinRoom = document.getElementById('btnJoinRoom');
-    const btnCancel = document.getElementById('btnCancelMatchmaking');
-    const btnCopyCode = document.getElementById('btnCopyRoomCode');
-    const btnCopyLink = document.getElementById('btnCopyRoomLink');
-    const btnRematch = document.getElementById('btnDuelRematch');
-    const btnNewMatch = document.getElementById('btnDuelNewMatch');
-    const btnExit = document.getElementById('btnDuelExit');
-
-    if (btnQuickMatch) btnQuickMatch.addEventListener('click', () => startQuickMatch());
-    if (btnCreateRoom) btnCreateRoom.addEventListener('click', () => createPrivateRoom());
-    if (btnJoinRoom) btnJoinRoom.addEventListener('click', () => joinRoomFromInput());
-    if (btnCancel) btnCancel.addEventListener('click', () => cancelMatchmaking());
-    if (btnCopyCode) btnCopyCode.addEventListener('click', () => copyRoomCode());
-    if (btnCopyLink) btnCopyLink.addEventListener('click', () => copyRoomLink());
-    if (btnRematch) btnRematch.addEventListener('click', () => requestRematch());
-    if (btnNewMatch) btnNewMatch.addEventListener('click', () => resetToLobby(true));
-    if (btnExit) btnExit.addEventListener('click', () => resetToLobby(false));
-
-    // Global keyboard listener for answers (1, 2, 3, 4 or &, é, ", ')
-    window.addEventListener('keydown', (e) => {
-      if (!duel.isRunning || duel.isAnswerLocked) return;
-      const keyMap = { '1': 0, '&': 0, '2': 1, 'é': 1, '3': 2, '"': 2, '4': 3, "'": 3 };
-      if (keyMap.hasOwnProperty(e.key)) {
-        const optionBtns = document.querySelectorAll('.duel-opt-btn');
-        const idx = keyMap[e.key];
-        if (optionBtns[idx] && !optionBtns[idx].disabled) {
-          optionBtns[idx].click();
-        }
-      }
-    });
-
-    // Check URL parameters on load: ?mode=duel or ?duel=CODE or ?room=CODE
-    const urlParams = new URLSearchParams(window.location.search);
-    const duelCode = urlParams.get('duel') || urlParams.get('room');
-    const modeParam = urlParams.get('mode');
-
-    if (duelCode) {
-      window.switchQuizMainMode('duel');
-      const input = document.getElementById('duelJoinCodeInput');
-      if (input) input.value = duelCode;
-      setTimeout(() => joinRoom(duelCode), 400);
-    } else if (modeParam === 'duel') {
-      window.switchQuizMainMode('duel');
-    }
+  /* ------------------------------------------------------------------
+     HELPERS
+  ------------------------------------------------------------------ */
+  function showDuelScreen(id) {
+    ['duelLobbyScreen','duelWaitScreen','duelCountdownScreen','duelActiveScreen','duelResultsScreen']
+      .forEach(s => { const el = document.getElementById(s); if (el) el.classList.toggle('hidden', s !== id); });
   }
 
-  function showDuelScreen(screenId) {
-    const screens = ['duelLobbyScreen', 'duelWaitScreen', 'duelCountdownScreen', 'duelActiveScreen', 'duelResultsScreen'];
-    screens.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.classList.toggle('hidden', id !== screenId);
-    });
+  function setWaitStatus(title, desc) {
+    const t = document.getElementById('duelWaitTitle');
+    const d = document.getElementById('duelWaitDesc');
+    if (t) t.textContent = title;
+    if (d) d.textContent = desc;
   }
 
-  function updateDuelStoredStats() {
-    const wins = parseInt(localStorage.getItem('blender_duel_wins') || '0', 10);
-    const record = parseInt(localStorage.getItem('blender_duel_record') || '0', 10);
-    const matches = parseInt(localStorage.getItem('blender_duel_matches') || '0', 10);
-
-    const elWins = document.getElementById('duelStatWins');
-    const elRecord = document.getElementById('duelStatRecord');
-    const elMatches = document.getElementById('duelStatMatches');
-
-    if (elWins) elWins.textContent = wins;
-    if (elRecord) elRecord.textContent = record;
-    if (elMatches) elMatches.textContent = matches;
+  function updateStoredStats() {
+    const elW = document.getElementById('duelStatWins');
+    const elR = document.getElementById('duelStatRecord');
+    const elM = document.getElementById('duelStatMatches');
+    if (elW) elW.textContent = localStorage.getItem('blender_duel_wins') || '0';
+    if (elR) elR.textContent = localStorage.getItem('blender_duel_record') || '0';
+    if (elM) elM.textContent = localStorage.getItem('blender_duel_matches') || '0';
   }
 
-  // Generate short 4-digit code
-  function generateRoomCode() {
-    return Math.floor(1000 + Math.random() * 9000).toString();
+  function destroyPeer() {
+    if (duel.conn) { try { duel.conn.close(); } catch(e){} duel.conn = null; }
+    if (duel.peer) { try { duel.peer.destroy(); } catch(e){} duel.peer = null; }
   }
 
-  // P2P Messaging
-  function sendP2PMessage(msg) {
-    const payload = { ...msg, roomCode: duel.roomCode };
-    // 1. WebRTC DataChannel
-    if (duel.conn && duel.conn.open) {
-      try { duel.conn.send(payload); } catch (e) { console.warn(e); }
-    }
-    // 2. BroadcastChannel
-    if (duel.bc) {
-      try { duel.bc.postMessage(payload); } catch (e) { console.warn(e); }
-    }
+  /* ------------------------------------------------------------------
+     TIME-SLOT ROOM ID
+     Two players clicking QuickMatch within the same 60-second window
+     automatically get the same room ID → one becomes host, one guest.
+  ------------------------------------------------------------------ */
+  function getTimeSlotRoomId(slotOffsetSeconds) {
+    const WINDOW = 60; // seconds per matchmaking window
+    const now = Math.floor(Date.now() / 1000);
+    const slot = Math.floor(now / WINDOW) + (slotOffsetSeconds || 0);
+    return 'blnd-match-' + slot;
   }
 
-  function handleP2PMessage(msg) {
-    if (!msg) return;
-    // Check room code match if specified
-    if (msg.roomCode && duel.roomCode && msg.roomCode !== duel.roomCode) return;
-
-    switch (msg.type) {
-      case 'join_request':
+  /* ------------------------------------------------------------------
+     RECEIVE P2P DATA
+  ------------------------------------------------------------------ */
+  function onData(data) {
+    if (!data || !data.type) return;
+    switch (data.type) {
+      case 'hello':
+        // Guest sends hello → host responds with ack, both start countdown
         if (duel.isHost) {
-          duel.opponentName = msg.playerName || 'Adversaire Réel';
-          duel.opponentBadge = 'JOUEUR 2';
-          sendP2PMessage({ type: 'join_accepted', hostName: duel.playerName });
+          duel.opponentName = data.name || 'Adversaire';
+          duel.conn.send({ type: 'hello_ack', name: duel.playerName });
           startDuelCountdown();
         }
         break;
-
-      case 'join_accepted':
-        duel.opponentName = msg.hostName || 'Hôte';
-        duel.opponentBadge = 'HÔTE';
+      case 'hello_ack':
+        // Host responds → guest starts countdown
+        duel.opponentName = data.name || 'Adversaire';
         startDuelCountdown();
         break;
-
-      case 'score_update':
-        duel.opponentScore = msg.score || 0;
-        duel.opponentStreak = msg.combo || 0;
+      case 'score':
+        duel.opponentScore = data.s || 0;
+        duel.opponentStreak = data.c || 0;
         updateOpponentHud();
-        updateTugOfWarBar();
-        feedBattleAlert(`⚡ ${duel.opponentName} marque ! (${duel.opponentScore} pts)`, 'feed-event-opp');
+        updateTugBar();
+        feedAlert(`⚡ ${duel.opponentName}: ${duel.opponentScore} pts`, 'feed-event-opp');
         break;
-
-      case 'game_over':
-        duel.opponentScore = msg.finalScore || duel.opponentScore;
-        duel.opponentTotal = msg.totalAnswers || duel.opponentTotal;
+      case 'end':
+        duel.opponentScore = data.s || duel.opponentScore;
         break;
-
-      case 'rematch_request':
-        feedBattleAlert(`🔄 ${duel.opponentName} demande une revanche !`, 'feed-event-combo');
-        const btnRematch = document.getElementById('btnDuelRematch');
-        if (btnRematch) {
-          btnRematch.textContent = `⚡ Accepter la Revanche de ${duel.opponentName} !`;
-          btnRematch.classList.add('pulse');
-        }
-        break;
-
-      case 'rematch_start':
+      case 'rematch_ok':
         startDuelCountdown();
         break;
     }
   }
 
-  // Real Matchmaking (Public queue between real players)
+  function setupConn(conn) {
+    duel.conn = conn;
+    conn.on('data', onData);
+    conn.on('close', () => {
+      if (duel.isRunning) feedAlert('⚠️ Connexion perdue avec l\'adversaire.', '');
+    });
+    conn.on('error', (err) => console.warn('Conn error:', err));
+  }
+
+  /* ------------------------------------------------------------------
+     QUICK MATCH — Time-slot matchmaking (no server needed)
+     Strategy:
+       1. Try to connect to current slot room (be the GUEST)
+       2. If peer-unavailable → become HOST of that slot room
+       3. If still nothing after 50s → try next slot as host (edge case)
+  ------------------------------------------------------------------ */
   function startQuickMatch() {
-    duel.roomCode = 'PUBLIC-1';
+    destroyPeer();
     duel.isHost = false;
+    duel.roomCode = '';
+
     showDuelScreen('duelWaitScreen');
+    setWaitStatus('Recherche d\'un adversaire en ligne...', 'Connexion au réseau PeerJS en cours...');
+    const shareZone = document.getElementById('duelRoomShareZone');
+    if (shareZone) shareZone.style.display = 'none';
 
-    const waitTitle = document.getElementById('duelWaitTitle');
-    const waitDesc = document.getElementById('duelWaitDesc');
-    const codeDisplay = document.getElementById('duelDisplayRoomCode');
-    const shareHint = document.getElementById('duelShareHint');
-
-    if (waitTitle) waitTitle.textContent = "Recherche d'un adversaire en ligne...";
-    if (waitDesc) waitDesc.textContent = "Connexion à la file publique en direct. En attente du prochain joueur réel...";
-    if (codeDisplay) codeDisplay.textContent = "PUBLIC-1";
-    if (shareHint) shareHint.textContent = "Tu peux aussi envoyer ce code ou lien à un ami, ou ouvrir un 2ème onglet pour jouer tout de suite !";
-
-    // Broadcast search query locally (cross-tab test)
-    sendP2PMessage({ type: 'join_request', playerName: duel.playerName, roomCode: 'PUBLIC-1' });
-
-    // Try to connect as guest to PUBLIC-1 on PeerJS
-    if (typeof Peer !== 'undefined') {
-      try {
-        if (duel.peer) { duel.peer.destroy(); }
-        duel.peer = new Peer();
-        duel.peer.on('open', () => {
-          duel.conn = duel.peer.connect('learnblender-match-public-1');
-          duel.conn.on('open', () => {
-            duel.conn.send({ type: 'join_request', playerName: duel.playerName, roomCode: 'PUBLIC-1' });
-          });
-          duel.conn.on('data', (data) => handleP2PMessage(data));
-        });
-
-        duel.peer.on('error', (err) => {
-          // If public host doesn't exist, become the host of PUBLIC-1!
-          if (err.type === 'peer-unavailable') {
-            duel.isHost = true;
-            try {
-              duel.peer.destroy();
-              duel.peer = new Peer('learnblender-match-public-1');
-              duel.peer.on('connection', (conn) => {
-                duel.conn = conn;
-                duel.conn.on('data', (data) => handleP2PMessage(data));
-              });
-              if (waitTitle) waitTitle.textContent = "File d'attente publique ouverte !";
-              if (waitDesc) waitDesc.textContent = "Tu es en première position. En attente du prochain joueur réel qui clique sur Matchmaking...";
-            } catch (e2) {
-              console.warn(e2);
-            }
-          }
-        });
-      } catch (e) {
-        console.warn('Peer error:', e);
-      }
-    }
-  }
-
-  // Create Private Room (Real human friend)
-  function createPrivateRoom() {
-    duel.isHost = true;
-    duel.roomCode = generateRoomCode();
-    showDuelScreen('duelWaitScreen');
-
-    const waitTitle = document.getElementById('duelWaitTitle');
-    const waitDesc = document.getElementById('duelWaitDesc');
-    const codeDisplay = document.getElementById('duelDisplayRoomCode');
-    const shareHint = document.getElementById('duelShareHint');
-
-    if (waitTitle) waitTitle.textContent = "Salon Privé Créé !";
-    if (waitDesc) waitDesc.textContent = "En attente que ton ami rejoigne le salon...";
-    if (codeDisplay) codeDisplay.textContent = duel.roomCode;
-    if (shareHint) shareHint.textContent = "Partage ce code ou ce lien à un ami. Dès qu'il l'ouvre, le décompte de 30s se lance pour vous deux !";
-
-    initPeerHost(duel.roomCode);
-  }
-
-  // Join Room from input
-  function joinRoomFromInput() {
-    const input = document.getElementById('duelJoinCodeInput');
-    const code = (input ? input.value : '').trim().toUpperCase();
-    if (!code) {
-      alert("Veuillez entrer un code de salon valide.");
+    if (typeof Peer === 'undefined') {
+      setWaitStatus('⚠️ PeerJS non chargé', 'Vérifie ta connexion internet et rechargez la page.');
       return;
     }
-    joinRoom(code);
-  }
 
-  function joinRoom(code) {
-    duel.isHost = false;
-    duel.roomCode = code;
-    showDuelScreen('duelWaitScreen');
+    const targetRoomId = getTimeSlotRoomId(0);
 
-    const waitTitle = document.getElementById('duelWaitTitle');
-    const waitDesc = document.getElementById('duelWaitDesc');
-    const codeDisplay = document.getElementById('duelDisplayRoomCode');
+    // Step 1: Create our own peer (random ID)
+    duel.peer = new Peer({ debug: 0 });
 
-    if (waitTitle) waitTitle.textContent = `Connexion au salon ${code}...`;
-    if (waitDesc) waitDesc.textContent = "Connexion directe avec ton adversaire...";
-    if (codeDisplay) codeDisplay.textContent = code;
-
-    // Send join request via BroadcastChannel
-    sendP2PMessage({ type: 'join_request', playerName: duel.playerName, roomCode: code });
-
-    // Connect via PeerJS
-    initPeerClient(code);
-  }
-
-  // PeerJS Client/Host Setup
-  function initPeerHost(code) {
-    if (typeof Peer === 'undefined') return;
-    try {
-      if (duel.peer) { duel.peer.destroy(); }
-      duel.peer = new Peer('learnblender-duel-' + code);
-      duel.peer.on('connection', (conn) => {
-        duel.conn = conn;
-        duel.conn.on('data', (data) => handleP2PMessage(data));
-      });
-      duel.peer.on('error', (err) => console.warn('Peer host error:', err));
-    } catch (e) { console.warn('PeerJS init failed:', e); }
-  }
-
-  function initPeerClient(code) {
-    if (typeof Peer === 'undefined') return;
-    try {
-      if (duel.peer) { duel.peer.destroy(); }
-      duel.peer = new Peer();
-      duel.peer.on('open', () => {
-        duel.conn = duel.peer.connect('learnblender-duel-' + code);
-        duel.conn.on('open', () => {
-          duel.conn.send({ type: 'join_request', playerName: duel.playerName, roomCode: code });
-        });
-        duel.conn.on('data', (data) => handleP2PMessage(data));
-      });
-      duel.peer.on('error', (err) => {
-        console.warn('Peer client error:', err);
-        if (err.type === 'peer-unavailable') {
-          const waitDesc = document.getElementById('duelWaitDesc');
-          if (waitDesc) waitDesc.textContent = `⚠️ Impossible de trouver le salon ${code}. Vérifie que l'hôte a bien créé ce salon.`;
-        }
-      });
-    } catch (e) { console.warn('PeerJS connect failed:', e); }
-  }
-
-  // Copy helpers
-  function copyRoomCode() {
-    if (!duel.roomCode) return;
-    navigator.clipboard.writeText(duel.roomCode).then(() => {
-      const btn = document.getElementById('btnCopyRoomCode');
-      if (btn) {
-        const orig = btn.textContent;
-        btn.textContent = "✅ Code copié !";
-        setTimeout(() => { btn.textContent = orig; }, 1800);
+    duel.peer.on('error', (err) => {
+      console.warn('Peer error:', err.type, err);
+      if (err.type === 'peer-unavailable') {
+        // The target host doesn't exist yet → WE become the host
+        becomeQuickMatchHost(targetRoomId);
+      } else if (err.type === 'unavailable-id') {
+        // ID already taken → try another
+        console.log('ID conflict, retrying...');
+        setTimeout(startQuickMatch, 300);
+      } else {
+        setWaitStatus('⚠️ Erreur réseau: ' + err.type, 'Vérifie ta connexion internet.');
       }
+    });
+
+    duel.peer.on('open', (myId) => {
+      setWaitStatus('Recherche d\'un adversaire...', 'Tentative de connexion au prochain joueur disponible...');
+      // Try to connect to the time-slot room (as guest)
+      const conn = duel.peer.connect(targetRoomId, { reliable: true });
+      duel.conn = conn;
+
+      let connected = false;
+
+      conn.on('open', () => {
+        connected = true;
+        duel.isHost = false;
+        conn.send({ type: 'hello', name: duel.playerName });
+        setWaitStatus('Adversaire trouvé !', 'Connexion établie. Préparation du duel...');
+        setupConn(conn);
+      });
+
+      conn.on('data', onData);
+      conn.on('error', (err) => {
+        if (!connected) becomeQuickMatchHost(targetRoomId);
+      });
+
+      // If nothing happens in 3s → we become host
+      setTimeout(() => {
+        if (!connected && !duel.isHost) {
+          becomeQuickMatchHost(targetRoomId);
+        }
+      }, 3000);
     });
   }
 
+  function becomeQuickMatchHost(roomId) {
+    destroyPeer();
+    duel.isHost = true;
+    duel.roomCode = roomId;
+
+    if (typeof Peer === 'undefined') return;
+
+    duel.peer = new Peer(roomId, { debug: 0 });
+
+    duel.peer.on('error', (err) => {
+      if (err.type === 'unavailable-id') {
+        // Someone else is already hosting this slot → try as guest again
+        setTimeout(startQuickMatch, 500);
+      } else {
+        console.warn('Host peer error:', err);
+      }
+    });
+
+    duel.peer.on('open', () => {
+      setWaitStatus('File d\'attente publique ouverte !', 'Tu es le premier dans la file. En attente du prochain joueur qui clique sur "Trouver un adversaire"...');
+      const shareZone = document.getElementById('duelRoomShareZone');
+      const codeEl = document.getElementById('duelDisplayRoomCode');
+      const hintEl = document.getElementById('duelShareHint');
+      if (shareZone) shareZone.style.display = '';
+      if (codeEl) codeEl.textContent = 'FILE PUBLIQUE';
+      if (hintEl) hintEl.textContent = 'Le match démarre automatiquement quand un autre joueur clique "Trouver un adversaire" !';
+    });
+
+    duel.peer.on('connection', (conn) => {
+      setupConn(conn);
+      duel.opponentName = '???';
+      setWaitStatus('Adversaire trouvé !', 'Connexion établie. Lancement du duel...');
+      // Wait for hello message (handled in onData)
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     PRIVATE ROOM — Host creates, guest joins with code
+  ------------------------------------------------------------------ */
+  function createPrivateRoom() {
+    destroyPeer();
+    duel.isHost = true;
+    const code = Math.floor(1000 + Math.random() * 9000).toString();
+    const roomId = 'blnd-priv-' + code;
+    duel.roomCode = code;
+
+    showDuelScreen('duelWaitScreen');
+
+    if (typeof Peer === 'undefined') {
+      setWaitStatus('⚠️ PeerJS non chargé', 'Vérifie ta connexion internet.');
+      return;
+    }
+
+    duel.peer = new Peer(roomId, { debug: 0 });
+
+    duel.peer.on('error', (err) => {
+      if (err.type === 'unavailable-id') {
+        // Code collision → generate new
+        setTimeout(createPrivateRoom, 200);
+      } else {
+        console.warn('Private room error:', err);
+      }
+    });
+
+    duel.peer.on('open', () => {
+      const codeEl = document.getElementById('duelDisplayRoomCode');
+      const shareZone = document.getElementById('duelRoomShareZone');
+      const hintEl = document.getElementById('duelShareHint');
+      if (codeEl) codeEl.textContent = code;
+      if (shareZone) shareZone.style.display = '';
+      if (hintEl) hintEl.textContent = `Envoie ce code à ton ami. Il clique "Rejoindre" et entre ${code}. Le duel démarre dès sa connexion !`;
+      setWaitStatus('Salon Privé Créé ! Code : ' + code, 'En attente de ton ami...');
+    });
+
+    duel.peer.on('connection', (conn) => {
+      setupConn(conn);
+      setWaitStatus('Ami connecté !', 'Lancement du duel...');
+    });
+  }
+
+  function joinRoomFromInput() {
+    const input = document.getElementById('duelJoinCodeInput');
+    const rawCode = (input ? input.value : '').trim().replace(/[^0-9]/g, '');
+    if (rawCode.length !== 4) {
+      alert('Entre un code valide à 4 chiffres (ex: 8492)');
+      return;
+    }
+    joinPrivateRoom(rawCode);
+  }
+
+  function joinPrivateRoom(code) {
+    destroyPeer();
+    duel.isHost = false;
+    duel.roomCode = code;
+    const roomId = 'blnd-priv-' + code;
+
+    showDuelScreen('duelWaitScreen');
+    setWaitStatus('Connexion au salon ' + code + '...', 'Connexion à ton ami en cours...');
+    const shareZone = document.getElementById('duelRoomShareZone');
+    if (shareZone) shareZone.style.display = 'none';
+
+    if (typeof Peer === 'undefined') {
+      setWaitStatus('⚠️ PeerJS non chargé', 'Vérifie ta connexion internet.');
+      return;
+    }
+
+    duel.peer = new Peer({ debug: 0 });
+
+    duel.peer.on('error', (err) => {
+      console.warn('Guest error:', err);
+      if (err.type === 'peer-unavailable') {
+        setWaitStatus('⚠️ Salon introuvable', 'Vérifie le code (4 chiffres) et que ton ami ait bien créé le salon avant toi.');
+      }
+    });
+
+    duel.peer.on('open', () => {
+      const conn = duel.peer.connect(roomId, { reliable: true });
+      duel.conn = conn;
+      conn.on('open', () => {
+        conn.send({ type: 'hello', name: duel.playerName });
+        setWaitStatus('Connecté !', 'En attente de l\'hôte...');
+        setupConn(conn);
+      });
+      conn.on('error', (err) => {
+        setWaitStatus('⚠️ Erreur de connexion', 'Code introuvable. Vérifie le code ou que ton ami ait créé le salon.');
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     COPY HELPERS
+  ------------------------------------------------------------------ */
+  function copyRoomCode() {
+    navigator.clipboard.writeText(duel.roomCode).then(() => {
+      const btn = document.getElementById('btnCopyRoomCode');
+      if (btn) { const o = btn.textContent; btn.textContent = '✅ Copié !'; setTimeout(() => btn.textContent = o, 1800); }
+    });
+  }
   function copyRoomLink() {
-    if (!duel.roomCode) return;
-    const url = window.location.origin + window.location.pathname + '?duel=' + duel.roomCode;
+    const url = location.origin + location.pathname + '?duel=' + duel.roomCode;
     navigator.clipboard.writeText(url).then(() => {
       const btn = document.getElementById('btnCopyRoomLink');
-      if (btn) {
-        const orig = btn.textContent;
-        btn.textContent = "✅ Lien copié !";
-        setTimeout(() => { btn.textContent = orig; }, 1800);
-      }
+      if (btn) { const o = btn.textContent; btn.textContent = '✅ Lien copié !'; setTimeout(() => btn.textContent = o, 1800); }
     });
   }
 
   function cancelMatchmaking() {
-    if (duel.peer) {
-      try { duel.peer.destroy(); } catch (e) {}
-      duel.peer = null;
-    }
+    destroyPeer();
+    duel.isRunning = false;
     resetToLobby(false);
   }
 
@@ -2150,383 +2099,298 @@ document.addEventListener('DOMContentLoaded', () => {
     if (duel.timerInterval) clearInterval(duel.timerInterval);
     duel.isRunning = false;
     showDuelScreen('duelLobbyScreen');
-    updateDuelStoredStats();
+    updateStoredStats();
     if (keepDuelMode) window.switchQuizMainMode('duel');
   }
 
-  // Countdown 3, 2, 1, GO
+  /* ------------------------------------------------------------------
+     COUNTDOWN + GAME LAUNCH
+  ------------------------------------------------------------------ */
   function startDuelCountdown() {
     showDuelScreen('duelCountdownScreen');
-
     const p1 = document.getElementById('duelP1Name');
     const p2 = document.getElementById('duelP2Name');
-    const p2Badge = document.getElementById('duelP2Badge');
+    const p2b = document.getElementById('duelP2Badge');
     const cdNum = document.getElementById('duelCountdownNumber');
-
     if (p1) p1.textContent = duel.playerName;
     if (p2) p2.textContent = duel.opponentName;
-    if (p2Badge) p2Badge.textContent = duel.opponentBadge;
+    if (p2b) p2b.textContent = duel.isHost ? 'JOUEUR 2' : 'HÔTE';
+    if (cdNum) cdNum.textContent = '3';
 
     let count = 3;
-    if (cdNum) cdNum.textContent = count;
-
-    const timer = setInterval(() => {
+    const t = setInterval(() => {
       count--;
       if (count > 0) {
-        if (cdNum) {
-          cdNum.textContent = count;
-          cdNum.style.animation = 'none';
-          void cdNum.offsetWidth;
-          cdNum.style.animation = 'countdown-pop 0.4s cubic-bezier(0.16,1,0.3,1)';
-        }
+        if (cdNum) { cdNum.textContent = count; cdNum.style.animation='none'; void cdNum.offsetWidth; cdNum.style.animation='countdown-pop 0.4s cubic-bezier(0.16,1,0.3,1)'; }
       } else if (count === 0) {
-        if (cdNum) cdNum.textContent = "GO !";
+        if (cdNum) cdNum.textContent = 'GO !';
       } else {
-        clearInterval(timer);
-        launchActiveDuel();
+        clearInterval(t);
+        launchDuel();
       }
     }, 900);
   }
 
-  // Active Game (30s)
-  function launchActiveDuel() {
+  function launchDuel() {
     showDuelScreen('duelActiveScreen');
-
-    // Reset scores & stats
-    duel.score = 0;
-    duel.streak = 0;
-    duel.maxStreak = 0;
-    duel.correctCount = 0;
-    duel.wrongCount = 0;
-    duel.mistakes = [];
-    duel.opponentScore = 0;
-    duel.opponentStreak = 0;
-    duel.opponentTotal = 0;
-    duel.timeLeft = 30.0;
-    duel.isRunning = true;
-    duel.isAnswerLocked = false;
-
-    // Shuffle questions pool
+    duel.score = 0; duel.streak = 0; duel.maxStreak = 0;
+    duel.correctCount = 0; duel.wrongCount = 0; duel.mistakes = [];
+    duel.opponentScore = 0; duel.opponentStreak = 0;
+    duel.timeLeft = 30.0; duel.isRunning = true; duel.isAnswerLocked = false;
     duel.shuffledQuestions = [...DUEL_QUESTIONS].sort(() => Math.random() - 0.5);
     duel.currentIndex = 0;
 
-    // Update HUD display
-    const hudP1 = document.getElementById('duelHudP1Name');
-    const hudP2 = document.getElementById('duelHudP2Name');
-    if (hudP1) hudP1.textContent = duel.playerName;
-    if (hudP2) hudP2.textContent = duel.opponentName;
+    const h1 = document.getElementById('duelHudP1Name');
+    const h2 = document.getElementById('duelHudP2Name');
+    if (h1) h1.textContent = duel.playerName;
+    if (h2) h2.textContent = duel.opponentName;
 
-    updatePlayerHud();
-    updateOpponentHud();
-    updateTugOfWarBar();
-    renderNextQuestion();
+    updatePlayerHud(); updateOpponentHud(); updateTugBar();
+    renderQ();
 
-    // Start 30s timer
     const circle = document.getElementById('duelTimerCircle');
     const numEl = document.getElementById('duelTimerNumber');
-    const circumference = 276.46; // 2 * PI * 44
-
+    const CIRC = 276.46;
     if (duel.timerInterval) clearInterval(duel.timerInterval);
     duel.timerInterval = setInterval(() => {
       duel.timeLeft -= 0.1;
-      if (duel.timeLeft <= 0) {
-        duel.timeLeft = 0;
-        clearInterval(duel.timerInterval);
-        endDuelMatch();
-      }
-
-      // Update timer ring
-      const progressRatio = duel.timeLeft / 30.0;
-      const offset = circumference * (1 - progressRatio);
+      if (duel.timeLeft <= 0) { duel.timeLeft = 0; clearInterval(duel.timerInterval); endMatch(); return; }
+      const ratio = duel.timeLeft / 30;
       if (circle) {
-        circle.style.strokeDashoffset = offset;
+        circle.style.strokeDashoffset = CIRC * (1 - ratio);
         circle.classList.toggle('warning', duel.timeLeft <= 10 && duel.timeLeft > 5);
         circle.classList.toggle('critical', duel.timeLeft <= 5);
       }
-      if (numEl) {
-        numEl.textContent = Math.ceil(duel.timeLeft);
-      }
+      if (numEl) numEl.textContent = Math.ceil(duel.timeLeft);
     }, 100);
   }
 
-  // Render question with 100% SHUFFLED OPTIONS (Fix for "c'est toujours la première")
-  function renderNextQuestion() {
+  /* ------------------------------------------------------------------
+     QUESTION RENDERING (shuffled options)
+  ------------------------------------------------------------------ */
+  function renderQ() {
     if (duel.currentIndex >= duel.shuffledQuestions.length) {
       duel.shuffledQuestions = [...DUEL_QUESTIONS].sort(() => Math.random() - 0.5);
       duel.currentIndex = 0;
     }
-
-    const item = duel.shuffledQuestions[duel.currentIndex];
-    duel.currentIndex++;
+    const item = duel.shuffledQuestions[duel.currentIndex++];
     duel.isAnswerLocked = false;
 
     const qText = document.getElementById('duelQuestionText');
     const qCat = document.getElementById('duelQCat');
     const grid = document.getElementById('duelOptionsGrid');
-
     if (qText) qText.textContent = `Quelle touche pour : ${item.q} ?`;
     if (qCat) qCat.textContent = `Raccourci · ${item.cat}`;
     if (!grid) return;
 
+    // SHUFFLE the 4 options so correct answer is never always first
+    const opts = [...item.options].sort(() => Math.random() - 0.5);
+    const keys = ['1','2','3','4'];
     grid.innerHTML = '';
-    const keysHints = ['1', '2', '3', '4'];
-
-    // SHUFFLE the options array so the correct answer is never always in the first button!
-    const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
-
-    shuffledOptions.forEach((opt, idx) => {
+    opts.forEach((opt, i) => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'duel-opt-btn';
-      btn.innerHTML = `<span class="opt-key">${keysHints[idx]}</span><span class="opt-text">${opt}</span>`;
-      btn.addEventListener('click', () => handleOptionClick(opt, item.correct, btn, item));
+      btn.innerHTML = `<span class="opt-key">${keys[i]}</span><span class="opt-text">${opt}</span>`;
+      btn.addEventListener('click', () => onAnswer(opt, item.correct, btn, item));
       grid.appendChild(btn);
     });
   }
 
-  function handleOptionClick(chosen, correct, btnEl, item) {
+  function onAnswer(chosen, correct, btnEl, item) {
     if (!duel.isRunning || duel.isAnswerLocked) return;
     duel.isAnswerLocked = true;
-
-    const isCorrect = (chosen === correct);
     const allBtns = document.querySelectorAll('.duel-opt-btn');
 
-    if (isCorrect) {
+    if (chosen === correct) {
       btnEl.classList.add('correct');
-      duel.score++;
-      duel.streak++;
-      duel.correctCount++;
+      duel.score++; duel.streak++; duel.correctCount++;
       if (duel.streak > duel.maxStreak) duel.maxStreak = duel.streak;
-
-      // Bump animation on score
-      const scoreEl = document.getElementById('duelHudP1Score');
-      if (scoreEl) {
-        scoreEl.classList.remove('bump');
-        void scoreEl.offsetWidth;
-        scoreEl.classList.add('bump');
-      }
-
-      feedBattleAlert(`✅ +1 point ! (${duel.score} pts)`, 'feed-event-me');
-
-      // Real-time P2P score synchronization to opponent
-      sendP2PMessage({ type: 'score_update', score: duel.score, combo: duel.streak, correct: duel.correctCount });
-
-      updatePlayerHud();
-      updateTugOfWarBar();
-
-      // Immediate transition (120ms) for high speed!
-      setTimeout(() => {
-        renderNextQuestion();
-      }, 120);
+      const sEl = document.getElementById('duelHudP1Score');
+      if (sEl) { sEl.classList.remove('bump'); void sEl.offsetWidth; sEl.classList.add('bump'); }
+      feedAlert(`✅ +1 point ! (${duel.score} pts)`, 'feed-event-me');
+      if (duel.conn && duel.conn.open) duel.conn.send({ type:'score', s:duel.score, c:duel.streak });
+      updatePlayerHud(); updateTugBar();
+      setTimeout(renderQ, 120);
     } else {
       btnEl.classList.add('wrong');
-      duel.streak = 0;
-      duel.wrongCount++;
-      duel.mistakes.push({ q: item.q, correct: item.correct, user: chosen });
-
-      // Highlight the correct one
-      allBtns.forEach(b => {
-        const textEl = b.querySelector('.opt-text');
-        if (textEl && textEl.textContent.trim() === correct.trim()) {
-          b.classList.add('correct');
-        }
-      });
-
-      feedBattleAlert(`❌ Erreur ! La réponse était ${correct}`, 'feed-event-opp');
-
-      updatePlayerHud();
-      updateTugOfWarBar();
-
-      // Freeze penalty (380ms)
-      setTimeout(() => {
-        renderNextQuestion();
-      }, 380);
+      duel.streak = 0; duel.wrongCount++;
+      duel.mistakes.push({ q: item.q, correct: item.correct });
+      allBtns.forEach(b => { if (b.querySelector('.opt-text') && b.querySelector('.opt-text').textContent === correct) b.classList.add('correct'); });
+      feedAlert(`❌ Erreur ! Réponse : ${correct}`, 'feed-event-opp');
+      updatePlayerHud(); updateTugBar();
+      setTimeout(renderQ, 380);
     }
   }
 
+  /* ------------------------------------------------------------------
+     HUD UPDATES
+  ------------------------------------------------------------------ */
   function updatePlayerHud() {
-    const scoreEl = document.getElementById('duelHudP1Score');
-    const comboEl = document.getElementById('duelHudP1Combo');
-    if (scoreEl) scoreEl.textContent = duel.score;
-    if (comboEl) {
-      if (duel.streak >= 2) {
-        comboEl.textContent = `🔥 Combo x${duel.streak}`;
-        comboEl.classList.remove('hidden');
-      } else {
-        comboEl.classList.add('hidden');
-      }
-    }
+    const s = document.getElementById('duelHudP1Score');
+    const c = document.getElementById('duelHudP1Combo');
+    if (s) s.textContent = duel.score;
+    if (c) { if (duel.streak >= 2) { c.textContent = `🔥 x${duel.streak}`; c.classList.remove('hidden'); } else c.classList.add('hidden'); }
   }
-
   function updateOpponentHud() {
-    const scoreEl = document.getElementById('duelHudP2Score');
-    const comboEl = document.getElementById('duelHudP2Combo');
-    if (scoreEl) scoreEl.textContent = duel.opponentScore;
-    if (comboEl) {
-      if (duel.opponentStreak >= 2) {
-        comboEl.textContent = `🔥 Combo x${duel.opponentStreak}`;
-        comboEl.classList.remove('hidden');
-      } else {
-        comboEl.classList.add('hidden');
-      }
-    }
+    const s = document.getElementById('duelHudP2Score');
+    const c = document.getElementById('duelHudP2Combo');
+    if (s) s.textContent = duel.opponentScore;
+    if (c) { if (duel.opponentStreak >= 2) { c.textContent = `🔥 x${duel.opponentStreak}`; c.classList.remove('hidden'); } else c.classList.add('hidden'); }
   }
-
-  function updateTugOfWarBar() {
+  function updateTugBar() {
     const tugMe = document.getElementById('duelTugMe');
     const tugOpp = document.getElementById('duelTugOpp');
-    const diffTag = document.getElementById('duelDifferentialTag');
-
+    const tag = document.getElementById('duelDifferentialTag');
     const total = duel.score + duel.opponentScore;
-    let percentMe = 50;
-    if (total > 0) {
-      percentMe = Math.round((duel.score / total) * 100);
-      percentMe = Math.max(12, Math.min(88, percentMe)); // clamp
-    }
-    const percentOpp = 100 - percentMe;
-
-    if (tugMe) tugMe.style.width = `${percentMe}%`;
-    if (tugOpp) tugOpp.style.width = `${percentOpp}%`;
-
-    if (diffTag) {
+    let pct = 50;
+    if (total > 0) pct = Math.max(12, Math.min(88, Math.round((duel.score / total) * 100)));
+    if (tugMe) tugMe.style.width = pct + '%';
+    if (tugOpp) tugOpp.style.width = (100-pct) + '%';
+    if (tag) {
       const diff = duel.score - duel.opponentScore;
-      if (diff > 0) {
-        diffTag.textContent = `TU MÈNES (+${diff})`;
-        diffTag.className = 'duel-differential-tag winning';
-      } else if (diff < 0) {
-        diffTag.textContent = `RETARD (${diff})`;
-        diffTag.className = 'duel-differential-tag losing';
-      } else {
-        diffTag.textContent = 'ÉGALITÉ';
-        diffTag.className = 'duel-differential-tag';
-      }
+      if (diff > 0) { tag.textContent = `+${diff} pts`; tag.className = 'duel-differential-tag winning'; }
+      else if (diff < 0) { tag.textContent = `${diff} pts`; tag.className = 'duel-differential-tag losing'; }
+      else { tag.textContent = 'ÉGALITÉ'; tag.className = 'duel-differential-tag'; }
     }
   }
-
-  function feedBattleAlert(text, typeClass) {
-    const feed = document.getElementById('duelBattleFeed');
-    if (feed) {
-      feed.innerHTML = `<span class="${typeClass || ''}">${text}</span>`;
-    }
+  function feedAlert(text, cls) {
+    const f = document.getElementById('duelBattleFeed');
+    if (f) f.innerHTML = `<span class="${cls}">${text}</span>`;
   }
 
-  // End of 30 Seconds Match
-  function endDuelMatch() {
+  /* ------------------------------------------------------------------
+     END MATCH + RESULTS
+  ------------------------------------------------------------------ */
+  function endMatch() {
     duel.isRunning = false;
-
-    // Notify opponent of final score
-    sendP2PMessage({ type: 'game_over', finalScore: duel.score, totalAnswers: duel.correctCount + duel.wrongCount });
-
+    if (duel.conn && duel.conn.open) duel.conn.send({ type:'end', s:duel.score });
     showDuelScreen('duelResultsScreen');
 
-    // Compute stats
-    const totalAnswers = duel.correctCount + duel.wrongCount;
-    const accuracy = totalAnswers > 0 ? Math.round((duel.correctCount / totalAnswers) * 100) : 0;
-    const apm = Math.round((totalAnswers / 30) * 60);
-
-    const isWinner = duel.score > duel.opponentScore;
+    const total = duel.correctCount + duel.wrongCount;
+    const acc = total > 0 ? Math.round((duel.correctCount / total) * 100) : 0;
+    const apm = Math.round((total / 30) * 60);
+    const isWin = duel.score > duel.opponentScore;
     const isDraw = duel.score === duel.opponentScore;
 
-    // Save records
-    const storedRecord = parseInt(localStorage.getItem('blender_duel_record') || '0', 10);
-    if (duel.score > storedRecord) {
-      localStorage.setItem('blender_duel_record', duel.score);
-    }
-    const totalMatches = parseInt(localStorage.getItem('blender_duel_matches') || '0', 10) + 1;
-    localStorage.setItem('blender_duel_matches', totalMatches);
+    const storedRec = parseInt(localStorage.getItem('blender_duel_record') || '0');
+    if (duel.score > storedRec) localStorage.setItem('blender_duel_record', duel.score);
+    localStorage.setItem('blender_duel_matches', (parseInt(localStorage.getItem('blender_duel_matches') || '0') + 1).toString());
+    if (isWin) localStorage.setItem('blender_duel_wins', (parseInt(localStorage.getItem('blender_duel_wins') || '0') + 1).toString());
 
-    if (isWinner) {
-      const totalWins = parseInt(localStorage.getItem('blender_duel_wins') || '0', 10) + 1;
-      localStorage.setItem('blender_duel_wins', totalWins);
-    }
-
-    // Render results
     const emojiEl = document.getElementById('duelResultEmoji');
     const titleEl = document.getElementById('duelResultTitle');
     const subEl = document.getElementById('duelResultSubtitle');
-
-    if (isWinner) {
+    if (isWin) {
       if (emojiEl) emojiEl.textContent = '🏆';
-      if (titleEl) { titleEl.textContent = 'VICTOIRE ÉCLATANTE !'; titleEl.style.color = '#8bdc63'; }
-      if (subEl) subEl.textContent = `Tu remportes le duel face à ${duel.opponentName} avec ${duel.score} bonnes réponses en 30s !`;
+      if (titleEl) { titleEl.textContent = 'VICTOIRE !'; titleEl.style.color = '#8bdc63'; }
+      if (subEl) subEl.textContent = `Tu bats ${duel.opponentName} : ${duel.score} vs ${duel.opponentScore} pts !`;
     } else if (isDraw) {
       if (emojiEl) emojiEl.textContent = '🤝';
-      if (titleEl) { titleEl.textContent = 'ÉGALITÉ PARFAITE !'; titleEl.style.color = '#f08a34'; }
-      if (subEl) subEl.textContent = `Score parfait de ${duel.score} partout ! Une revanche s'impose !`;
+      if (titleEl) { titleEl.textContent = 'ÉGALITÉ !'; titleEl.style.color = '#f08a34'; }
+      if (subEl) subEl.textContent = `Score parfait : ${duel.score} partout !`;
     } else {
       if (emojiEl) emojiEl.textContent = '💀';
       if (titleEl) { titleEl.textContent = 'DÉFAITE...'; titleEl.style.color = '#e03a3a'; }
-      if (subEl) subEl.textContent = `${duel.opponentName} l'emporte avec ${duel.opponentScore} points. Entraîne tes réflexes !`;
+      if (subEl) subEl.textContent = `${duel.opponentName} l'emporte : ${duel.opponentScore} vs ${duel.score} pts.`;
     }
 
-    // Fill comparison table
-    const myScoreEl = document.getElementById('duelFinalMyScore');
-    const myAccEl = document.getElementById('duelFinalMyAcc');
-    const myApmEl = document.getElementById('duelFinalMyApm');
-    const myStreakEl = document.getElementById('duelFinalMyStreak');
+    const elems = {
+      duelFinalMyScore: duel.score,
+      duelFinalMyAcc: acc + '%',
+      duelFinalMyApm: apm + ' APM',
+      duelFinalMyStreak: 'x' + duel.maxStreak + ' 🔥',
+      duelFinalOppName: duel.opponentName.toUpperCase(),
+      duelFinalOppScore: duel.opponentScore
+    };
+    Object.entries(elems).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.textContent = val; });
 
-    if (myScoreEl) myScoreEl.textContent = duel.score;
-    if (myAccEl) myAccEl.textContent = `${accuracy}%`;
-    if (myApmEl) myApmEl.textContent = `${apm} APM`;
-    if (myStreakEl) myStreakEl.textContent = `x${duel.maxStreak} 🔥`;
-
-    const oppNameEl = document.getElementById('duelFinalOppName');
-    const oppScoreEl = document.getElementById('duelFinalOppScore');
-    const oppAccEl = document.getElementById('duelFinalOppAcc');
-    const oppApmEl = document.getElementById('duelFinalOppApm');
-    const oppStreakEl = document.getElementById('duelFinalOppStreak');
-
-    const oppApmVal = Math.round((Math.max(duel.opponentScore, duel.opponentTotal) / 30) * 60);
-    const oppAccVal = Math.floor(75 + Math.random() * 20);
-
-    if (oppNameEl) oppNameEl.textContent = duel.opponentName.toUpperCase();
-    if (oppScoreEl) oppScoreEl.textContent = duel.opponentScore;
-    if (oppAccEl) oppAccEl.textContent = `${oppAccVal}%`;
-    if (oppApmEl) oppApmEl.textContent = `${oppApmVal} APM`;
-    if (oppStreakEl) oppStreakEl.textContent = `x${Math.max(1, Math.floor(duel.opponentScore * 0.4))} 🔥`;
-
-    // Highlight winner column
     const colMe = document.getElementById('duelCompMeCol');
     const colOpp = document.getElementById('duelCompOppCol');
-    if (colMe) colMe.classList.toggle('winner', isWinner);
-    if (colOpp) colOpp.classList.toggle('winner', !isWinner && !isDraw);
+    if (colMe) colMe.classList.toggle('winner', isWin);
+    if (colOpp) colOpp.classList.toggle('winner', !isWin && !isDraw);
 
-    // Render Mistakes Review
-    const mistakesWrap = document.getElementById('duelMistakesWrap');
-    const mistakesList = document.getElementById('duelMistakesList');
-    if (mistakesWrap && mistakesList) {
+    const wrap = document.getElementById('duelMistakesWrap');
+    const list = document.getElementById('duelMistakesList');
+    if (wrap && list) {
       if (duel.mistakes.length > 0) {
-        mistakesWrap.classList.remove('hidden');
-        mistakesList.innerHTML = duel.mistakes.map(m => `
-          <div class="duel-mistake-item">
-            <span class="mistake-q">${m.q}</span>
-            <span class="mistake-correct"><kbd>${m.correct}</kbd></span>
-          </div>
-        `).join('');
+        wrap.classList.remove('hidden');
+        list.innerHTML = duel.mistakes.map(m => `<div class="duel-mistake-item"><span class="mistake-q">${m.q}</span><span class="mistake-correct"><kbd>${m.correct}</kbd></span></div>`).join('');
       } else {
-        mistakesWrap.classList.add('hidden');
+        wrap.classList.add('hidden');
       }
     }
 
-    const btnRematch = document.getElementById('btnDuelRematch');
-    if (btnRematch) {
-      btnRematch.textContent = "🔄 Demander une Revanche (30s)";
-      btnRematch.classList.remove('pulse');
-    }
+    const btnR = document.getElementById('btnDuelRematch');
+    if (btnR) btnR.textContent = '🔄 Demander une Revanche (30s)';
   }
 
   function requestRematch() {
-    sendP2PMessage({ type: 'rematch_request' });
-    const btn = document.getElementById('btnDuelRematch');
-    if (btn) btn.textContent = "⏳ Demande de revanche envoyée...";
-    setTimeout(() => {
-      sendP2PMessage({ type: 'rematch_start' });
+    if (duel.conn && duel.conn.open) {
+      duel.conn.send({ type: 'rematch_ok' });
       startDuelCountdown();
-    }, 1200);
+    } else {
+      alert('La connexion avec ton adversaire est perdue. Lance un nouveau match.');
+    }
   }
 
-  // Call initialization
-  initDuelSystem();
+  /* ------------------------------------------------------------------
+     KEYBOARD SHORTCUTS (AZERTY: &éé"')
+  ------------------------------------------------------------------ */
+  window.addEventListener('keydown', (e) => {
+    if (!duel.isRunning || duel.isAnswerLocked) return;
+    const map = { '1':0, '&':0, '2':1, 'é':1, '"':2, '3':2, "'":3, '4':3 };
+    if (map.hasOwnProperty(e.key)) {
+      const btns = document.querySelectorAll('.duel-opt-btn');
+      const idx = map[e.key];
+      if (btns[idx] && !btns[idx].disabled) btns[idx].click();
+    }
+  });
+
+  /* ------------------------------------------------------------------
+     INIT
+  ------------------------------------------------------------------ */
+  function initDuel() {
+    if (!document.getElementById('duelCard')) return;
+
+    // Player name persistence
+    const nameInput = document.getElementById('duelPlayerName');
+    if (nameInput) {
+      nameInput.value = duel.playerName;
+      nameInput.addEventListener('input', e => {
+        duel.playerName = e.target.value.trim() || 'Joueur 3D';
+        localStorage.setItem('blender_duel_pseudo', duel.playerName);
+      });
+    }
+
+    updateStoredStats();
+
+    // Wire buttons
+    const wire = (id, fn) => { const el = document.getElementById(id); if (el) el.addEventListener('click', fn); };
+    wire('btnQuickMatch', startQuickMatch);
+    wire('btnCreateRoom', createPrivateRoom);
+    wire('btnJoinRoom', joinRoomFromInput);
+    wire('btnCancelMatchmaking', cancelMatchmaking);
+    wire('btnCopyRoomCode', copyRoomCode);
+    wire('btnCopyRoomLink', copyRoomLink);
+    wire('btnDuelRematch', requestRematch);
+    wire('btnDuelNewMatch', () => resetToLobby(true));
+    wire('btnDuelExit', () => { destroyPeer(); resetToLobby(false); });
+
+    // URL auto-join: ?duel=1234
+    const params = new URLSearchParams(location.search);
+    const codeParam = params.get('duel') || params.get('room');
+    if (codeParam) {
+      window.switchQuizMainMode('duel');
+      const inp = document.getElementById('duelJoinCodeInput');
+      if (inp) inp.value = codeParam.replace(/[^0-9]/g,'');
+      setTimeout(() => joinPrivateRoom(codeParam.replace(/[^0-9]/g,'')), 400);
+    } else if (params.get('mode') === 'duel') {
+      window.switchQuizMainMode('duel');
+    }
+  }
+
+  initDuel();
 
 
 });
