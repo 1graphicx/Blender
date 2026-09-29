@@ -1835,15 +1835,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!data || !data.type) return;
     switch (data.type) {
       case 'hello':
-        // Guest sends hello → host responds with ack, both start countdown
-        if (duel.isHost) {
-          duel.opponentName = data.name || 'Adversaire';
+        // Guest sends hello → host responds with ack, then host starts countdown
+        duel.opponentName = data.name || 'Adversaire';
+        if (duel.isHost && duel.conn && duel.conn.open) {
           duel.conn.send({ type: 'hello_ack', name: duel.playerName });
-          startDuelCountdown();
+          setTimeout(startDuelCountdown, 100); // small delay to ensure ack is sent
         }
         break;
       case 'hello_ack':
-        // Host responds → guest starts countdown
+        // Guest receives ack → guest starts countdown
         duel.opponentName = data.name || 'Adversaire';
         startDuelCountdown();
         break;
@@ -1921,15 +1921,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let connected = false;
 
+      setupConn(conn); // register data handler BEFORE open
       conn.on('open', () => {
         connected = true;
         duel.isHost = false;
         conn.send({ type: 'hello', name: duel.playerName });
         setWaitStatus('Adversaire trouvé !', 'Connexion établie. Préparation du duel...');
-        setupConn(conn);
       });
-
-      conn.on('data', onData);
       conn.on('error', (err) => {
         if (!connected) becomeQuickMatchHost(targetRoomId);
       });
@@ -2061,13 +2059,14 @@ document.addEventListener('DOMContentLoaded', () => {
     duel.peer.on('open', () => {
       const conn = duel.peer.connect(roomId, { reliable: true });
       duel.conn = conn;
+      setupConn(conn); // register data handler BEFORE open fires
       conn.on('open', () => {
         conn.send({ type: 'hello', name: duel.playerName });
-        setWaitStatus('Connecté !', 'En attente de l\'hôte...');
-        setupConn(conn);
+        setWaitStatus('Connecté !', 'Lancement du duel en cours...');
       });
       conn.on('error', (err) => {
-        setWaitStatus('⚠️ Erreur de connexion', 'Code introuvable. Vérifie le code ou que ton ami ait créé le salon.');
+        console.warn('join conn error:', err);
+        setWaitStatus('⚠️ Salon introuvable', 'Vérifie le code et que ton ami ait créé le salon avant toi.');
       });
     });
   }
