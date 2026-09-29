@@ -1691,6 +1691,869 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
+
+
+  /* ================================================================
+     DUEL 1V1 MULTIJOUEUR EN LIGNE (30 SECONDES CHRONO)
+     ================================================================ */
+
+  const DUEL_QUESTIONS = [
+    { q: "Extruder une face ou arête", correct: "E", options: ["E", "I", "G", "S"], cat: "Mode Édition" },
+    { q: "Déplacer / Grab la sélection", correct: "G", options: ["G", "R", "S", "B"], cat: "Transformations" },
+    { q: "Faire pivoter (Rotate)", correct: "R", options: ["R", "G", "X", "S"], cat: "Transformations" },
+    { q: "Redimensionner (Scale)", correct: "S", options: ["S", "R", "Alt + S", "G"], cat: "Transformations" },
+    { q: "Biseauter / Chanfrein (Bevel)", correct: "Ctrl + B", options: ["Ctrl + B", "Ctrl + R", "I", "Alt + B"], cat: "Mode Édition" },
+    { q: "Ajouter une boucle de coupe (Loop Cut)", correct: "Ctrl + R", options: ["Ctrl + R", "Shift + L", "K", "E"], cat: "Mode Édition" },
+    { q: "Insertion de face (Inset)", correct: "I", options: ["I", "E", "F", "Ctrl + I"], cat: "Mode Édition" },
+    { q: "Menu d'ajout (Add Mesh / Curve)", correct: "Maj + A", options: ["Maj + A", "Ctrl + A", "Alt + A", "Tab"], cat: "Général" },
+    { q: "Fusionner les sommets (Merge)", correct: "M", options: ["M", "Alt + M", "J", "F"], cat: "Mode Édition" },
+    { q: "Déplier les coordonnées UV (Unwrap)", correct: "U", options: ["U", "Ctrl + U", "Shift + U", "E"], cat: "UV & Textures" },
+    { q: "Basculer Mode Objet / Mode Édition", correct: "Tab", options: ["Tab", "Ctrl + Tab", "A", "Z"], cat: "Général" },
+    { q: "Activer la vue Rayons X (X-Ray)", correct: "Alt + Z", options: ["Alt + Z", "Shift + Z", "Z", "Ctrl + Z"], cat: "Vues & Shading" },
+    { q: "Vue de face orthogonale", correct: "Pavé 1", options: ["Pavé 1", "Pavé 3", "Pavé 7", "Pavé 0"], cat: "Navigation 3D" },
+    { q: "Vue de profil droite", correct: "Pavé 3", options: ["Pavé 3", "Pavé 1", "Pavé 7", "Ctrl + 3"], cat: "Navigation 3D" },
+    { q: "Vue de dessus (Top View)", correct: "Pavé 7", options: ["Pavé 7", "Pavé 1", "Pavé 3", "Pavé 9"], cat: "Navigation 3D" },
+    { q: "Vue Caméra active", correct: "Pavé 0", options: ["Pavé 0", "Pavé 5", "Pavé 1", "Ctrl + 0"], cat: "Navigation 3D" },
+    { q: "Bascule Perspective / Orthographique", correct: "Pavé 5", options: ["Pavé 5", "Pavé 1", "Pavé 9", "Pavé 0"], cat: "Navigation 3D" },
+    { q: "Tout sélectionner dans la scène", correct: "A", options: ["A", "Ctrl + A", "Alt + A", "B"], cat: "Sélections" },
+    { q: "Tout désélectionner", correct: "Alt + A", options: ["Alt + A", "A", "Ctrl + D", "X"], cat: "Sélections" },
+    { q: "Appliquer Échelle et Rotation", correct: "Ctrl + A", options: ["Ctrl + A", "Maj + A", "Alt + A", "Ctrl + T"], cat: "Transformations" },
+    { q: "Dupliquer l'objet sélectionné", correct: "Maj + D", options: ["Maj + D", "Alt + D", "Ctrl + D", "D"], cat: "Transformations" },
+    { q: "Duplication liée (Linked Duplicate)", correct: "Alt + D", options: ["Alt + D", "Maj + D", "Ctrl + L", "Ctrl + D"], cat: "Transformations" },
+    { q: "Masquer la sélection (Hide)", correct: "H", options: ["H", "Alt + H", "Shift + H", "X"], cat: "Vues & Shading" },
+    { q: "Réafficher tout ce qui est masqué", correct: "Alt + H", options: ["Alt + H", "H", "Ctrl + H", "Shift + H"], cat: "Vues & Shading" },
+    { q: "Séparer en nouvel objet (Separate)", correct: "P", options: ["P", "Y", "V", "M"], cat: "Mode Édition" },
+    { q: "Rejoindre plusieurs objets (Join)", correct: "Ctrl + J", options: ["Ctrl + J", "J", "M", "Ctrl + P"], cat: "Général" },
+    { q: "Parenter des objets", correct: "Ctrl + P", options: ["Ctrl + P", "Alt + P", "P", "Shift + P"], cat: "Général" },
+    { q: "Outil Couteau de découpe libre", correct: "K", options: ["K", "C", "X", "V"], cat: "Mode Édition" },
+    { q: "Créer une face entre sommets (Fill)", correct: "F", options: ["F", "J", "M", "Alt + F"], cat: "Mode Édition" },
+    { q: "Relier deux sommets par une arête", correct: "J", options: ["J", "F", "V", "K"], cat: "Mode Édition" },
+    { q: "Activer l'Édition Proportionnelle", correct: "O", options: ["O", "P", "Alt + O", "Shift + O"], cat: "Transformations" },
+    { q: "Ouvrir la recherche globale d'outils", correct: "F3", options: ["F3", "Espace", "Ctrl + F", "Shift + F3"], cat: "Général" },
+    { q: "Isoler l'objet sélectionné (Vue locale)", correct: "Pavé /", options: ["Pavé /", "H", "Alt + Z", "Pavé ."], cat: "Navigation 3D" },
+    { q: "Centrer la vue sur l'objet sélectionné", correct: "Pavé .", options: ["Pavé .", "Pavé /", "C", "Home"], cat: "Navigation 3D" },
+    { q: "Marquer une couture UV (Mark Seam)", correct: "Ctrl + E", options: ["Ctrl + E", "U", "Alt + E", "Ctrl + S"], cat: "UV & Textures" },
+    { q: "Sélection d'une boucle complète (Loop)", correct: "Alt + Clic G", options: ["Alt + Clic G", "Ctrl + Clic G", "Shift + Clic G", "L"], cat: "Sélections" },
+    { q: "Inverser la sélection active", correct: "Ctrl + I", options: ["Ctrl + I", "Alt + I", "I", "Shift + I"], cat: "Sélections" },
+    { q: "Menu Supprimer (Delete)", correct: "X", options: ["X", "Delete", "Backspace", "Suppr"], cat: "Général" },
+    { q: "Menu Shading (Wireframe, Solid...)", correct: "Z", options: ["Z", "Alt + Z", "Shift + Z", "W"], cat: "Vues & Shading" },
+    { q: "Sélectionner les éléments reliés", correct: "L", options: ["L", "Alt + L", "Ctrl + L", "Shift + L"], cat: "Sélections" },
+    { q: "Biseau de sommet (Vertex Bevel)", correct: "Ctrl + Maj + B", options: ["Ctrl + Maj + B", "Ctrl + B", "Alt + B", "V"], cat: "Mode Édition" },
+    { q: "Menu Extrusion le long des normales", correct: "Alt + E", options: ["Alt + E", "Ctrl + E", "E", "Shift + E"], cat: "Mode Édition" },
+    { q: "Glissement d'arête (Edge Slide)", correct: "G + G", options: ["G + G", "Alt + G", "Ctrl + G", "Shift + G"], cat: "Mode Édition" },
+    { q: "Répéter la dernière action", correct: "Maj + R", options: ["Maj + R", "Ctrl + R", "R", "Alt + R"], cat: "Général" },
+    { q: "Mode de sélection Sommet (Vertex)", correct: "1", options: ["1", "2", "3", "Tab"], cat: "Mode Édition" },
+    { q: "Mode de sélection Arête (Edge)", correct: "2", options: ["2", "1", "3", "Tab"], cat: "Mode Édition" },
+    { q: "Mode de sélection Face", correct: "3", options: ["3", "1", "2", "Tab"], cat: "Mode Édition" },
+    { q: "Ouvrir le panneau Propriétés (Sidebar)", correct: "N", options: ["N", "T", "P", "F4"], cat: "Navigation 3D" },
+    { q: "Ouvrir la barre d'outils (Toolbar)", correct: "T", options: ["T", "N", "W", "Tab"], cat: "Navigation 3D" }
+  ];
+
+  // Mode Switcher Solo vs Duel
+  window.switchQuizMainMode = function(mode) {
+    const tabDuel = document.getElementById('tabModeDuel');
+    const tabSolo = document.getElementById('tabModeSolo');
+    const cardDuel = document.getElementById('duelCard');
+    const cardSolo = document.getElementById('quizCard');
+
+    if (!tabDuel || !tabSolo || !cardDuel || !cardSolo) return;
+
+    if (mode === 'duel') {
+      tabDuel.classList.add('active');
+      tabSolo.classList.remove('active');
+      cardDuel.classList.remove('hidden');
+      cardSolo.classList.add('hidden');
+    } else {
+      tabSolo.classList.add('active');
+      tabDuel.classList.remove('active');
+      cardSolo.classList.remove('hidden');
+      cardDuel.classList.add('hidden');
+    }
+  };
+
+  // Duel State
+  const duel = {
+    playerName: localStorage.getItem('blender_duel_pseudo') || 'Joueur 3D',
+    opponentName: 'Adversaire',
+    opponentBadge: 'JOUEUR 2',
+    isHost: false,
+    roomCode: '',
+    peer: null,
+    conn: null,
+    bc: null,
+    isBot: false,
+    botTimer: null,
+    botDifficulty: 'medium',
+    
+    // In-game stats
+    score: 0,
+    streak: 0,
+    maxStreak: 0,
+    correctCount: 0,
+    wrongCount: 0,
+    mistakes: [],
+    
+    opponentScore: 0,
+    opponentStreak: 0,
+    opponentTotal: 0,
+
+    // Time
+    timeLeft: 30.0,
+    timerInterval: null,
+    isRunning: false,
+
+    // Questions pool for this match
+    shuffledQuestions: [],
+    currentIndex: 0,
+    isAnswerLocked: false
+  };
+
+  // Initialize Duel UI
+  function initDuelSystem() {
+    const duelCard = document.getElementById('duelCard');
+    if (!duelCard) return;
+
+    // Load stored player name and stats
+    const nameInput = document.getElementById('duelPlayerName');
+    if (nameInput) {
+      nameInput.value = duel.playerName;
+      nameInput.addEventListener('input', (e) => {
+        duel.playerName = e.target.value.trim() || 'Joueur 3D';
+        localStorage.setItem('blender_duel_pseudo', duel.playerName);
+      });
+    }
+
+    updateDuelStoredStats();
+
+    // BroadcastChannel for cross-tab local 1V1
+    try {
+      if (typeof BroadcastChannel !== 'undefined') {
+        duel.bc = new BroadcastChannel('learnblender_duel_bus');
+        duel.bc.onmessage = (event) => handleP2PMessage(event.data);
+      }
+    } catch (e) {
+      console.warn('BroadcastChannel not supported:', e);
+    }
+
+    // Buttons bindings
+    const btnQuickMatch = document.getElementById('btnQuickMatch');
+    const btnCreateRoom = document.getElementById('btnCreateRoom');
+    const btnJoinRoom = document.getElementById('btnJoinRoom');
+    const btnPlayBot = document.getElementById('btnPlayBot');
+    const btnCancel = document.getElementById('btnCancelMatchmaking');
+    const btnCopyCode = document.getElementById('btnCopyRoomCode');
+    const btnCopyLink = document.getElementById('btnCopyRoomLink');
+    const btnRematch = document.getElementById('btnDuelRematch');
+    const btnNewMatch = document.getElementById('btnDuelNewMatch');
+    const btnExit = document.getElementById('btnDuelExit');
+
+    if (btnQuickMatch) btnQuickMatch.addEventListener('click', () => startQuickMatch());
+    if (btnCreateRoom) btnCreateRoom.addEventListener('click', () => createPrivateRoom());
+    if (btnJoinRoom) btnJoinRoom.addEventListener('click', () => joinRoomFromInput());
+    if (btnPlayBot) btnPlayBot.addEventListener('click', () => startBotDuel());
+    if (btnCancel) btnCancel.addEventListener('click', () => cancelMatchmaking());
+    if (btnCopyCode) btnCopyCode.addEventListener('click', () => copyRoomCode());
+    if (btnCopyLink) btnCopyLink.addEventListener('click', () => copyRoomLink());
+    if (btnRematch) btnRematch.addEventListener('click', () => requestRematch());
+    if (btnNewMatch) btnNewMatch.addEventListener('click', () => resetToLobby(true));
+    if (btnExit) btnExit.addEventListener('click', () => resetToLobby(false));
+
+    // Global keyboard listener for answers (1, 2, 3, 4 or &, é, ", ')
+    window.addEventListener('keydown', (e) => {
+      if (!duel.isRunning || duel.isAnswerLocked) return;
+      const keyMap = { '1': 0, '&': 0, '2': 1, 'é': 1, '3': 2, '"': 2, '4': 3, "'": 3 };
+      if (keyMap.hasOwnProperty(e.key)) {
+        const optionBtns = document.querySelectorAll('.duel-opt-btn');
+        const idx = keyMap[e.key];
+        if (optionBtns[idx] && !optionBtns[idx].disabled) {
+          optionBtns[idx].click();
+        }
+      }
+    });
+
+    // Check URL parameters on load: ?mode=duel or ?duel=CODE or ?room=CODE
+    const urlParams = new URLSearchParams(window.location.search);
+    const duelCode = urlParams.get('duel') || urlParams.get('room');
+    const modeParam = urlParams.get('mode');
+
+    if (duelCode) {
+      window.switchQuizMainMode('duel');
+      const input = document.getElementById('duelJoinCodeInput');
+      if (input) input.value = duelCode;
+      setTimeout(() => joinRoom(duelCode), 300);
+    } else if (modeParam === 'duel') {
+      window.switchQuizMainMode('duel');
+    }
+  }
+
+  function showDuelScreen(screenId) {
+    const screens = ['duelLobbyScreen', 'duelWaitScreen', 'duelCountdownScreen', 'duelActiveScreen', 'duelResultsScreen'];
+    screens.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden', id !== screenId);
+    });
+  }
+
+  function updateDuelStoredStats() {
+    const wins = parseInt(localStorage.getItem('blender_duel_wins') || '0', 10);
+    const record = parseInt(localStorage.getItem('blender_duel_record') || '0', 10);
+    const matches = parseInt(localStorage.getItem('blender_duel_matches') || '0', 10);
+
+    const elWins = document.getElementById('duelStatWins');
+    const elRecord = document.getElementById('duelStatRecord');
+    const elMatches = document.getElementById('duelStatMatches');
+
+    if (elWins) elWins.textContent = wins;
+    if (elRecord) elRecord.textContent = record;
+    if (elMatches) elMatches.textContent = matches;
+  }
+
+  // Generate short 4-digit code
+  function generateRoomCode() {
+    return Math.floor(1000 + Math.random() * 9000).toString();
+  }
+
+  // P2P Messaging
+  function sendP2PMessage(msg) {
+    // 1. WebRTC DataChannel
+    if (duel.conn && duel.conn.open) {
+      try { duel.conn.send(msg); } catch (e) { console.warn(e); }
+    }
+    // 2. BroadcastChannel
+    if (duel.bc) {
+      try { duel.bc.postMessage({ ...msg, roomCode: duel.roomCode }); } catch (e) { console.warn(e); }
+    }
+  }
+
+  function handleP2PMessage(msg) {
+    if (!msg) return;
+    if (msg.roomCode && duel.roomCode && msg.roomCode !== duel.roomCode) return;
+
+    switch (msg.type) {
+      case 'join_request':
+        if (duel.isHost) {
+          duel.opponentName = msg.playerName || 'Adversaire';
+          duel.opponentBadge = 'JOUEUR 2';
+          sendP2PMessage({ type: 'join_accepted', hostName: duel.playerName });
+          startDuelCountdown();
+        }
+        break;
+
+      case 'join_accepted':
+        duel.opponentName = msg.hostName || 'Hôte';
+        duel.opponentBadge = 'HÔTE';
+        startDuelCountdown();
+        break;
+
+      case 'score_update':
+        duel.opponentScore = msg.score || 0;
+        duel.opponentStreak = msg.combo || 0;
+        updateOpponentHud();
+        updateTugOfWarBar();
+        feedBattleAlert(`⚡ ${duel.opponentName} marque ! (${duel.opponentScore} pts)`, 'feed-event-opp');
+        break;
+
+      case 'game_over':
+        duel.opponentScore = msg.finalScore || duel.opponentScore;
+        duel.opponentTotal = msg.totalAnswers || duel.opponentTotal;
+        break;
+
+      case 'rematch_request':
+        feedBattleAlert(`🔄 ${duel.opponentName} demande une revanche !`, 'feed-event-combo');
+        const btnRematch = document.getElementById('btnDuelRematch');
+        if (btnRematch) {
+          btnRematch.textContent = `⚡ Accepter la Revanche de ${duel.opponentName} !`;
+          btnRematch.classList.add('pulse');
+        }
+        break;
+
+      case 'rematch_start':
+        startDuelCountdown();
+        break;
+    }
+  }
+
+  // Matchmaking Rapide
+  function startQuickMatch() {
+    duel.isBot = false;
+    duel.roomCode = generateRoomCode();
+    showDuelScreen('duelWaitScreen');
+
+    const waitTitle = document.getElementById('duelWaitTitle');
+    const waitDesc = document.getElementById('duelWaitDesc');
+    const shareZone = document.getElementById('duelRoomShareZone');
+
+    if (waitTitle) waitTitle.textContent = "Recherche d'un adversaire en ligne...";
+    if (waitDesc) waitDesc.textContent = "Balayage des salons disponibles...";
+    if (shareZone) shareZone.classList.add('hidden');
+
+    // Broadcast search query locally
+    sendP2PMessage({ type: 'quick_search', playerName: duel.playerName, roomCode: duel.roomCode });
+
+    // Fallback: If no player after 3.2 seconds, pair with a realistic bot player!
+    duel.matchTimeout = setTimeout(() => {
+      const botNames = ['Thomas_Cycles', 'Alex3D_Pro', 'MayaRefugee_FR', 'VoxelMaster', 'Kev_Blender92', 'Sarah_Sculpt'];
+      const chosenBot = botNames[Math.floor(Math.random() * botNames.length)];
+      duel.isBot = true;
+      duel.opponentName = chosenBot;
+      duel.opponentBadge = 'RIVAL EN LIGNE';
+      startDuelCountdown();
+    }, 3200);
+  }
+
+  // Create Private Room
+  function createPrivateRoom() {
+    duel.isHost = true;
+    duel.isBot = false;
+    duel.roomCode = generateRoomCode();
+    showDuelScreen('duelWaitScreen');
+
+    const waitTitle = document.getElementById('duelWaitTitle');
+    const waitDesc = document.getElementById('duelWaitDesc');
+    const shareZone = document.getElementById('duelRoomShareZone');
+    const codeDisplay = document.getElementById('duelDisplayRoomCode');
+
+    if (waitTitle) waitTitle.textContent = "Salon Privé Créé !";
+    if (waitDesc) waitDesc.textContent = "En attente de connexion de ton ami...";
+    if (codeDisplay) codeDisplay.textContent = duel.roomCode;
+    if (shareZone) shareZone.classList.remove('hidden');
+
+    // Initialize PeerJS if available
+    initPeerHost(duel.roomCode);
+  }
+
+  // Join Room
+  function joinRoomFromInput() {
+    const input = document.getElementById('duelJoinCodeInput');
+    const code = (input ? input.value : '').trim().toUpperCase();
+    if (!code) {
+      alert("Veuillez entrer un code de salon valide.");
+      return;
+    }
+    joinRoom(code);
+  }
+
+  function joinRoom(code) {
+    duel.isHost = false;
+    duel.isBot = false;
+    duel.roomCode = code;
+    showDuelScreen('duelWaitScreen');
+
+    const waitTitle = document.getElementById('duelWaitTitle');
+    const waitDesc = document.getElementById('duelWaitDesc');
+    const shareZone = document.getElementById('duelRoomShareZone');
+
+    if (waitTitle) waitTitle.textContent = `Connexion au salon ${code}...`;
+    if (waitDesc) waitDesc.textContent = "Échange des clés de jeu en direct...";
+    if (shareZone) shareZone.classList.add('hidden');
+
+    // Send join request via BroadcastChannel
+    sendP2PMessage({ type: 'join_request', playerName: duel.playerName, roomCode: code });
+
+    // Connect via PeerJS
+    initPeerClient(code);
+
+    // Timeout if room not found
+    duel.matchTimeout = setTimeout(() => {
+      if (!duel.isRunning) {
+        alert(`Aucun joueur trouvé dans le salon ${code}. Vérifie le code ou lance un Matchmaking Rapide.`);
+        resetToLobby(false);
+      }
+    }, 8000);
+  }
+
+  // Bot Duel
+  function startBotDuel() {
+    duel.isBot = true;
+    const diffSelect = document.getElementById('duelBotDifficulty');
+    duel.botDifficulty = diffSelect ? diffSelect.value : 'medium';
+    duel.opponentName = duel.botDifficulty === 'hard' ? 'Blender_Sensei [IA]' : (duel.botDifficulty === 'medium' ? 'VoxelBot [IA]' : 'Apprenti_Bot [IA]');
+    duel.opponentBadge = 'BOT ENTRAÎNEMENT';
+    startDuelCountdown();
+  }
+
+  // PeerJS Client/Host Setup
+  function initPeerHost(code) {
+    if (typeof Peer === 'undefined') return;
+    try {
+      duel.peer = new Peer('learnblender-' + code);
+      duel.peer.on('connection', (conn) => {
+        duel.conn = conn;
+        duel.conn.on('data', (data) => handleP2PMessage(data));
+      });
+      duel.peer.on('error', (err) => console.warn('Peer host error:', err));
+    } catch (e) { console.warn('PeerJS init failed:', e); }
+  }
+
+  function initPeerClient(code) {
+    if (typeof Peer === 'undefined') return;
+    try {
+      duel.peer = new Peer();
+      duel.peer.on('open', () => {
+        duel.conn = duel.peer.connect('learnblender-' + code);
+        duel.conn.on('open', () => {
+          duel.conn.send({ type: 'join_request', playerName: duel.playerName, roomCode: code });
+        });
+        duel.conn.on('data', (data) => handleP2PMessage(data));
+      });
+      duel.peer.on('error', (err) => console.warn('Peer client error:', err));
+    } catch (e) { console.warn('PeerJS connect failed:', e); }
+  }
+
+  // Copy helpers
+  function copyRoomCode() {
+    if (!duel.roomCode) return;
+    navigator.clipboard.writeText(duel.roomCode).then(() => {
+      const btn = document.getElementById('btnCopyRoomCode');
+      if (btn) {
+        const orig = btn.textContent;
+        btn.textContent = "✅ Code copié !";
+        setTimeout(() => { btn.textContent = orig; }, 1800);
+      }
+    });
+  }
+
+  function copyRoomLink() {
+    if (!duel.roomCode) return;
+    const url = window.location.origin + window.location.pathname + '?duel=' + duel.roomCode;
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = document.getElementById('btnCopyRoomLink');
+      if (btn) {
+        const orig = btn.textContent;
+        btn.textContent = "✅ Lien copié !";
+        setTimeout(() => { btn.textContent = orig; }, 1800);
+      }
+    });
+  }
+
+  function cancelMatchmaking() {
+    if (duel.matchTimeout) clearTimeout(duel.matchTimeout);
+    resetToLobby(false);
+  }
+
+  function resetToLobby(keepDuelMode) {
+    if (duel.timerInterval) clearInterval(duel.timerInterval);
+    if (duel.botTimer) clearInterval(duel.botTimer);
+    if (duel.matchTimeout) clearTimeout(duel.matchTimeout);
+    duel.isRunning = false;
+    showDuelScreen('duelLobbyScreen');
+    updateDuelStoredStats();
+    if (keepDuelMode) window.switchQuizMainMode('duel');
+  }
+
+  // Countdown 3, 2, 1, GO
+  function startDuelCountdown() {
+    if (duel.matchTimeout) clearTimeout(duel.matchTimeout);
+    showDuelScreen('duelCountdownScreen');
+
+    const p1 = document.getElementById('duelP1Name');
+    const p2 = document.getElementById('duelP2Name');
+    const p2Badge = document.getElementById('duelP2Badge');
+    const cdNum = document.getElementById('duelCountdownNumber');
+
+    if (p1) p1.textContent = duel.playerName;
+    if (p2) p2.textContent = duel.opponentName;
+    if (p2Badge) p2Badge.textContent = duel.opponentBadge;
+
+    let count = 3;
+    if (cdNum) cdNum.textContent = count;
+
+    const timer = setInterval(() => {
+      count--;
+      if (count > 0) {
+        if (cdNum) {
+          cdNum.textContent = count;
+          cdNum.style.animation = 'none';
+          void cdNum.offsetWidth;
+          cdNum.style.animation = 'countdown-pop 0.4s cubic-bezier(0.16,1,0.3,1)';
+        }
+      } else if (count === 0) {
+        if (cdNum) cdNum.textContent = "GO !";
+      } else {
+        clearInterval(timer);
+        launchActiveDuel();
+      }
+    }, 900);
+  }
+
+  // Active Game (30s)
+  function launchActiveDuel() {
+    showDuelScreen('duelActiveScreen');
+
+    // Reset scores & stats
+    duel.score = 0;
+    duel.streak = 0;
+    duel.maxStreak = 0;
+    duel.correctCount = 0;
+    duel.wrongCount = 0;
+    duel.mistakes = [];
+    duel.opponentScore = 0;
+    duel.opponentStreak = 0;
+    duel.opponentTotal = 0;
+    duel.timeLeft = 30.0;
+    duel.isRunning = true;
+    duel.isAnswerLocked = false;
+
+    // Shuffle questions
+    duel.shuffledQuestions = [...DUEL_QUESTIONS].sort(() => Math.random() - 0.5);
+    duel.currentIndex = 0;
+
+    // Update HUD display
+    const hudP1 = document.getElementById('duelHudP1Name');
+    const hudP2 = document.getElementById('duelHudP2Name');
+    if (hudP1) hudP1.textContent = duel.playerName;
+    if (hudP2) hudP2.textContent = duel.opponentName;
+
+    updatePlayerHud();
+    updateOpponentHud();
+    updateTugOfWarBar();
+    renderNextQuestion();
+
+    // Start 30s timer
+    const circle = document.getElementById('duelTimerCircle');
+    const numEl = document.getElementById('duelTimerNumber');
+    const circumference = 276.46; // 2 * PI * 44
+
+    if (duel.timerInterval) clearInterval(duel.timerInterval);
+    duel.timerInterval = setInterval(() => {
+      duel.timeLeft -= 0.1;
+      if (duel.timeLeft <= 0) {
+        duel.timeLeft = 0;
+        clearInterval(duel.timerInterval);
+        endDuelMatch();
+      }
+
+      // Update timer ring
+      const progressRatio = duel.timeLeft / 30.0;
+      const offset = circumference * (1 - progressRatio);
+      if (circle) {
+        circle.style.strokeDashoffset = offset;
+        circle.classList.toggle('warning', duel.timeLeft <= 10 && duel.timeLeft > 5);
+        circle.classList.toggle('critical', duel.timeLeft <= 5);
+      }
+      if (numEl) {
+        numEl.textContent = Math.ceil(duel.timeLeft);
+      }
+    }, 100);
+
+    // Bot engine (if opponent is bot)
+    if (duel.isBot) {
+      launchBotEngine();
+    }
+  }
+
+  function launchBotEngine() {
+    if (duel.botTimer) clearInterval(duel.botTimer);
+
+    const minDelay = duel.botDifficulty === 'hard' ? 950 : (duel.botDifficulty === 'medium' ? 1300 : 1800);
+    const maxDelay = duel.botDifficulty === 'hard' ? 1400 : (duel.botDifficulty === 'medium' ? 1900 : 2500);
+    const accuracy = duel.botDifficulty === 'hard' ? 0.92 : (duel.botDifficulty === 'medium' ? 0.82 : 0.70);
+
+    function scheduleBotTick() {
+      if (!duel.isRunning) return;
+      const delay = Math.floor(minDelay + Math.random() * (maxDelay - minDelay));
+      duel.botTimer = setTimeout(() => {
+        if (!duel.isRunning) return;
+
+        duel.opponentTotal++;
+        const isRight = Math.random() < accuracy;
+        if (isRight) {
+          duel.opponentScore++;
+          duel.opponentStreak++;
+          feedBattleAlert(`⚡ ${duel.opponentName} +1 pt ! (${duel.opponentScore})`, 'feed-event-opp');
+        } else {
+          duel.opponentStreak = 0;
+          feedBattleAlert(`⚠️ ${duel.opponentName} a fait une faute !`, 'feed-event-me');
+        }
+        updateOpponentHud();
+        updateTugOfWarBar();
+        scheduleBotTick();
+      }, delay);
+    }
+
+    scheduleBotTick();
+  }
+
+  function renderNextQuestion() {
+    if (duel.currentIndex >= duel.shuffledQuestions.length) {
+      duel.shuffledQuestions = [...DUEL_QUESTIONS].sort(() => Math.random() - 0.5);
+      duel.currentIndex = 0;
+    }
+
+    const item = duel.shuffledQuestions[duel.currentIndex];
+    duel.currentIndex++;
+    duel.isAnswerLocked = false;
+
+    const qText = document.getElementById('duelQuestionText');
+    const qCat = document.getElementById('duelQCat');
+    const grid = document.getElementById('duelOptionsGrid');
+
+    if (qText) qText.textContent = `Quelle touche pour : ${item.q} ?`;
+    if (qCat) qCat.textContent = `Raccourci · ${item.cat}`;
+    if (!grid) return;
+
+    grid.innerHTML = '';
+    const keysHints = ['1', '2', '3', '4'];
+
+    item.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'duel-opt-btn';
+      btn.innerHTML = `<span class="opt-key">${keysHints[idx]}</span><span class="opt-text">${opt}</span>`;
+      btn.addEventListener('click', () => handleOptionClick(opt, item.correct, btn, item));
+      grid.appendChild(btn);
+    });
+  }
+
+  function handleOptionClick(chosen, correct, btnEl, item) {
+    if (!duel.isRunning || duel.isAnswerLocked) return;
+    duel.isAnswerLocked = true;
+
+    const isCorrect = (chosen === correct);
+    const allBtns = document.querySelectorAll('.duel-opt-btn');
+
+    if (isCorrect) {
+      btnEl.classList.add('correct');
+      duel.score++;
+      duel.streak++;
+      duel.correctCount++;
+      if (duel.streak > duel.maxStreak) duel.maxStreak = duel.streak;
+
+      // Bump animation on score
+      const scoreEl = document.getElementById('duelHudP1Score');
+      if (scoreEl) {
+        scoreEl.classList.remove('bump');
+        void scoreEl.offsetWidth;
+        scoreEl.classList.add('bump');
+      }
+
+      feedBattleAlert(`✅ +1 point ! (${duel.score} pts)`, 'feed-event-me');
+
+      // Sync P2P score
+      sendP2PMessage({ type: 'score_update', score: duel.score, combo: duel.streak, correct: duel.correctCount });
+
+      updatePlayerHud();
+      updateTugOfWarBar();
+
+      // Immediate transition (120ms) for high speed!
+      setTimeout(() => {
+        renderNextQuestion();
+      }, 120);
+    } else {
+      btnEl.classList.add('wrong');
+      duel.streak = 0;
+      duel.wrongCount++;
+      duel.mistakes.push({ q: item.q, correct: item.correct, user: chosen });
+
+      // Highlight the correct one
+      allBtns.forEach(b => {
+        if (b.querySelector('.opt-text') && b.querySelector('.opt-text').textContent === correct) {
+          b.classList.add('correct');
+        }
+      });
+
+      feedBattleAlert(`❌ Erreur ! La réponse était ${correct}`, 'feed-event-opp');
+
+      updatePlayerHud();
+      updateTugOfWarBar();
+
+      // Small freeze penalty (380ms)
+      setTimeout(() => {
+        renderNextQuestion();
+      }, 380);
+    }
+  }
+
+  function updatePlayerHud() {
+    const scoreEl = document.getElementById('duelHudP1Score');
+    const comboEl = document.getElementById('duelHudP1Combo');
+    if (scoreEl) scoreEl.textContent = duel.score;
+    if (comboEl) {
+      if (duel.streak >= 2) {
+        comboEl.textContent = `🔥 Combo x${duel.streak}`;
+        comboEl.classList.remove('hidden');
+      } else {
+        comboEl.classList.add('hidden');
+      }
+    }
+  }
+
+  function updateOpponentHud() {
+    const scoreEl = document.getElementById('duelHudP2Score');
+    const comboEl = document.getElementById('duelHudP2Combo');
+    if (scoreEl) scoreEl.textContent = duel.opponentScore;
+    if (comboEl) {
+      if (duel.opponentStreak >= 2) {
+        comboEl.textContent = `🔥 Combo x${duel.opponentStreak}`;
+        comboEl.classList.remove('hidden');
+      } else {
+        comboEl.classList.add('hidden');
+      }
+    }
+  }
+
+  function updateTugOfWarBar() {
+    const tugMe = document.getElementById('duelTugMe');
+    const tugOpp = document.getElementById('duelTugOpp');
+    const diffTag = document.getElementById('duelDifferentialTag');
+
+    const total = duel.score + duel.opponentScore;
+    let percentMe = 50;
+    if (total > 0) {
+      percentMe = Math.round((duel.score / total) * 100);
+      percentMe = Math.max(12, Math.min(88, percentMe)); // clamp
+    }
+    const percentOpp = 100 - percentMe;
+
+    if (tugMe) tugMe.style.width = `${percentMe}%`;
+    if (tugOpp) tugOpp.style.width = `${percentOpp}%`;
+
+    if (diffTag) {
+      const diff = duel.score - duel.opponentScore;
+      if (diff > 0) {
+        diffTag.textContent = `TU MÈNES (+${diff})`;
+        diffTag.className = 'duel-differential-tag winning';
+      } else if (diff < 0) {
+        diffTag.textContent = `RETARD (${diff})`;
+        diffTag.className = 'duel-differential-tag losing';
+      } else {
+        diffTag.textContent = 'ÉGALITÉ';
+        diffTag.className = 'duel-differential-tag';
+      }
+    }
+  }
+
+  function feedBattleAlert(text, typeClass) {
+    const feed = document.getElementById('duelBattleFeed');
+    if (feed) {
+      feed.innerHTML = `<span class="${typeClass || ''}">${text}</span>`;
+    }
+  }
+
+  // End of 30 Seconds Match
+  function endDuelMatch() {
+    duel.isRunning = false;
+    if (duel.botTimer) clearInterval(duel.botTimer);
+
+    // Notify opponent of final score
+    sendP2PMessage({ type: 'game_over', finalScore: duel.score, totalAnswers: duel.correctCount + duel.wrongCount });
+
+    showDuelScreen('duelResultsScreen');
+
+    // Compute stats
+    const totalAnswers = duel.correctCount + duel.wrongCount;
+    const accuracy = totalAnswers > 0 ? Math.round((duel.correctCount / totalAnswers) * 100) : 0;
+    const apm = Math.round((totalAnswers / 30) * 60);
+
+    const isWinner = duel.score > duel.opponentScore;
+    const isDraw = duel.score === duel.opponentScore;
+
+    // Save records
+    const storedRecord = parseInt(localStorage.getItem('blender_duel_record') || '0', 10);
+    if (duel.score > storedRecord) {
+      localStorage.setItem('blender_duel_record', duel.score);
+    }
+    const totalMatches = parseInt(localStorage.getItem('blender_duel_matches') || '0', 10) + 1;
+    localStorage.setItem('blender_duel_matches', totalMatches);
+
+    if (isWinner) {
+      const totalWins = parseInt(localStorage.getItem('blender_duel_wins') || '0', 10) + 1;
+      localStorage.setItem('blender_duel_wins', totalWins);
+    }
+
+    // Render results
+    const emojiEl = document.getElementById('duelResultEmoji');
+    const titleEl = document.getElementById('duelResultTitle');
+    const subEl = document.getElementById('duelResultSubtitle');
+
+    if (isWinner) {
+      if (emojiEl) emojiEl.textContent = '🏆';
+      if (titleEl) { titleEl.textContent = 'VICTOIRE ÉCLATANTE !'; titleEl.style.color = '#8bdc63'; }
+      if (subEl) subEl.textContent = `Tu remportes le duel face à ${duel.opponentName} avec ${duel.score} bonnes réponses en 30s !`;
+    } else if (isDraw) {
+      if (emojiEl) emojiEl.textContent = '🤝';
+      if (titleEl) { titleEl.textContent = 'ÉGALITÉ PARFAITE !'; titleEl.style.color = '#f08a34'; }
+      if (subEl) subEl.textContent = `Score parfait de ${duel.score} partout ! Une revanche s'impose !`;
+    } else {
+      if (emojiEl) emojiEl.textContent = '💀';
+      if (titleEl) { titleEl.textContent = 'DÉFAITE CUISANTE...'; titleEl.style.color = '#e03a3a'; }
+      if (subEl) subEl.textContent = `${duel.opponentName} l'emporte avec ${duel.opponentScore} points. Entraîne tes réflexes !`;
+    }
+
+    // Fill comparison table
+    const myScoreEl = document.getElementById('duelFinalMyScore');
+    const myAccEl = document.getElementById('duelFinalMyAcc');
+    const myApmEl = document.getElementById('duelFinalMyApm');
+    const myStreakEl = document.getElementById('duelFinalMyStreak');
+
+    if (myScoreEl) myScoreEl.textContent = duel.score;
+    if (myAccEl) myAccEl.textContent = `${accuracy}%`;
+    if (myApmEl) myApmEl.textContent = `${apm} APM`;
+    if (myStreakEl) myStreakEl.textContent = `x${duel.maxStreak} 🔥`;
+
+    const oppNameEl = document.getElementById('duelFinalOppName');
+    const oppScoreEl = document.getElementById('duelFinalOppScore');
+    const oppAccEl = document.getElementById('duelFinalOppAcc');
+    const oppApmEl = document.getElementById('duelFinalOppApm');
+    const oppStreakEl = document.getElementById('duelFinalOppStreak');
+
+    const oppApmVal = Math.round((Math.max(duel.opponentScore, duel.opponentTotal) / 30) * 60);
+    const oppAccVal = Math.floor(75 + Math.random() * 20);
+
+    if (oppNameEl) oppNameEl.textContent = duel.opponentName.toUpperCase();
+    if (oppScoreEl) oppScoreEl.textContent = duel.opponentScore;
+    if (oppAccEl) oppAccEl.textContent = `${oppAccVal}%`;
+    if (oppApmEl) oppApmEl.textContent = `${oppApmVal} APM`;
+    if (oppStreakEl) oppStreakEl.textContent = `x${Math.max(2, Math.floor(duel.opponentScore * 0.4))} 🔥`;
+
+    // Highlight winner column
+    const colMe = document.getElementById('duelCompMeCol');
+    const colOpp = document.getElementById('duelCompOppCol');
+    if (colMe) colMe.classList.toggle('winner', isWinner);
+    if (colOpp) colOpp.classList.toggle('winner', !isWinner && !isDraw);
+
+    // Render Mistakes Review
+    const mistakesWrap = document.getElementById('duelMistakesWrap');
+    const mistakesList = document.getElementById('duelMistakesList');
+    if (mistakesWrap && mistakesList) {
+      if (duel.mistakes.length > 0) {
+        mistakesWrap.classList.remove('hidden');
+        mistakesList.innerHTML = duel.mistakes.map(m => `
+          <div class="duel-mistake-item">
+            <span class="mistake-q">${m.q}</span>
+            <span class="mistake-correct"><kbd>${m.correct}</kbd></span>
+          </div>
+        `).join('');
+      } else {
+        mistakesWrap.classList.add('hidden');
+      }
+    }
+
+    const btnRematch = document.getElementById('btnDuelRematch');
+    if (btnRematch) {
+      btnRematch.textContent = "🔄 Demander une Revanche (30s)";
+      btnRematch.classList.remove('pulse');
+    }
+  }
+
+  function requestRematch() {
+    if (duel.isBot) {
+      startDuelCountdown();
+    } else {
+      sendP2PMessage({ type: 'rematch_request' });
+      const btn = document.getElementById('btnDuelRematch');
+      if (btn) btn.textContent = "⏳ Demande de revanche envoyée...";
+      setTimeout(() => {
+        sendP2PMessage({ type: 'rematch_start' });
+        startDuelCountdown();
+      }, 1000);
+    }
+  }
+
+  // Call initialization
+  initDuelSystem();
+
+
 });
 
 

@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 </head>
 <body>
 
@@ -32,12 +33,12 @@
       <a href="modules.html">Modules (13)</a>
       <a href="raccourcis.html">Raccourcis</a>
       <a href="armes.html" class="weapons-topnav-link">Atelier Armes ⚔️</a>
-      <a href="quiz.html" class="quiz-topnav-link active">Quiz Express ⚡</a>
+      <a href="quiz.html" class="quiz-topnav-link active">Quiz & Duel 1V1 ⚔️</a>
       <a href="projets.html">Projets & Pièges</a>
     </nav>
     <div class="progress-pill">
       <span class="dot"></span>
-      <span id="topProgress">Quiz Express ⚡</span>
+      <span id="topProgress">Quiz & Duel 1V1 ⚔️</span>
     </div>
   </div>
 </header>
@@ -46,16 +47,301 @@
   <div class="container">
     <div class="section-head">
       <div>
-        <span class="section-tag">// Entraînement Réflexe</span>
-        <h2>Quiz Express : Raccourcis & Langage Technique</h2>
+        <span class="section-tag">// Multijoueur & Réflexes Clavier</span>
+        <h2>Arène de Quiz & Duel 1V1 Raccourcis</h2>
       </div>
       <p class="section-desc">
-        Rappelle-toi des touches et du vocabulaire de Blender. <strong>10 secondes par question</strong>, 4 réponses possibles. 
-        Utilise les touches <kbd>1-4</kbd> ou <kbd>A-D</kbd> de ton clavier ou clique sur les réponses.
+        Défie d'autres joueurs en direct ou entraîne-toi en solo. Clique sur les bonnes réponses le plus vite possible en <strong>30 secondes chrono</strong> pour remporter la victoire !
       </p>
     </div>
 
-    <div class="quiz-card" id="quizCard">
+    <!-- SELECTEUR PRINCIPAL DE MODE -->
+    <div class="quiz-top-mode-selector">
+      <button type="button" class="top-mode-tab active" id="tabModeDuel" onclick="switchQuizMainMode('duel')">
+        <span class="tab-icon">⚔️</span>
+        <div class="tab-text">
+          <strong>Mode Duel 1V1 En Ligne</strong>
+          <small>30s Chrono · Clics réflexes multijoueur</small>
+        </div>
+        <span class="tab-badge-live">LIVE 1V1</span>
+      </button>
+
+      <button type="button" class="top-mode-tab" id="tabModeSolo" onclick="switchQuizMainMode('solo')">
+        <span class="tab-icon">⚡</span>
+        <div class="tab-text">
+          <strong>Entraînement Solo</strong>
+          <small>Mode Infini · 10s par question</small>
+        </div>
+      </button>
+    </div>
+
+    <!-- ==================== ARÈNE DUEL 1V1 EN LIGNE ==================== -->
+    <div class="duel-card" id="duelCard">
+
+      <!-- 1. DUEL LOBBY SCREEN -->
+      <div class="duel-screen" id="duelLobbyScreen">
+        <div class="duel-lobby-hero">
+          <div class="duel-badge-icon">⚔️</div>
+          <h3>Arène 1V1 : Raccourcis Blender 30s</h3>
+          <p>Affronte un adversaire en direct. Le but : <strong>cliquer sur les bonnes réponses le plus vite possible</strong> et en accumuler le plus en <strong>30 secondes chrono</strong> !</p>
+        </div>
+
+        <!-- Profil du joueur -->
+        <div class="duel-player-config">
+          <label for="duelPlayerName">Ton Pseudo de duelliste :</label>
+          <div class="duel-name-input-wrap">
+            <span class="input-icon">👤</span>
+            <input type="text" id="duelPlayerName" maxlength="15" placeholder="Ton Pseudo (ex: VoxelPro, Alex3D...)" value="Joueur 3D">
+          </div>
+        </div>
+
+        <!-- Options de connexion multijoueur -->
+        <div class="duel-modes-grid">
+          
+          <!-- Mode 1 : Matchmaking Rapide -->
+          <div class="duel-choice-box featured">
+            <div class="choice-icon">⚡</div>
+            <h4>Matchmaking Rapide</h4>
+            <p>Recherche instantanée d'un adversaire en ligne pour lancer le chrono de 30s.</p>
+            <button type="button" class="btn btn-primary btn-duel-action" id="btnQuickMatch">
+              ⚡ Trouver un adversaire (En Ligne)
+            </button>
+          </div>
+
+          <!-- Mode 2 : Salon Privé (Défier un ami) -->
+          <div class="duel-choice-box">
+            <div class="choice-icon">👥</div>
+            <h4>Créer un Salon Privé</h4>
+            <p>Génère un code de salon et un lien direct à envoyer à un ami pour vous affronter.</p>
+            <button type="button" class="btn btn-ghost btn-duel-action" id="btnCreateRoom">
+              🔑 Créer un Salon Privé
+            </button>
+          </div>
+
+          <!-- Mode 3 : Rejoindre avec un code -->
+          <div class="duel-choice-box">
+            <div class="choice-icon">🔗</div>
+            <h4>Rejoindre un Salon</h4>
+            <p>Entre le code à 4-6 caractères fourni par ton ami.</p>
+            <div class="join-room-row">
+              <input type="text" id="duelJoinCodeInput" class="room-code-input" placeholder="Code (ex: 8492)" maxlength="10">
+              <button type="button" class="btn btn-primary" id="btnJoinRoom">Rejoindre</button>
+            </div>
+          </div>
+
+          <!-- Mode 4 : Entraînement vs Bot Rapide -->
+          <div class="duel-choice-box">
+            <div class="choice-icon">🤖</div>
+            <h4>Duel vs Bot d'Entraînement</h4>
+            <p>Entraîne tes réflexes contre un rival simulé pour t'échauffer avant le match.</p>
+            <div class="bot-select-row">
+              <select id="duelBotDifficulty" class="bot-difficulty-select">
+                <option value="easy">Novice (12-16 pts)</option>
+                <option value="medium" selected>Intermédiaire (17-22 pts)</option>
+                <option value="hard">Expert Blender (23-28 pts)</option>
+              </select>
+              <button type="button" class="btn btn-ghost" id="btnPlayBot">Défier le Bot</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Statistiques personnelles -->
+        <div class="duel-stats-summary">
+          <div class="duel-stat-box">
+            <span class="val" id="duelStatWins">0</span>
+            <span class="lbl">Victoires 1V1</span>
+          </div>
+          <div class="duel-stat-box">
+            <span class="val" id="duelStatRecord">0</span>
+            <span class="lbl">Record en 30s</span>
+          </div>
+          <div class="duel-stat-box">
+            <span class="val" id="duelStatMatches">0</span>
+            <span class="lbl">Duels joués</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. DUEL WAITING / MATCHMAKING SCREEN -->
+      <div class="duel-screen hidden" id="duelWaitScreen">
+        <div class="duel-wait-card">
+          <div class="duel-radar-spinner">
+            <div class="radar-circle"></div>
+            <div class="radar-dot"></div>
+          </div>
+          <h3 id="duelWaitTitle">Recherche d'un adversaire en cours...</h3>
+          <p id="duelWaitDesc">Connexion au réseau multijoueur en temps réel...</p>
+
+          <!-- Zone de code de salon si salon privé -->
+          <div class="duel-room-share-zone hidden" id="duelRoomShareZone">
+            <div class="share-code-badge">
+              <span>Code du salon :</span>
+              <strong id="duelDisplayRoomCode">BLND-000</strong>
+            </div>
+            <div class="share-buttons-row">
+              <button type="button" class="btn btn-ghost btn-small" id="btnCopyRoomCode">📋 Copier le code</button>
+              <button type="button" class="btn btn-primary btn-small" id="btnCopyRoomLink">🔗 Copier le lien d'invitation</button>
+            </div>
+            <small class="share-hint">Envoie ce lien ou ce code à ton ami. Le duel démarrera dès sa connexion !</small>
+          </div>
+
+          <button type="button" class="btn btn-ghost" id="btnCancelMatchmaking" style="margin-top:16px;">✕ Annuler la recherche</button>
+        </div>
+      </div>
+
+      <!-- 3. DUEL COUNTDOWN SCREEN (3, 2, 1, GO !) -->
+      <div class="duel-screen hidden" id="duelCountdownScreen">
+        <div class="duel-vs-banner">
+          <div class="player-vs-card me">
+            <div class="p-avatar">🧑‍💻</div>
+            <div class="p-name" id="duelP1Name">Toi</div>
+            <span class="p-badge">JOUEUR 1</span>
+          </div>
+          <div class="vs-emblem">VS</div>
+          <div class="player-vs-card opp">
+            <div class="p-avatar">🥷</div>
+            <div class="p-name" id="duelP2Name">Adversaire</div>
+            <span class="p-badge" id="duelP2Badge">JOUEUR 2</span>
+          </div>
+        </div>
+        <div class="countdown-center">
+          <span class="countdown-label">LE DUEL DE 30 SECONDES DÉMARRE DANS</span>
+          <div class="countdown-number" id="duelCountdownNumber">3</div>
+        </div>
+      </div>
+
+      <!-- 4. DUEL ACTIVE ARENA SCREEN (30s CHRONO) -->
+      <div class="duel-screen hidden" id="duelActiveScreen">
+        
+        <!-- Dual HUD Scoreboard -->
+        <div class="duel-arena-hud">
+          
+          <!-- Joueur 1 (Toi) -->
+          <div class="duel-hud-side me">
+            <div class="hud-player-info">
+              <span class="hud-avatar">🧑‍💻</span>
+              <span class="hud-name" id="duelHudP1Name">Toi</span>
+            </div>
+            <div class="hud-score-counter">
+              <span class="score-digit" id="duelHudP1Score">0</span>
+              <span class="score-label">bonnes rép.</span>
+            </div>
+            <div class="hud-combo-badge hidden" id="duelHudP1Combo">🔥 Combo x2</div>
+          </div>
+
+          <!-- Chrono 30s Central -->
+          <div class="duel-hud-center">
+            <div class="duel-timer-ring">
+              <svg viewBox="0 0 100 100" class="timer-svg">
+                <circle cx="50" cy="50" r="44" class="timer-bg"></circle>
+                <circle cx="50" cy="50" r="44" class="timer-progress" id="duelTimerCircle"></circle>
+              </svg>
+              <div class="timer-display">
+                <span class="timer-number" id="duelTimerNumber">30</span>
+                <span class="timer-unit">SEC</span>
+              </div>
+            </div>
+            <div class="duel-differential-tag" id="duelDifferentialTag">ÉGALITÉ</div>
+          </div>
+
+          <!-- Joueur 2 (Adversaire) -->
+          <div class="duel-hud-side opp">
+            <div class="hud-player-info">
+              <span class="hud-name" id="duelHudP2Name">Adversaire</span>
+              <span class="hud-avatar">🥷</span>
+            </div>
+            <div class="hud-score-counter">
+              <span class="score-digit" id="duelHudP2Score">0</span>
+              <span class="score-label">bonnes rép.</span>
+            </div>
+            <div class="hud-combo-badge hidden" id="duelHudP2Combo">🔥 Combo x2</div>
+          </div>
+
+        </div>
+
+        <!-- Tug-of-War Split Lead Bar -->
+        <div class="duel-tug-bar-wrap">
+          <div class="duel-tug-me" id="duelTugMe" style="width: 50%;"></div>
+          <div class="duel-tug-opp" id="duelTugOpp" style="width: 50%;"></div>
+        </div>
+
+        <!-- Action / Question Box -->
+        <div class="duel-question-area">
+          <div class="duel-q-cat-tag" id="duelQCat">Raccourci Édition</div>
+          <h3 id="duelQuestionText">Quelle touche pour : Biseauter une arête (Bevel) ?</h3>
+        </div>
+
+        <!-- 4 Options de réponse rapides -->
+        <div class="duel-options-grid" id="duelOptionsGrid">
+          <!-- Injecté dynamiquement en JS -->
+        </div>
+
+        <!-- Live Battle Notifications ticker -->
+        <div class="duel-battle-feed" id="duelBattleFeed">
+          <span>⚡ Clique le plus vite possible sur les bonnes touches pour distancer l'adversaire !</span>
+        </div>
+
+      </div>
+
+      <!-- 5. DUEL RESULTS SCREEN (PODIUM) -->
+      <div class="duel-screen hidden" id="duelResultsScreen">
+        
+        <div class="duel-result-hero">
+          <div class="result-trophy-icon" id="duelResultEmoji">🏆</div>
+          <h2 id="duelResultTitle">VICTOIRE ÉCLATANTE !</h2>
+          <p id="duelResultSubtitle">Tu as surpassé ton adversaire sur la vitesse d'exécution !</p>
+        </div>
+
+        <!-- Tableau comparatif des deux joueurs -->
+        <div class="duel-comparison-table">
+          <div class="comp-col me" id="duelCompMeCol">
+            <span class="player-tag">TOI</span>
+            <span class="final-score" id="duelFinalMyScore">24</span>
+            <span class="score-unit">bonnes réponses</span>
+            <div class="comp-meta">
+              <span>Précision : <strong id="duelFinalMyAcc">92%</strong></span>
+              <span>Vitesse : <strong id="duelFinalMyApm">48 APM</strong></span>
+              <span>Série Max : <strong id="duelFinalMyStreak">x6 🔥</strong></span>
+            </div>
+          </div>
+
+          <div class="comp-vs-divider">
+            <span>30 SEC</span>
+            <div class="line"></div>
+          </div>
+
+          <div class="comp-col opp" id="duelCompOppCol">
+            <span class="player-tag" id="duelFinalOppName">ADVERSAIRE</span>
+            <span class="final-score" id="duelFinalOppScore">19</span>
+            <span class="score-unit">bonnes réponses</span>
+            <div class="comp-meta">
+              <span>Précision : <strong id="duelFinalOppAcc">83%</strong></span>
+              <span>Vitesse : <strong id="duelFinalOppApm">38 APM</strong></span>
+              <span>Série Max : <strong id="duelFinalOppStreak">x4 🔥</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Liste des erreurs commises pour réviser -->
+        <div class="duel-review-wrap hidden" id="duelMistakesWrap">
+          <h4>💡 Raccourcis à mémoriser pour la prochaine fois :</h4>
+          <div class="duel-mistakes-list" id="duelMistakesList"></div>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="duel-results-actions">
+          <button type="button" class="btn btn-primary btn-large" id="btnDuelRematch">🔄 Demander une Revanche (30s)</button>
+          <button type="button" class="btn btn-ghost" id="btnDuelNewMatch">⚔️ Chercher un autre joueur</button>
+          <button type="button" class="btn btn-ghost" id="btnDuelExit">🏠 Retour au Salon</button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ==================== MODE SOLO EXISTANT ==================== -->
+    <div class="quiz-card hidden" id="quizCard">
       
       <!-- 1. ÉCRAN D'ACCUEIL / CHOIX DU MODE -->
       <div class="quiz-screen quiz-screen-start" id="quizStartScreen">
