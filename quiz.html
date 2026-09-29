@@ -95,24 +95,28 @@
           </div>
         </div>
 
-        <!-- Options de connexion multijoueur -->
+        <!-- Options de connexion multijoueur (100% Joueurs Réels) -->
         <div class="duel-modes-grid">
           
-          <!-- Mode 1 : Matchmaking Rapide -->
+          <!-- Mode 1 : Matchmaking Public -->
           <div class="duel-choice-box featured">
             <div class="choice-icon">⚡</div>
-            <h4>Matchmaking Rapide</h4>
-            <p>Recherche instantanée d'un adversaire en ligne pour lancer le chrono de 30s.</p>
+            <div class="choice-body">
+              <h4>Matchmaking Public (File en direct)</h4>
+              <p>Rejoins la file d'attente pour affronter le prochain joueur en ligne en 30 secondes chrono.</p>
+            </div>
             <button type="button" class="btn btn-primary btn-duel-action" id="btnQuickMatch">
-              ⚡ Trouver un adversaire (En Ligne)
+              ⚡ Trouver un adversaire en ligne
             </button>
           </div>
 
           <!-- Mode 2 : Salon Privé (Défier un ami) -->
           <div class="duel-choice-box">
             <div class="choice-icon">👥</div>
-            <h4>Créer un Salon Privé</h4>
-            <p>Génère un code de salon et un lien direct à envoyer à un ami pour vous affronter.</p>
+            <div class="choice-body">
+              <h4>Créer un Salon Privé</h4>
+              <p>Génère un code et un lien d'invitation direct pour défier un ami.</p>
+            </div>
             <button type="button" class="btn btn-ghost btn-duel-action" id="btnCreateRoom">
               🔑 Créer un Salon Privé
             </button>
@@ -121,26 +125,13 @@
           <!-- Mode 3 : Rejoindre avec un code -->
           <div class="duel-choice-box">
             <div class="choice-icon">🔗</div>
-            <h4>Rejoindre un Salon</h4>
-            <p>Entre le code à 4-6 caractères fourni par ton ami.</p>
+            <div class="choice-body">
+              <h4>Rejoindre un Salon</h4>
+              <p>Entre le code de salon reçu d'un ami pour entrer dans l'arène.</p>
+            </div>
             <div class="join-room-row">
               <input type="text" id="duelJoinCodeInput" class="room-code-input" placeholder="Code (ex: 8492)" maxlength="10">
               <button type="button" class="btn btn-primary" id="btnJoinRoom">Rejoindre</button>
-            </div>
-          </div>
-
-          <!-- Mode 4 : Entraînement vs Bot Rapide -->
-          <div class="duel-choice-box">
-            <div class="choice-icon">🤖</div>
-            <h4>Duel vs Bot d'Entraînement</h4>
-            <p>Entraîne tes réflexes contre un rival simulé pour t'échauffer avant le match.</p>
-            <div class="bot-select-row">
-              <select id="duelBotDifficulty" class="bot-difficulty-select">
-                <option value="easy">Novice (12-16 pts)</option>
-                <option value="medium" selected>Intermédiaire (17-22 pts)</option>
-                <option value="hard">Expert Blender (23-28 pts)</option>
-              </select>
-              <button type="button" class="btn btn-ghost" id="btnPlayBot">Défier le Bot</button>
             </div>
           </div>
 
@@ -170,23 +161,23 @@
             <div class="radar-circle"></div>
             <div class="radar-dot"></div>
           </div>
-          <h3 id="duelWaitTitle">Recherche d'un adversaire en cours...</h3>
-          <p id="duelWaitDesc">Connexion au réseau multijoueur en temps réel...</p>
+          <h3 id="duelWaitTitle">En attente d'un adversaire réel...</h3>
+          <p id="duelWaitDesc">Le duel démarre automatiquement dès qu'un joueur rejoint la partie.</p>
 
-          <!-- Zone de code de salon si salon privé -->
-          <div class="duel-room-share-zone hidden" id="duelRoomShareZone">
+          <!-- Zone de code de salon et partage de lien -->
+          <div class="duel-room-share-zone" id="duelRoomShareZone">
             <div class="share-code-badge">
               <span>Code du salon :</span>
-              <strong id="duelDisplayRoomCode">BLND-000</strong>
+              <strong id="duelDisplayRoomCode">BLND-0000</strong>
             </div>
             <div class="share-buttons-row">
               <button type="button" class="btn btn-ghost btn-small" id="btnCopyRoomCode">📋 Copier le code</button>
               <button type="button" class="btn btn-primary btn-small" id="btnCopyRoomLink">🔗 Copier le lien d'invitation</button>
             </div>
-            <small class="share-hint">Envoie ce lien ou ce code à ton ami. Le duel démarrera dès sa connexion !</small>
+            <small class="share-hint" id="duelShareHint">Partage ce code ou ce lien à un ami. Le match démarre dès sa connexion !</small>
           </div>
 
-          <button type="button" class="btn btn-ghost" id="btnCancelMatchmaking" style="margin-top:16px;">✕ Annuler la recherche</button>
+          <button type="button" class="btn btn-ghost" id="btnCancelMatchmaking" style="margin-top:16px;">✕ Quitter le salon</button>
         </div>
       </div>
 

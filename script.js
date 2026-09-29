@@ -1693,8 +1693,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  /* ================================================================
-     DUEL 1V1 MULTIJOUEUR EN LIGNE (30 SECONDES CHRONO)
+    /* ================================================================
+     DUEL 1V1 MULTIJOUEUR EN LIGNE (30 SECONDES CHRONO - 100% HUMAINS)
      ================================================================ */
 
   const DUEL_QUESTIONS = [
@@ -1771,7 +1771,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Duel State
+  // Duel State (100% Real Players Only)
   const duel = {
     playerName: localStorage.getItem('blender_duel_pseudo') || 'Joueur 3D',
     opponentName: 'Adversaire',
@@ -1781,9 +1781,6 @@ document.addEventListener('DOMContentLoaded', () => {
     peer: null,
     conn: null,
     bc: null,
-    isBot: false,
-    botTimer: null,
-    botDifficulty: 'medium',
     
     // In-game stats
     score: 0,
@@ -1825,7 +1822,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateDuelStoredStats();
 
-    // BroadcastChannel for cross-tab local 1V1
+    // BroadcastChannel for instant local 1V1 (e.g. 2 tabs or same browser)
     try {
       if (typeof BroadcastChannel !== 'undefined') {
         duel.bc = new BroadcastChannel('learnblender_duel_bus');
@@ -1839,7 +1836,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnQuickMatch = document.getElementById('btnQuickMatch');
     const btnCreateRoom = document.getElementById('btnCreateRoom');
     const btnJoinRoom = document.getElementById('btnJoinRoom');
-    const btnPlayBot = document.getElementById('btnPlayBot');
     const btnCancel = document.getElementById('btnCancelMatchmaking');
     const btnCopyCode = document.getElementById('btnCopyRoomCode');
     const btnCopyLink = document.getElementById('btnCopyRoomLink');
@@ -1850,7 +1846,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnQuickMatch) btnQuickMatch.addEventListener('click', () => startQuickMatch());
     if (btnCreateRoom) btnCreateRoom.addEventListener('click', () => createPrivateRoom());
     if (btnJoinRoom) btnJoinRoom.addEventListener('click', () => joinRoomFromInput());
-    if (btnPlayBot) btnPlayBot.addEventListener('click', () => startBotDuel());
     if (btnCancel) btnCancel.addEventListener('click', () => cancelMatchmaking());
     if (btnCopyCode) btnCopyCode.addEventListener('click', () => copyRoomCode());
     if (btnCopyLink) btnCopyLink.addEventListener('click', () => copyRoomLink());
@@ -1880,7 +1875,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.switchQuizMainMode('duel');
       const input = document.getElementById('duelJoinCodeInput');
       if (input) input.value = duelCode;
-      setTimeout(() => joinRoom(duelCode), 300);
+      setTimeout(() => joinRoom(duelCode), 400);
     } else if (modeParam === 'duel') {
       window.switchQuizMainMode('duel');
     }
@@ -1915,24 +1910,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // P2P Messaging
   function sendP2PMessage(msg) {
+    const payload = { ...msg, roomCode: duel.roomCode };
     // 1. WebRTC DataChannel
     if (duel.conn && duel.conn.open) {
-      try { duel.conn.send(msg); } catch (e) { console.warn(e); }
+      try { duel.conn.send(payload); } catch (e) { console.warn(e); }
     }
     // 2. BroadcastChannel
     if (duel.bc) {
-      try { duel.bc.postMessage({ ...msg, roomCode: duel.roomCode }); } catch (e) { console.warn(e); }
+      try { duel.bc.postMessage(payload); } catch (e) { console.warn(e); }
     }
   }
 
   function handleP2PMessage(msg) {
     if (!msg) return;
+    // Check room code match if specified
     if (msg.roomCode && duel.roomCode && msg.roomCode !== duel.roomCode) return;
 
     switch (msg.type) {
       case 'join_request':
         if (duel.isHost) {
-          duel.opponentName = msg.playerName || 'Adversaire';
+          duel.opponentName = msg.playerName || 'Adversaire Réel';
           duel.opponentBadge = 'JOUEUR 2';
           sendP2PMessage({ type: 'join_accepted', hostName: duel.playerName });
           startDuelCountdown();
@@ -1973,56 +1970,82 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Matchmaking Rapide
+  // Real Matchmaking (Public queue between real players)
   function startQuickMatch() {
-    duel.isBot = false;
-    duel.roomCode = generateRoomCode();
+    duel.roomCode = 'PUBLIC-1';
+    duel.isHost = false;
     showDuelScreen('duelWaitScreen');
 
     const waitTitle = document.getElementById('duelWaitTitle');
     const waitDesc = document.getElementById('duelWaitDesc');
-    const shareZone = document.getElementById('duelRoomShareZone');
+    const codeDisplay = document.getElementById('duelDisplayRoomCode');
+    const shareHint = document.getElementById('duelShareHint');
 
     if (waitTitle) waitTitle.textContent = "Recherche d'un adversaire en ligne...";
-    if (waitDesc) waitDesc.textContent = "Balayage des salons disponibles...";
-    if (shareZone) shareZone.classList.add('hidden');
+    if (waitDesc) waitDesc.textContent = "Connexion à la file publique en direct. En attente du prochain joueur réel...";
+    if (codeDisplay) codeDisplay.textContent = "PUBLIC-1";
+    if (shareHint) shareHint.textContent = "Tu peux aussi envoyer ce code ou lien à un ami, ou ouvrir un 2ème onglet pour jouer tout de suite !";
 
-    // Broadcast search query locally
-    sendP2PMessage({ type: 'quick_search', playerName: duel.playerName, roomCode: duel.roomCode });
+    // Broadcast search query locally (cross-tab test)
+    sendP2PMessage({ type: 'join_request', playerName: duel.playerName, roomCode: 'PUBLIC-1' });
 
-    // Fallback: If no player after 3.2 seconds, pair with a realistic bot player!
-    duel.matchTimeout = setTimeout(() => {
-      const botNames = ['Thomas_Cycles', 'Alex3D_Pro', 'MayaRefugee_FR', 'VoxelMaster', 'Kev_Blender92', 'Sarah_Sculpt'];
-      const chosenBot = botNames[Math.floor(Math.random() * botNames.length)];
-      duel.isBot = true;
-      duel.opponentName = chosenBot;
-      duel.opponentBadge = 'RIVAL EN LIGNE';
-      startDuelCountdown();
-    }, 3200);
+    // Try to connect as guest to PUBLIC-1 on PeerJS
+    if (typeof Peer !== 'undefined') {
+      try {
+        if (duel.peer) { duel.peer.destroy(); }
+        duel.peer = new Peer();
+        duel.peer.on('open', () => {
+          duel.conn = duel.peer.connect('learnblender-match-public-1');
+          duel.conn.on('open', () => {
+            duel.conn.send({ type: 'join_request', playerName: duel.playerName, roomCode: 'PUBLIC-1' });
+          });
+          duel.conn.on('data', (data) => handleP2PMessage(data));
+        });
+
+        duel.peer.on('error', (err) => {
+          // If public host doesn't exist, become the host of PUBLIC-1!
+          if (err.type === 'peer-unavailable') {
+            duel.isHost = true;
+            try {
+              duel.peer.destroy();
+              duel.peer = new Peer('learnblender-match-public-1');
+              duel.peer.on('connection', (conn) => {
+                duel.conn = conn;
+                duel.conn.on('data', (data) => handleP2PMessage(data));
+              });
+              if (waitTitle) waitTitle.textContent = "File d'attente publique ouverte !";
+              if (waitDesc) waitDesc.textContent = "Tu es en première position. En attente du prochain joueur réel qui clique sur Matchmaking...";
+            } catch (e2) {
+              console.warn(e2);
+            }
+          }
+        });
+      } catch (e) {
+        console.warn('Peer error:', e);
+      }
+    }
   }
 
-  // Create Private Room
+  // Create Private Room (Real human friend)
   function createPrivateRoom() {
     duel.isHost = true;
-    duel.isBot = false;
     duel.roomCode = generateRoomCode();
     showDuelScreen('duelWaitScreen');
 
     const waitTitle = document.getElementById('duelWaitTitle');
     const waitDesc = document.getElementById('duelWaitDesc');
-    const shareZone = document.getElementById('duelRoomShareZone');
     const codeDisplay = document.getElementById('duelDisplayRoomCode');
+    const shareHint = document.getElementById('duelShareHint');
 
     if (waitTitle) waitTitle.textContent = "Salon Privé Créé !";
-    if (waitDesc) waitDesc.textContent = "En attente de connexion de ton ami...";
+    if (waitDesc) waitDesc.textContent = "En attente que ton ami rejoigne le salon...";
     if (codeDisplay) codeDisplay.textContent = duel.roomCode;
-    if (shareZone) shareZone.classList.remove('hidden');
+    if (shareHint) shareHint.textContent = "Partage ce code ou ce lien à un ami. Dès qu'il l'ouvre, le décompte de 30s se lance pour vous deux !";
 
-    // Initialize PeerJS if available
     initPeerHost(duel.roomCode);
   }
 
-  // Join Room
+  // Join Room from input
   function joinRoomFromInput() {
     const input = document.getElementById('duelJoinCodeInput');
     const code = (input ? input.value : '').trim().toUpperCase();
@@ -2035,48 +2058,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function joinRoom(code) {
     duel.isHost = false;
-    duel.isBot = false;
     duel.roomCode = code;
     showDuelScreen('duelWaitScreen');
 
     const waitTitle = document.getElementById('duelWaitTitle');
     const waitDesc = document.getElementById('duelWaitDesc');
-    const shareZone = document.getElementById('duelRoomShareZone');
+    const codeDisplay = document.getElementById('duelDisplayRoomCode');
 
     if (waitTitle) waitTitle.textContent = `Connexion au salon ${code}...`;
-    if (waitDesc) waitDesc.textContent = "Échange des clés de jeu en direct...";
-    if (shareZone) shareZone.classList.add('hidden');
+    if (waitDesc) waitDesc.textContent = "Connexion directe avec ton adversaire...";
+    if (codeDisplay) codeDisplay.textContent = code;
 
     // Send join request via BroadcastChannel
     sendP2PMessage({ type: 'join_request', playerName: duel.playerName, roomCode: code });
 
     // Connect via PeerJS
     initPeerClient(code);
-
-    // Timeout if room not found
-    duel.matchTimeout = setTimeout(() => {
-      if (!duel.isRunning) {
-        alert(`Aucun joueur trouvé dans le salon ${code}. Vérifie le code ou lance un Matchmaking Rapide.`);
-        resetToLobby(false);
-      }
-    }, 8000);
-  }
-
-  // Bot Duel
-  function startBotDuel() {
-    duel.isBot = true;
-    const diffSelect = document.getElementById('duelBotDifficulty');
-    duel.botDifficulty = diffSelect ? diffSelect.value : 'medium';
-    duel.opponentName = duel.botDifficulty === 'hard' ? 'Blender_Sensei [IA]' : (duel.botDifficulty === 'medium' ? 'VoxelBot [IA]' : 'Apprenti_Bot [IA]');
-    duel.opponentBadge = 'BOT ENTRAÎNEMENT';
-    startDuelCountdown();
   }
 
   // PeerJS Client/Host Setup
   function initPeerHost(code) {
     if (typeof Peer === 'undefined') return;
     try {
-      duel.peer = new Peer('learnblender-' + code);
+      if (duel.peer) { duel.peer.destroy(); }
+      duel.peer = new Peer('learnblender-duel-' + code);
       duel.peer.on('connection', (conn) => {
         duel.conn = conn;
         duel.conn.on('data', (data) => handleP2PMessage(data));
@@ -2088,15 +2093,22 @@ document.addEventListener('DOMContentLoaded', () => {
   function initPeerClient(code) {
     if (typeof Peer === 'undefined') return;
     try {
+      if (duel.peer) { duel.peer.destroy(); }
       duel.peer = new Peer();
       duel.peer.on('open', () => {
-        duel.conn = duel.peer.connect('learnblender-' + code);
+        duel.conn = duel.peer.connect('learnblender-duel-' + code);
         duel.conn.on('open', () => {
           duel.conn.send({ type: 'join_request', playerName: duel.playerName, roomCode: code });
         });
         duel.conn.on('data', (data) => handleP2PMessage(data));
       });
-      duel.peer.on('error', (err) => console.warn('Peer client error:', err));
+      duel.peer.on('error', (err) => {
+        console.warn('Peer client error:', err);
+        if (err.type === 'peer-unavailable') {
+          const waitDesc = document.getElementById('duelWaitDesc');
+          if (waitDesc) waitDesc.textContent = `⚠️ Impossible de trouver le salon ${code}. Vérifie que l'hôte a bien créé ce salon.`;
+        }
+      });
     } catch (e) { console.warn('PeerJS connect failed:', e); }
   }
 
@@ -2127,14 +2139,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function cancelMatchmaking() {
-    if (duel.matchTimeout) clearTimeout(duel.matchTimeout);
+    if (duel.peer) {
+      try { duel.peer.destroy(); } catch (e) {}
+      duel.peer = null;
+    }
     resetToLobby(false);
   }
 
   function resetToLobby(keepDuelMode) {
     if (duel.timerInterval) clearInterval(duel.timerInterval);
-    if (duel.botTimer) clearInterval(duel.botTimer);
-    if (duel.matchTimeout) clearTimeout(duel.matchTimeout);
     duel.isRunning = false;
     showDuelScreen('duelLobbyScreen');
     updateDuelStoredStats();
@@ -2143,7 +2156,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Countdown 3, 2, 1, GO
   function startDuelCountdown() {
-    if (duel.matchTimeout) clearTimeout(duel.matchTimeout);
     showDuelScreen('duelCountdownScreen');
 
     const p1 = document.getElementById('duelP1Name');
@@ -2194,7 +2206,7 @@ document.addEventListener('DOMContentLoaded', () => {
     duel.isRunning = true;
     duel.isAnswerLocked = false;
 
-    // Shuffle questions
+    // Shuffle questions pool
     duel.shuffledQuestions = [...DUEL_QUESTIONS].sort(() => Math.random() - 0.5);
     duel.currentIndex = 0;
 
@@ -2235,45 +2247,9 @@ document.addEventListener('DOMContentLoaded', () => {
         numEl.textContent = Math.ceil(duel.timeLeft);
       }
     }, 100);
-
-    // Bot engine (if opponent is bot)
-    if (duel.isBot) {
-      launchBotEngine();
-    }
   }
 
-  function launchBotEngine() {
-    if (duel.botTimer) clearInterval(duel.botTimer);
-
-    const minDelay = duel.botDifficulty === 'hard' ? 950 : (duel.botDifficulty === 'medium' ? 1300 : 1800);
-    const maxDelay = duel.botDifficulty === 'hard' ? 1400 : (duel.botDifficulty === 'medium' ? 1900 : 2500);
-    const accuracy = duel.botDifficulty === 'hard' ? 0.92 : (duel.botDifficulty === 'medium' ? 0.82 : 0.70);
-
-    function scheduleBotTick() {
-      if (!duel.isRunning) return;
-      const delay = Math.floor(minDelay + Math.random() * (maxDelay - minDelay));
-      duel.botTimer = setTimeout(() => {
-        if (!duel.isRunning) return;
-
-        duel.opponentTotal++;
-        const isRight = Math.random() < accuracy;
-        if (isRight) {
-          duel.opponentScore++;
-          duel.opponentStreak++;
-          feedBattleAlert(`⚡ ${duel.opponentName} +1 pt ! (${duel.opponentScore})`, 'feed-event-opp');
-        } else {
-          duel.opponentStreak = 0;
-          feedBattleAlert(`⚠️ ${duel.opponentName} a fait une faute !`, 'feed-event-me');
-        }
-        updateOpponentHud();
-        updateTugOfWarBar();
-        scheduleBotTick();
-      }, delay);
-    }
-
-    scheduleBotTick();
-  }
-
+  // Render question with 100% SHUFFLED OPTIONS (Fix for "c'est toujours la première")
   function renderNextQuestion() {
     if (duel.currentIndex >= duel.shuffledQuestions.length) {
       duel.shuffledQuestions = [...DUEL_QUESTIONS].sort(() => Math.random() - 0.5);
@@ -2295,7 +2271,10 @@ document.addEventListener('DOMContentLoaded', () => {
     grid.innerHTML = '';
     const keysHints = ['1', '2', '3', '4'];
 
-    item.options.forEach((opt, idx) => {
+    // SHUFFLE the options array so the correct answer is never always in the first button!
+    const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
+
+    shuffledOptions.forEach((opt, idx) => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'duel-opt-btn';
@@ -2329,7 +2308,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       feedBattleAlert(`✅ +1 point ! (${duel.score} pts)`, 'feed-event-me');
 
-      // Sync P2P score
+      // Real-time P2P score synchronization to opponent
       sendP2PMessage({ type: 'score_update', score: duel.score, combo: duel.streak, correct: duel.correctCount });
 
       updatePlayerHud();
@@ -2347,7 +2326,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Highlight the correct one
       allBtns.forEach(b => {
-        if (b.querySelector('.opt-text') && b.querySelector('.opt-text').textContent === correct) {
+        const textEl = b.querySelector('.opt-text');
+        if (textEl && textEl.textContent.trim() === correct.trim()) {
           b.classList.add('correct');
         }
       });
@@ -2357,7 +2337,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updatePlayerHud();
       updateTugOfWarBar();
 
-      // Small freeze penalty (380ms)
+      // Freeze penalty (380ms)
       setTimeout(() => {
         renderNextQuestion();
       }, 380);
@@ -2433,7 +2413,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // End of 30 Seconds Match
   function endDuelMatch() {
     duel.isRunning = false;
-    if (duel.botTimer) clearInterval(duel.botTimer);
 
     // Notify opponent of final score
     sendP2PMessage({ type: 'game_over', finalScore: duel.score, totalAnswers: duel.correctCount + duel.wrongCount });
@@ -2476,7 +2455,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (subEl) subEl.textContent = `Score parfait de ${duel.score} partout ! Une revanche s'impose !`;
     } else {
       if (emojiEl) emojiEl.textContent = '💀';
-      if (titleEl) { titleEl.textContent = 'DÉFAITE CUISANTE...'; titleEl.style.color = '#e03a3a'; }
+      if (titleEl) { titleEl.textContent = 'DÉFAITE...'; titleEl.style.color = '#e03a3a'; }
       if (subEl) subEl.textContent = `${duel.opponentName} l'emporte avec ${duel.opponentScore} points. Entraîne tes réflexes !`;
     }
 
@@ -2504,7 +2483,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (oppScoreEl) oppScoreEl.textContent = duel.opponentScore;
     if (oppAccEl) oppAccEl.textContent = `${oppAccVal}%`;
     if (oppApmEl) oppApmEl.textContent = `${oppApmVal} APM`;
-    if (oppStreakEl) oppStreakEl.textContent = `x${Math.max(2, Math.floor(duel.opponentScore * 0.4))} 🔥`;
+    if (oppStreakEl) oppStreakEl.textContent = `x${Math.max(1, Math.floor(duel.opponentScore * 0.4))} 🔥`;
 
     // Highlight winner column
     const colMe = document.getElementById('duelCompMeCol');
@@ -2537,17 +2516,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function requestRematch() {
-    if (duel.isBot) {
+    sendP2PMessage({ type: 'rematch_request' });
+    const btn = document.getElementById('btnDuelRematch');
+    if (btn) btn.textContent = "⏳ Demande de revanche envoyée...";
+    setTimeout(() => {
+      sendP2PMessage({ type: 'rematch_start' });
       startDuelCountdown();
-    } else {
-      sendP2PMessage({ type: 'rematch_request' });
-      const btn = document.getElementById('btnDuelRematch');
-      if (btn) btn.textContent = "⏳ Demande de revanche envoyée...";
-      setTimeout(() => {
-        sendP2PMessage({ type: 'rematch_start' });
-        startDuelCountdown();
-      }, 1000);
-    }
+    }, 1200);
   }
 
   // Call initialization
