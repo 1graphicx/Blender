@@ -395,169 +395,826 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ---------- MASTER SHORTCUT DEFINITIONS (62 RACCOURCIS TOUT INCLUS) ---------- */
+  const ALL_SHORTCUT_DEFINITIONS = [
+  {
+    "name": "Orbiter la vue 3D",
+    "soloQ": "Quel raccourci permet d'orbiter la vue 3D autour du centre de la scène ?",
+    "correct": "BM (Bouton Milieu)",
+    "options": [
+      "BM (Bouton Milieu)",
+      "Clic Droit",
+      "Maj + BM",
+      "Ctrl + BM"
+    ],
+    "cat": "Navigation 3D",
+    "expl": "Le clic sur la molette (Bouton Milieu) fait pivoter la caméra d'observation autour du centre."
+  },
+  {
+    "name": "Glisser la vue (Pan)",
+    "soloQ": "Quel raccourci permet de glisser (pan) la vue latéralement ou verticalement ?",
+    "correct": "Maj + BM",
+    "options": [
+      "Maj + BM",
+      "BM seul",
+      "Ctrl + BM",
+      "Alt + BM"
+    ],
+    "cat": "Navigation 3D",
+    "expl": "Maj + Bouton Milieu translate la caméra sans rotation."
+  },
+  {
+    "name": "Zoom fluide dans le viewport",
+    "soloQ": "Quel raccourci permet de zoomer / dézoomer de façon fluide dans la vue 3D ?",
+    "correct": "Molette",
+    "options": [
+      "Molette",
+      "Maj + Clic G",
+      "Ctrl + Espace",
+      "Alt + Molette"
+    ],
+    "cat": "Navigation 3D",
+    "expl": "Faire rouler la molette (ou Ctrl + BM) rapproche ou éloigne la caméra."
+  },
+  {
+    "name": "Vue de Face (Front)",
+    "soloQ": "Quelle touche du pavé numérique passe en vue de Face (Front View) ?",
+    "correct": "Pavé 1",
+    "options": [
+      "Pavé 1",
+      "Pavé 3",
+      "Pavé 7",
+      "Pavé 0"
+    ],
+    "cat": "Navigation 3D",
+    "expl": "Pavé 1 aligne la caméra en vue de face orthogonale sur le plan X/Z."
+  },
+  {
+    "name": "Vue de Côté Droit (Right)",
+    "soloQ": "Quelle touche du pavé numérique passe en vue de Côté Droit (Right View) ?",
+    "correct": "Pavé 3",
+    "options": [
+      "Pavé 3",
+      "Pavé 1",
+      "Pavé 7",
+      "Pavé 5"
+    ],
+    "cat": "Navigation 3D",
+    "expl": "Pavé 3 aligne la caméra en vue de profil droit orthogonale sur le plan Y/Z."
+  },
+  {
+    "name": "Vue du Dessus (Top)",
+    "soloQ": "Quelle touche du pavé numérique passe en vue du Dessus (Top View) ?",
+    "correct": "Pavé 7",
+    "options": [
+      "Pavé 7",
+      "Pavé 1",
+      "Pavé 3",
+      "Pavé 9"
+    ],
+    "cat": "Navigation 3D",
+    "expl": "Pavé 7 aligne la caméra en vue de dessus orthogonale sur le plan X/Y."
+  },
+  {
+    "name": "Vues opposées (Arrière / Gauche / Bas)",
+    "soloQ": "Quelle combinaison avec Pavé 1/3/7 donne les vues opposées (Arrière, Gauche, Bas) ?",
+    "correct": "Ctrl + Pavé 1/3/7",
+    "options": [
+      "Ctrl + Pavé 1/3/7",
+      "Maj + Pavé 1/3/7",
+      "Alt + Pavé 1/3/7",
+      "Pavé 9"
+    ],
+    "cat": "Navigation 3D",
+    "expl": "Maintenir Ctrl avec Pavé 1, 3 ou 7 inverse l'orientation de la vue orthogonale."
+  },
+  {
+    "name": "Bascule Perspective / Orthographique",
+    "soloQ": "Quelle touche du pavé numérique bascule entre vue Perspective et Orthographique ?",
+    "correct": "Pavé 5",
+    "options": [
+      "Pavé 5",
+      "Pavé 1",
+      "Pavé 0",
+      "Pavé ."
+    ],
+    "cat": "Navigation 3D",
+    "expl": "Pavé 5 élimine ou réactive la distorsion perspective pour s'aligner sur des blueprints."
+  },
+  {
+    "name": "Cadrer sur la sélection (Focus)",
+    "soloQ": "Quel raccourci centre la vue et le pivot sur l'objet sélectionné (Frame Selection) ?",
+    "correct": "Pavé .",
+    "options": [
+      "Pavé .",
+      "Pavé /",
+      "Home",
+      "Pavé 0"
+    ],
+    "cat": "Navigation 3D",
+    "expl": "Pavé Point (.) recentre le point de pivot et le cadrage caméra sur la sélection."
+  },
+  {
+    "name": "Vue Caméra active",
+    "soloQ": "Quelle touche du pavé numérique permet de regarder à travers la caméra de rendu ?",
+    "correct": "Pavé 0",
+    "options": [
+      "Pavé 0",
+      "Pavé 5",
+      "Ctrl + 0",
+      "Pavé 1"
+    ],
+    "cat": "Navigation 3D",
+    "expl": "Pavé 0 fait basculer la vue directement à travers l'objectif de la caméra de scène."
+  },
+  {
+    "name": "Mode Isolation Locale (Isolate)",
+    "soloQ": "Quel raccourci isole temporairement l'objet actif en masquant tout le reste ?",
+    "correct": "Pavé /",
+    "options": [
+      "Pavé /",
+      "H",
+      "Alt + H",
+      "Pavé ."
+    ],
+    "cat": "Navigation 3D",
+    "expl": "Pavé / (barre oblique) bascule entre vue globale et vue locale isolée."
+  },
+  {
+    "name": "Déplacer (Grab / Translate)",
+    "soloQ": "Quel raccourci permet de déplacer (Grab / Translate) la sélection ?",
+    "correct": "G",
+    "options": [
+      "G",
+      "T",
+      "D",
+      "M"
+    ],
+    "cat": "Transformations",
+    "expl": "G pour Grab translate librement les objets ou composants sélectionnés."
+  },
+  {
+    "name": "Pivoter (Rotate)",
+    "soloQ": "Quel raccourci permet d'effectuer une rotation (Rotate) ?",
+    "correct": "R",
+    "options": [
+      "R",
+      "P",
+      "T",
+      "Alt + R"
+    ],
+    "cat": "Transformations",
+    "expl": "R pour Rotate fait pivoter la sélection selon l'axe de la vue."
+  },
+  {
+    "name": "Redimensionner (Scale)",
+    "soloQ": "Quel raccourci permet de changer l'échelle ou la taille (Scale) d'un objet ?",
+    "correct": "S",
+    "options": [
+      "S",
+      "R",
+      "Alt + S",
+      "Ctrl + S"
+    ],
+    "cat": "Transformations",
+    "expl": "S pour Scale modifie la taille de la sélection proportionnellement."
+  },
+  {
+    "name": "Contrainte sur un axe précis",
+    "soloQ": "Comment verrouiller un déplacement, une rotation ou une mise à l'échelle sur un axe ?",
+    "correct": "G/R/S + X / Y / Z",
+    "options": [
+      "G/R/S + X / Y / Z",
+      "G + Ctrl + Z",
+      "Maj + Tab",
+      "Alt + G"
+    ],
+    "cat": "Transformations",
+    "expl": "Taper G, R ou S puis X, Y ou Z contraint immédiatement l'action sur cet axe."
+  },
+  {
+    "name": "Déplacer sur un plan (exclure un axe)",
+    "soloQ": "Quel raccourci déplace un objet sur un plan 2D en conservant sa hauteur (exclure Z) ?",
+    "correct": "G + Maj + Z",
+    "options": [
+      "G + Maj + Z",
+      "G + Alt + Z",
+      "G + Ctrl + Z",
+      "G + Z"
+    ],
+    "cat": "Transformations",
+    "expl": "G suivi de Maj + Z permet de bouger sur X/Y sans modifier la hauteur Z."
+  },
+  {
+    "name": "Appliquer les Transformations (Apply)",
+    "soloQ": "Quel raccourci fige l'échelle à 1.0 et la rotation à 0° (Apply Transforms) ?",
+    "correct": "Ctrl + A",
+    "options": [
+      "Ctrl + A",
+      "Maj + A",
+      "Alt + A",
+      "Ctrl + T"
+    ],
+    "cat": "Transformations",
+    "expl": "Ctrl + A ouvre le menu Apply Transforms (indispensable avant Bevel ou export Roblox)."
+  },
+  {
+    "name": "Dupliquer (Duplicate)",
+    "soloQ": "Quel raccourci crée une copie totalement indépendante de l'objet (Duplicate) ?",
+    "correct": "Maj + D",
+    "options": [
+      "Maj + D",
+      "Ctrl + D",
+      "Alt + D",
+      "D"
+    ],
+    "cat": "Transformations",
+    "expl": "Maj + D crée un nouveau clone séparé avec sa propre géométrie."
+  },
+  {
+    "name": "Duplication liée (Linked Instance)",
+    "soloQ": "Quel raccourci crée une copie liée dont la géométrie reste partagée (Linked Duplicate) ?",
+    "correct": "Alt + D",
+    "options": [
+      "Alt + D",
+      "Maj + D",
+      "Ctrl + L",
+      "Ctrl + D"
+    ],
+    "cat": "Transformations",
+    "expl": "Alt + D partage le maillage : éditer une copie modifie toutes les autres automatiquement."
+  },
+  {
+    "name": "Réinitialiser Position / Rotation / Échelle",
+    "soloQ": "Quel raccourci remet la position, rotation ou échelle d'un objet à zéro (Clear) ?",
+    "correct": "Alt + G / R / S",
+    "options": [
+      "Alt + G / R / S",
+      "Ctrl + G / R / S",
+      "Maj + G / R / S",
+      "G + 0"
+    ],
+    "cat": "Transformations",
+    "expl": "Alt+G remet la position à l'origine, Alt+R la rotation à 0°, Alt+S l'échelle à 1.0."
+  },
+  {
+    "name": "Supprimer (Delete)",
+    "soloQ": "Quel raccourci ouvre le menu de suppression d'éléments ou d'objets (Delete) ?",
+    "correct": "X ou Suppr",
+    "options": [
+      "X ou Suppr",
+      "Backspace",
+      "Ctrl + D",
+      "D"
+    ],
+    "cat": "Transformations",
+    "expl": "X ou Suppr supprime les objets en mode Objet, ou les sommets/arêtes/faces en mode Édition."
+  },
+  {
+    "name": "Basculer Objet / Édition",
+    "soloQ": "Quel raccourci permet de basculer entre le Mode Objet et le Mode Édition ?",
+    "correct": "Tab",
+    "options": [
+      "Tab",
+      "Ctrl + Tab",
+      "Maj + Tab",
+      "Espace"
+    ],
+    "cat": "Mode Édition",
+    "expl": "Tab est la touche reine de Blender pour alterner entre vue globale et retouche du maillage."
+  },
+  {
+    "name": "Sélection Sommets / Arêtes / Faces",
+    "soloQ": "En Mode Édition, quelles touches sélectionnent les Sommets, Arêtes ou Faces ?",
+    "correct": "1 / 2 / 3",
+    "options": [
+      "1 / 2 / 3",
+      "F1 / F2 / F3",
+      "Tab",
+      "Maj + 1/2/3"
+    ],
+    "cat": "Mode Édition",
+    "expl": "Touches 1 (Sommets), 2 (Arêtes), 3 (Faces) au-dessus du bloc alphabétique."
+  },
+  {
+    "name": "Extrusion (Extrude)",
+    "soloQ": "Quelle touche déclenche l'Extrusion de géométrie en Mode Édition ?",
+    "correct": "E",
+    "options": [
+      "E",
+      "I",
+      "Ctrl + E",
+      "Alt + E"
+    ],
+    "cat": "Mode Édition",
+    "expl": "E tire de nouveaux polygones perpendiculairement à la surface sélectionnée."
+  },
+  {
+    "name": "Insertion de face (Inset)",
+    "soloQ": "Quel raccourci crée une face concentrique en retrait à l'intérieur (Inset) ?",
+    "correct": "I",
+    "options": [
+      "I",
+      "E",
+      "F",
+      "Ctrl + I"
+    ],
+    "cat": "Mode Édition",
+    "expl": "I génère un cadre intérieur de faces concentriques idéal pour créer des creux ou bordures."
+  },
+  {
+    "name": "Découpe en boucle (Loop Cut)",
+    "soloQ": "Quel raccourci insère un anneau d'arêtes tout autour du maillage (Loop Cut) ?",
+    "correct": "Ctrl + R",
+    "options": [
+      "Ctrl + R",
+      "Maj + R",
+      "Alt + R",
+      "Ctrl + L"
+    ],
+    "cat": "Mode Édition",
+    "expl": "Ctrl + R tranche le maillage avec une boucle d'arêtes (molette pour multiplier les tranches)."
+  },
+  {
+    "name": "Biseau / Chanfrein (Bevel)",
+    "soloQ": "Quel raccourci applique un biseau ou chanfrein aux arêtes sélectionnées (Bevel) ?",
+    "correct": "Ctrl + B",
+    "options": [
+      "Ctrl + B",
+      "Alt + B",
+      "B",
+      "Maj + B"
+    ],
+    "cat": "Mode Édition",
+    "expl": "Ctrl + B adoucit et arrondit les angles droits vifs pour capter la lumière."
+  },
+  {
+    "name": "Créer une face / arête (Fill)",
+    "soloQ": "Quel raccourci crée une face ou relie deux sommets par une arête (Fill) ?",
+    "correct": "F",
+    "options": [
+      "F",
+      "M",
+      "J",
+      "E"
+    ],
+    "cat": "Mode Édition",
+    "expl": "F relie 2 sommets par une arête, ou 3+ sommets pour former une nouvelle face fermée."
+  },
+  {
+    "name": "Fusionner les sommets (Merge)",
+    "soloQ": "Quel raccourci permet de fusionner des sommets sélectionnés (Merge) ?",
+    "correct": "M",
+    "options": [
+      "M",
+      "Alt + M",
+      "J",
+      "F"
+    ],
+    "cat": "Mode Édition",
+    "expl": "M ouvre le menu Merge : At Center, At Cursor, At Last, By Distance."
+  },
+  {
+    "name": "Outil Couteau (Knife)",
+    "soloQ": "Quel raccourci active l'outil Couteau pour tracer des découpes libres (Knife) ?",
+    "correct": "K",
+    "options": [
+      "K",
+      "C",
+      "Ctrl + K",
+      "V"
+    ],
+    "cat": "Mode Édition",
+    "expl": "K permet de dessiner des découpes d'arêtes chirurgicales directement à la souris sur les faces."
+  },
+  {
+    "name": "Joindre deux sommets (Connect)",
+    "soloQ": "Quel raccourci trace une arête directe entre 2 sommets en divisant la face (Connect) ?",
+    "correct": "J",
+    "options": [
+      "J",
+      "F",
+      "K",
+      "Ctrl + J"
+    ],
+    "cat": "Mode Édition",
+    "expl": "J (Vertex Connect Path) relie deux sommets en coupant la face qui les sépare."
+  },
+  {
+    "name": "Séparer la sélection (Separate)",
+    "soloQ": "Quel raccourci détache les éléments sélectionnés pour former un nouvel objet (Separate) ?",
+    "correct": "P",
+    "options": [
+      "P",
+      "Y",
+      "V",
+      "Ctrl + P"
+    ],
+    "cat": "Mode Édition",
+    "expl": "P sépare la sélection active en un objet 3D entièrement distinct dans l'Outliner."
+  },
+  {
+    "name": "Joindre plusieurs objets (Join)",
+    "soloQ": "Quel raccourci fusionne plusieurs objets sélectionnés en un seul maillage (Join) ?",
+    "correct": "Ctrl + J",
+    "options": [
+      "Ctrl + J",
+      "J",
+      "M",
+      "Ctrl + P"
+    ],
+    "cat": "Mode Édition",
+    "expl": "Ctrl + J réunit tous les objets sélectionnés dans le maillage de l'objet actif."
+  },
+  {
+    "name": "Tout sélectionner (Select All)",
+    "soloQ": "Quel raccourci permet de sélectionner l'ensemble des éléments visibles (Select All) ?",
+    "correct": "A",
+    "options": [
+      "A",
+      "Ctrl + A",
+      "Alt + A",
+      "B"
+    ],
+    "cat": "Sélections",
+    "expl": "A sélectionne la totalité des objets ou composants du maillage."
+  },
+  {
+    "name": "Tout désélectionner (Deselect)",
+    "soloQ": "Quel raccourci permet de tout désélectionner d'un coup (Deselect All) ?",
+    "correct": "Alt + A",
+    "options": [
+      "Alt + A",
+      "A",
+      "Ctrl + D",
+      "X"
+    ],
+    "cat": "Sélections",
+    "expl": "Alt + A (ou double appui sur A) annule instantanément la sélection active."
+  },
+  {
+    "name": "Sélection de boucle (Loop Select)",
+    "soloQ": "Quel raccourci permet de sélectionner toute une boucle continue d'arêtes ou faces ?",
+    "correct": "Alt + Clic Gauche",
+    "options": [
+      "Alt + Clic Gauche",
+      "Ctrl + Clic Gauche",
+      "Maj + Clic Gauche",
+      "L"
+    ],
+    "cat": "Sélections",
+    "expl": "Alt + Clic Gauche sur une arête suit le tracé pour attraper toute la boucle d'un coup."
+  },
+  {
+    "name": "Sélection en anneau (Ring Select)",
+    "soloQ": "Quel raccourci sélectionne la série d'arêtes parallèles transversales (Ring Select) ?",
+    "correct": "Ctrl + Alt + Clic Gauche",
+    "options": [
+      "Ctrl + Alt + Clic Gauche",
+      "Alt + Clic Gauche",
+      "Maj + Alt + Clic",
+      "Ctrl + L"
+    ],
+    "cat": "Sélections",
+    "expl": "Ctrl + Alt + Clic Gauche sélectionne la série d'arêtes disposées en échelle parallèle."
+  },
+  {
+    "name": "Sélectionner élément connexe (Linked)",
+    "soloQ": "Quel raccourci sélectionne l'îlot géométrique entier sous le curseur souris (Linked) ?",
+    "correct": "L ou Ctrl + L",
+    "options": [
+      "L ou Ctrl + L",
+      "Alt + L",
+      "A",
+      "Ctrl + A"
+    ],
+    "cat": "Sélections",
+    "expl": "Survoler une pièce et appuyer sur L sélectionne tout le sous-ensemble soudé."
+  },
+  {
+    "name": "Agrandir / Réduire la sélection",
+    "soloQ": "Quel raccourci étend la sélection aux sommets voisins adjacents (Grow Selection) ?",
+    "correct": "Ctrl + + / -",
+    "options": [
+      "Ctrl + + / -",
+      "Maj + + / -",
+      "Alt + + / -",
+      "Ctrl + Molette"
+    ],
+    "cat": "Sélections",
+    "expl": "Ctrl + Pavé + propage la sélection aux faces adjacentes, Ctrl + Pavé - la rétracte."
+  },
+  {
+    "name": "Sélection au pinceau circulaire (Circle)",
+    "soloQ": "Quel raccourci active le pinceau de sélection circulaire (Circle Select) ?",
+    "correct": "C",
+    "options": [
+      "C",
+      "B",
+      "Maj + C",
+      "Alt + C"
+    ],
+    "cat": "Sélections",
+    "expl": "C transforme le curseur en pinceau circulaire (molette pour changer le rayon)."
+  },
+  {
+    "name": "Inverser la sélection (Invert)",
+    "soloQ": "Quel raccourci inverse la sélection active (Invert Selection) ?",
+    "correct": "Ctrl + I",
+    "options": [
+      "Ctrl + I",
+      "Alt + I",
+      "I",
+      "Maj + I"
+    ],
+    "cat": "Sélections",
+    "expl": "Ctrl + I sélectionne tout ce qui n'était pas sélectionné et désélectionne le reste."
+  },
+  {
+    "name": "Pie Menu Shading (Mode d'affichage)",
+    "soloQ": "Quel raccourci ouvre le Pie Menu de shading (Filaire, Solide, Matériau, Rendu) ?",
+    "correct": "Z",
+    "options": [
+      "Z",
+      "Alt + Z",
+      "Maj + Z",
+      "Ctrl + Z"
+    ],
+    "cat": "Vues & Shading",
+    "expl": "Z ouvre le menu circulaire Shading : Wireframe, Solid, Material Preview, Rendered."
+  },
+  {
+    "name": "Bascule Rayons X (X-Ray)",
+    "soloQ": "Quel raccourci active la transparence Rayons X pour sélectionner à travers le modèle ?",
+    "correct": "Alt + Z",
+    "options": [
+      "Alt + Z",
+      "Z",
+      "Maj + Z",
+      "Ctrl + Z"
+    ],
+    "cat": "Vues & Shading",
+    "expl": "Alt + Z rend la géométrie translucide pour attraper les sommets placés derrière."
+  },
+  {
+    "name": "Masquer la sélection (Hide)",
+    "soloQ": "Quel raccourci masque temporairement les éléments sélectionnés (Hide) ?",
+    "correct": "H",
+    "options": [
+      "H",
+      "Alt + H",
+      "Maj + H",
+      "X"
+    ],
+    "cat": "Vues & Shading",
+    "expl": "H masque les éléments gênants sans les supprimer de la scène."
+  },
+  {
+    "name": "Révéler les éléments masqués (Unhide)",
+    "soloQ": "Quel raccourci fait réapparaître tous les objets ou sommets masqués (Unhide) ?",
+    "correct": "Alt + H",
+    "options": [
+      "Alt + H",
+      "H",
+      "Ctrl + H",
+      "Maj + H"
+    ],
+    "cat": "Vues & Shading",
+    "expl": "Alt + H réaffiche immédiatement l'ensemble des éléments cachés."
+  },
+  {
+    "name": "Masquer tout sauf la sélection",
+    "soloQ": "Quel raccourci masque tout sauf les éléments sélectionnés pour s'isoler ?",
+    "correct": "Maj + H",
+    "options": [
+      "Maj + H",
+      "Alt + H",
+      "H",
+      "Ctrl + H"
+    ],
+    "cat": "Vues & Shading",
+    "expl": "Maj + H cache tous les objets non sélectionnés pour travailler au calme."
+  },
+  {
+    "name": "Panneau latéral droit (N-Panel)",
+    "soloQ": "Quel raccourci ouvre/ferme le panneau latéral droit des propriétés (Dimensions, Addons) ?",
+    "correct": "N",
+    "options": [
+      "N",
+      "T",
+      "P",
+      "Ctrl + N"
+    ],
+    "cat": "Vues & Shading",
+    "expl": "N affiche le volet latéral avec les coordonnées d'échelle, de rotation et onglets d'addons."
+  },
+  {
+    "name": "Barre d'outils gauche (Toolbar)",
+    "soloQ": "Quel raccourci ouvre/ferme la barre d'outils gauche du Viewport (Toolbar) ?",
+    "correct": "T",
+    "options": [
+      "T",
+      "N",
+      "W",
+      "Tab"
+    ],
+    "cat": "Vues & Shading",
+    "expl": "T affiche ou masque la barre d'outils contenant le curseur, couteau, biseau, etc."
+  },
+  {
+    "name": "Recherche globale d'opérations",
+    "soloQ": "Quel raccourci ouvre la recherche globale pour trouver et exécuter n'importe quel outil ?",
+    "correct": "F3 ou Espace",
+    "options": [
+      "F3 ou Espace",
+      "Ctrl + F",
+      "F4",
+      "Maj + F3"
+    ],
+    "cat": "Vues & Shading",
+    "expl": "F3 (ou Espace) permet de saisir le nom de n'importe quelle commande pour la lancer."
+  },
+  {
+    "name": "Menu Dépliage UV (Unwrap)",
+    "soloQ": "Quel raccourci ouvre le menu de dépliage UV (Unwrap, Smart UV Project...) ?",
+    "correct": "U",
+    "options": [
+      "U",
+      "Ctrl + U",
+      "Maj + U",
+      "V"
+    ],
+    "cat": "UV & Textures",
+    "expl": "U en Mode Édition aplatit la géométrie 3D pour la projeter sur une texture 2D."
+  },
+  {
+    "name": "Marquer les coutures (Mark Seam)",
+    "soloQ": "Quel raccourci ouvre le menu Edge pour marquer des coutures UV (Mark Seam) ?",
+    "correct": "Ctrl + E",
+    "options": [
+      "Ctrl + E",
+      "U",
+      "Alt + E",
+      "Ctrl + S"
+    ],
+    "cat": "UV & Textures",
+    "expl": "Ctrl + E ouvre le menu Edge où Mark Seam définit les lignes de découpe du patron UV."
+  },
+  {
+    "name": "Menu Ajouter (Add)",
+    "soloQ": "Quelle combinaison de touches ouvre le menu d'ajout d'objets (Mesh, Courbes, Lumières) ?",
+    "correct": "Maj + A",
+    "options": [
+      "Maj + A",
+      "Ctrl + A",
+      "Alt + A",
+      "Tab"
+    ],
+    "cat": "UV & Textures",
+    "expl": "Maj + A (Shift + A) ouvre le menu Add pour insérer des formes 3D primitives."
+  },
+  {
+    "name": "Édition Proportionnelle (Soft Move)",
+    "soloQ": "Quel raccourci active l'édition proportionnelle pour déformer doucement les voisins ?",
+    "correct": "O",
+    "options": [
+      "O",
+      "P",
+      "Alt + O",
+      "Maj + O"
+    ],
+    "cat": "UV & Textures",
+    "expl": "O active l'influence proportionnelle (molette de souris pour régler le rayon)."
+  },
+  {
+    "name": "Setup Texture instantané (Node Wrangler)",
+    "soloQ": "Quel raccourci crée automatiquement Mapping + Texture Coordinate sur un Shader ?",
+    "correct": "Ctrl + T",
+    "options": [
+      "Ctrl + T",
+      "Ctrl + N",
+      "Maj + T",
+      "T"
+    ],
+    "cat": "UV & Textures",
+    "expl": "Avec l'addon Node Wrangler, Ctrl + T sur un Principled BSDF câble les nœuds de texture."
+  },
+  {
+    "name": "Prévisualiser un nœud solo (Node Wrangler)",
+    "soloQ": "Quel raccourci branche instantanément un nœud sur la sortie Surface pour l'isoler ?",
+    "correct": "Ctrl + Maj + Clic Gauche",
+    "options": [
+      "Ctrl + Maj + Clic Gauche",
+      "Alt + Clic G",
+      "Ctrl + Clic G",
+      "Maj + Clic G"
+    ],
+    "cat": "UV & Textures",
+    "expl": "Ctrl + Maj + Clic Gauche (Node Wrangler) prévisualise en direct le résultat de ce nœud."
+  },
+  {
+    "name": "Aligner la Caméra sur la vue actuelle",
+    "soloQ": "Quel raccourci place la caméra de rendu exactement là où regardent vos yeux ?",
+    "correct": "Ctrl + Alt + Pavé 0",
+    "options": [
+      "Ctrl + Alt + Pavé 0",
+      "Ctrl + Pavé 0",
+      "Pavé 0",
+      "Ctrl + Pavé 1"
+    ],
+    "cat": "Navigation 3D",
+    "expl": "Ctrl + Alt + Pavé 0 aligne la caméra active sur l'angle de vue précis de votre écran."
+  },
+  {
+    "name": "Calculer le Rendu final (Render)",
+    "soloQ": "Quel raccourci lance le calcul du rendu final en image haute qualité (Render) ?",
+    "correct": "F12",
+    "options": [
+      "F12",
+      "F11",
+      "Ctrl + R",
+      "Ctrl + F12"
+    ],
+    "cat": "UV & Textures",
+    "expl": "F12 lance le moteur de rendu (Cycles ou EEVEE) pour sortir l'image définitive."
+  },
+  {
+    "name": "Parenter des objets (Set Parent)",
+    "soloQ": "Quel raccourci lie les objets sélectionnés à l'objet actif dans une hiérarchie parent/enfant ?",
+    "correct": "Ctrl + P",
+    "options": [
+      "Ctrl + P",
+      "Alt + P",
+      "P",
+      "Maj + P"
+    ],
+    "cat": "Transformations",
+    "expl": "Ctrl + P ouvre le menu Set Parent To pour attacher des accessoires à un personnage."
+  },
+  {
+    "name": "Biseau de sommet (Vertex Bevel)",
+    "soloQ": "Quel raccourci permet de biseauter un sommet unique sans toucher aux arêtes ?",
+    "correct": "Ctrl + Maj + B",
+    "options": [
+      "Ctrl + Maj + B",
+      "Ctrl + B",
+      "Alt + B",
+      "V"
+    ],
+    "cat": "Mode Édition",
+    "expl": "Ctrl + Maj + B arrondit ou biseaute des sommets individuels."
+  },
+  {
+    "name": "Extrusion le long des normales",
+    "soloQ": "Quel raccourci permet d'extruder chaque face selon sa propre normale (gonflement) ?",
+    "correct": "Alt + E",
+    "options": [
+      "Alt + E",
+      "Ctrl + E",
+      "E",
+      "Maj + E"
+    ],
+    "cat": "Mode Édition",
+    "expl": "Alt + E ouvre le menu d'extrusion avancée : Extrude Faces Along Normals."
+  },
+  {
+    "name": "Glissement d'arête (Edge Slide)",
+    "soloQ": "Quel raccourci fait glisser une arête le long du maillage sans altérer la forme ?",
+    "correct": "G + G",
+    "options": [
+      "G + G",
+      "Alt + G",
+      "Ctrl + G",
+      "Maj + G"
+    ],
+    "cat": "Mode Édition",
+    "expl": "Appuyer deux fois sur G (G + G) active l'Edge Slide le long des arêtes adjacentes."
+  },
+  {
+    "name": "Répéter la dernière action (Repeat Last)",
+    "soloQ": "Quel raccourci répète à l'identique la toute dernière opération effectuée ?",
+    "correct": "Maj + R",
+    "options": [
+      "Maj + R",
+      "Ctrl + R",
+      "R",
+      "Alt + R"
+    ],
+    "cat": "Transformations",
+    "expl": "Maj + R (Shift + R) réapplique instantanément la dernière commande exécutée."
+  }
+];
+
   /* ---------- SPEED QUIZ GAME ---------- */
   const quizQuestions = [
-    // RACCOURCIS (Shortcuts)
-    {
+    ...ALL_SHORTCUT_DEFINITIONS.map(item => ({
       cat: 'shortcuts',
       catLabel: 'Raccourcis',
-      q: "Quel raccourci permet de basculer entre le Mode Objet et le Mode Édition ?",
-      options: ["Shift + Tab", "Tab", "Espace", "Entrée"],
-      answer: 1,
-      expl: "La touche Tabulation (Tab) est le basculement fondamental Objet / Édition."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci permet de déplacer (Grab/Translate) une sélection ?",
-      options: ["G", "M", "T", "D"],
-      answer: 0,
-      expl: "G pour Grab (Attraper) déplace les objets ou éléments géométriques."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci permet d'effectuer une rotation (Rotate) ?",
-      options: ["T", "R", "O", "Shift + R"],
-      answer: 1,
-      expl: "R pour Rotate fait pivoter la sélection."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci permet de redimensionner (Scale) un objet ?",
-      options: ["Z", "S", "Ctrl + S", "Alt + S"],
-      answer: 1,
-      expl: "S pour Scale modifie la taille de la sélection."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "En Mode Édition, quelle touche déclenche l'Extrusion (E) ?",
-      options: ["Ctrl + E", "E", "Shift + E", "Alt + E"],
-      answer: 1,
-      expl: "E extrude les sommets, arêtes ou faces sélectionnées le long de leur normale."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci insère une nouvelle découpe de boucle (Loop Cut) ?",
-      options: ["Ctrl + R", "Shift + L", "Alt + R", "Ctrl + L"],
-      answer: 0,
-      expl: "Ctrl + R insère une boucle d'arêtes tout autour du maillage."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci permet d'insérer une face à l'intérieur d'une autre (Inset) ?",
-      options: ["F", "I", "Insert", "Shift + I"],
-      answer: 1,
-      expl: "I pour Inset crée une face concentrique à l'intérieur de la sélection."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci applique un biseau / chanfrein (Bevel) aux arêtes ?",
-      options: ["Ctrl + B", "Alt + B", "B", "Shift + B"],
-      answer: 0,
-      expl: "Ctrl + B arrondit ou brise les arêtes sélectionnées."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quelle combinaison de touches ouvre le menu d'ajout d'objets (Add Menu) ?",
-      options: ["Ctrl + A", "Shift + A", "A", "Alt + A"],
-      answer: 1,
-      expl: "Shift + A (Maj + A) ouvre le menu d'ajout (Mesh, Armature, Image...)."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci permet de fusionner des sommets sélectionnés (Merge) ?",
-      options: ["F", "M", "Ctrl + M", "J"],
-      answer: 1,
-      expl: "M ouvre le menu Merge (At Center, At Last, By Distance...)."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci crée un duplicata lié (Linked Duplicate) ?",
-      options: ["Shift + D", "Alt + D", "Ctrl + D", "D"],
-      answer: 1,
-      expl: "Alt + D duplique l'objet en partageant la même géométrie (mesh data)."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci réinitialise et applique l'Échelle/Rotation (Apply Transforms) ?",
-      options: ["Ctrl + A", "Shift + A", "Alt + A", "Ctrl + T"],
-      answer: 0,
-      expl: "Ctrl + A ouvre le menu Apply pour figer l'échelle à 1.0 et la rotation à 0."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "En Mode Édition, quelles touches permettent de basculer entre Sommets, Arêtes et Faces ?",
-      options: ["F1 / F2 / F3", "1 / 2 / 3", "Tab", "Shift + 1/2/3"],
-      answer: 1,
-      expl: "Touches 1 (Sommets), 2 (Arêtes), 3 (Faces) du clavier au-dessus des lettres."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quelle touche du pavé numérique passe en vue de face (Front View) ?",
-      options: ["Num 3", "Num 1", "Num 7", "Num 0"],
-      answer: 1,
-      expl: "Num 1 aligne la caméra en vue de face orthographique."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quelle touche du pavé numérique bascule entre vue Perspective et Orthographique ?",
-      options: ["Num 5", "Num 1", "Num 9", "Num 0"],
-      answer: 0,
-      expl: "Num 5 bascule la projection de la caméra."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci déplie les coordonnées UV d'un mesh (Unwrap) ?",
-      options: ["Ctrl + U", "U", "Shift + U", "V"],
-      answer: 1,
-      expl: "U ouvre le menu de dépliage UV (Unwrap, Smart UV Project...)."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci masque les objets ou éléments sélectionnés (Hide) ?",
-      options: ["Alt + H", "H", "Ctrl + H", "X"],
-      answer: 1,
-      expl: "H masque la sélection temporairement dans le Viewport."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci réaffiche tous les objets masqués (Unhide) ?",
-      options: ["Shift + H", "Alt + H", "Ctrl + H", "H"],
-      answer: 1,
-      expl: "Alt + H fait réapparaître tous les éléments cachés."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci sépare des faces sélectionnées en un objet indépendant (Separate) ?",
-      options: ["Ctrl + P", "P", "S", "Alt + P"],
-      answer: 1,
-      expl: "P en mode édition sépare la sélection en un nouvel objet."
-    },
-    {
-      cat: 'shortcuts',
-      catLabel: 'Raccourcis',
-      q: "Quel raccourci active l'édition proportionnelle (Proportional Editing) ?",
-      options: ["P", "O", "Shift + O", "Alt + O"],
-      answer: 1,
-      expl: "O active/désactive l'édition proportionnelle (champ d'influence doux)."
-    },
+      q: item.soloQ,
+      options: item.options,
+      answer: item.options.indexOf(item.correct),
+      expl: item.expl
+    })),
 
     // VOCABULAIRE & LANGAGE TECHNIQUE
     {
@@ -1700,57 +2357,12 @@ document.addEventListener('DOMContentLoaded', () => {
      Système de matchmaking par créneau temporel (60s windows)
      ================================================================ */
 
-  const DUEL_QUESTIONS = [
-    { q: "Extruder une face ou arête", correct: "E", options: ["E", "I", "G", "S"], cat: "Mode Édition" },
-    { q: "Déplacer / Grab la sélection", correct: "G", options: ["G", "R", "S", "B"], cat: "Transformations" },
-    { q: "Faire pivoter (Rotate)", correct: "R", options: ["R", "G", "X", "S"], cat: "Transformations" },
-    { q: "Redimensionner (Scale)", correct: "S", options: ["S", "R", "Alt + S", "G"], cat: "Transformations" },
-    { q: "Biseauter (Bevel)", correct: "Ctrl + B", options: ["Ctrl + B", "Ctrl + R", "I", "Alt + B"], cat: "Mode Édition" },
-    { q: "Boucle de coupe (Loop Cut)", correct: "Ctrl + R", options: ["Ctrl + R", "Shift + L", "K", "E"], cat: "Mode Édition" },
-    { q: "Insertion de face (Inset)", correct: "I", options: ["I", "E", "F", "Ctrl + I"], cat: "Mode Édition" },
-    { q: "Menu d'ajout (Add Mesh)", correct: "Maj + A", options: ["Maj + A", "Ctrl + A", "Alt + A", "Tab"], cat: "Général" },
-    { q: "Fusionner les sommets (Merge)", correct: "M", options: ["M", "Alt + M", "J", "F"], cat: "Mode Édition" },
-    { q: "Déplier les UV (Unwrap)", correct: "U", options: ["U", "Ctrl + U", "Shift + U", "E"], cat: "UV & Textures" },
-    { q: "Basculer Objet / Mode Édition", correct: "Tab", options: ["Tab", "Ctrl + Tab", "A", "Z"], cat: "Général" },
-    { q: "Vue Rayons X (X-Ray)", correct: "Alt + Z", options: ["Alt + Z", "Shift + Z", "Z", "Ctrl + Z"], cat: "Vues & Shading" },
-    { q: "Vue de face orthogonale", correct: "Pavé 1", options: ["Pavé 1", "Pavé 3", "Pavé 7", "Pavé 0"], cat: "Navigation 3D" },
-    { q: "Vue de profil droite", correct: "Pavé 3", options: ["Pavé 3", "Pavé 1", "Pavé 7", "Ctrl + 3"], cat: "Navigation 3D" },
-    { q: "Vue de dessus (Top View)", correct: "Pavé 7", options: ["Pavé 7", "Pavé 1", "Pavé 3", "Pavé 9"], cat: "Navigation 3D" },
-    { q: "Vue Caméra active", correct: "Pavé 0", options: ["Pavé 0", "Pavé 5", "Pavé 1", "Ctrl + 0"], cat: "Navigation 3D" },
-    { q: "Perspective / Orthographique", correct: "Pavé 5", options: ["Pavé 5", "Pavé 1", "Pavé 9", "Pavé 0"], cat: "Navigation 3D" },
-    { q: "Tout sélectionner", correct: "A", options: ["A", "Ctrl + A", "Alt + A", "B"], cat: "Sélections" },
-    { q: "Tout désélectionner", correct: "Alt + A", options: ["Alt + A", "A", "Ctrl + D", "X"], cat: "Sélections" },
-    { q: "Appliquer Échelle / Rotation", correct: "Ctrl + A", options: ["Ctrl + A", "Maj + A", "Alt + A", "Ctrl + T"], cat: "Transformations" },
-    { q: "Dupliquer l'objet", correct: "Maj + D", options: ["Maj + D", "Alt + D", "Ctrl + D", "D"], cat: "Transformations" },
-    { q: "Duplication liée (Linked)", correct: "Alt + D", options: ["Alt + D", "Maj + D", "Ctrl + L", "Ctrl + D"], cat: "Transformations" },
-    { q: "Masquer (Hide)", correct: "H", options: ["H", "Alt + H", "Shift + H", "X"], cat: "Vues & Shading" },
-    { q: "Réafficher tout", correct: "Alt + H", options: ["Alt + H", "H", "Ctrl + H", "Shift + H"], cat: "Vues & Shading" },
-    { q: "Séparer en objet (Separate)", correct: "P", options: ["P", "Y", "V", "M"], cat: "Mode Édition" },
-    { q: "Joindre plusieurs objets", correct: "Ctrl + J", options: ["Ctrl + J", "J", "M", "Ctrl + P"], cat: "Général" },
-    { q: "Parenter des objets", correct: "Ctrl + P", options: ["Ctrl + P", "Alt + P", "P", "Shift + P"], cat: "Général" },
-    { q: "Outil Couteau (Knife)", correct: "K", options: ["K", "C", "X", "V"], cat: "Mode Édition" },
-    { q: "Créer une face (Fill)", correct: "F", options: ["F", "J", "M", "Alt + F"], cat: "Mode Édition" },
-    { q: "Relier deux sommets", correct: "J", options: ["J", "F", "V", "K"], cat: "Mode Édition" },
-    { q: "Édition Proportionnelle", correct: "O", options: ["O", "P", "Alt + O", "Shift + O"], cat: "Transformations" },
-    { q: "Recherche globale d'outils", correct: "F3", options: ["F3", "Espace", "Ctrl + F", "Shift + F3"], cat: "Général" },
-    { q: "Vue locale (isoler objet)", correct: "Pavé /", options: ["Pavé /", "H", "Alt + Z", "Pavé ."], cat: "Navigation 3D" },
-    { q: "Centrer la vue sur la sélection", correct: "Pavé .", options: ["Pavé .", "Pavé /", "C", "Home"], cat: "Navigation 3D" },
-    { q: "Marquer une couture UV", correct: "Ctrl + E", options: ["Ctrl + E", "U", "Alt + E", "Ctrl + S"], cat: "UV & Textures" },
-    { q: "Sélectionner une boucle (Loop)", correct: "Alt + Clic G", options: ["Alt + Clic G", "Ctrl + Clic G", "Shift + Clic G", "L"], cat: "Sélections" },
-    { q: "Inverser la sélection", correct: "Ctrl + I", options: ["Ctrl + I", "Alt + I", "I", "Shift + I"], cat: "Sélections" },
-    { q: "Supprimer (Delete)", correct: "X", options: ["X", "Delete", "Backspace", "Suppr"], cat: "Général" },
-    { q: "Menu Shading (Wireframe...)", correct: "Z", options: ["Z", "Alt + Z", "Shift + Z", "W"], cat: "Vues & Shading" },
-    { q: "Sélectionner éléments reliés", correct: "L", options: ["L", "Alt + L", "Ctrl + L", "Shift + L"], cat: "Sélections" },
-    { q: "Biseauter un sommet (Vertex Bevel)", correct: "Ctrl + Maj + B", options: ["Ctrl + Maj + B", "Ctrl + B", "Alt + B", "V"], cat: "Mode Édition" },
-    { q: "Extrusion le long des normales", correct: "Alt + E", options: ["Alt + E", "Ctrl + E", "E", "Shift + E"], cat: "Mode Édition" },
-    { q: "Glissement d'arête (Edge Slide)", correct: "G + G", options: ["G + G", "Alt + G", "Ctrl + G", "Shift + G"], cat: "Mode Édition" },
-    { q: "Répéter la dernière action", correct: "Maj + R", options: ["Maj + R", "Ctrl + R", "R", "Alt + R"], cat: "Général" },
-    { q: "Mode de sélection Sommet", correct: "1", options: ["1", "2", "3", "Tab"], cat: "Mode Édition" },
-    { q: "Mode de sélection Arête (Edge)", correct: "2", options: ["2", "1", "3", "Tab"], cat: "Mode Édition" },
-    { q: "Mode de sélection Face", correct: "3", options: ["3", "1", "2", "Tab"], cat: "Mode Édition" },
-    { q: "Ouvrir le panneau Propriétés (N)", correct: "N", options: ["N", "T", "P", "F4"], cat: "Navigation 3D" },
-    { q: "Ouvrir la barre d'outils (T)", correct: "T", options: ["T", "N", "W", "Tab"], cat: "Navigation 3D" }
-  ];
+  const DUEL_QUESTIONS = ALL_SHORTCUT_DEFINITIONS.map(item => ({
+    q: item.name,
+    correct: item.correct,
+    options: item.options,
+    cat: item.cat
+  }));
 
   /* ------------------------------------------------------------------
      MODE SWITCHER
