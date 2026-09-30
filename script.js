@@ -886,12 +886,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Render 4 options randomly shuffled
     if (optionsGrid) {
       optionsGrid.innerHTML = '';
-      const letters = ['A', 'B', 'C', 'D'];
+      const keys = ['1', '2', '3', '4'];
       currentQData.options.forEach((opt, idx) => {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'quiz-option-btn';
-        btn.innerHTML = `<span class="opt-letter">${letters[idx]}</span><span>${opt}</span>`;
+        btn.innerHTML = `<span class="opt-letter opt-key">${keys[idx]}</span><span class="opt-text">${opt}</span>`;
         btn.addEventListener('click', () => handleAnswer(idx));
         optionsGrid.appendChild(btn);
       });
@@ -1104,14 +1104,16 @@ document.addEventListener('DOMContentLoaded', () => {
         advanceToNext();
       }
     } else {
-      const key = e.key.toLowerCase();
-      let idx = -1;
-      if (key === '1' || key === 'a') idx = 0;
-      else if (key === '2' || key === 'b') idx = 1;
-      else if (key === '3' || key === 'c') idx = 2;
-      else if (key === '4' || key === 'd') idx = 3;
-
-      if (idx !== -1) {
+      const keyMap = {
+        '1': 0, '&': 0,
+        '2': 1, 'é': 1,
+        '3': 2, '"': 2,
+        '4': 3, "'": 3,
+        'a': 0, 'b': 1, 'c': 2, 'd': 3
+      };
+      const k = e.key.toLowerCase();
+      if (keyMap.hasOwnProperty(e.key) || keyMap.hasOwnProperty(k)) {
+        const idx = keyMap.hasOwnProperty(e.key) ? keyMap[e.key] : keyMap[k];
         e.preventDefault();
         handleAnswer(idx);
       }
