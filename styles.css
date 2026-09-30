@@ -1346,6 +1346,16 @@ footer {
 .quiz-topnav-link:hover {
   text-shadow: 0 0 10px rgba(240,138,52,0.4);
 }
+.duel-topnav-link {
+  color: #ff6b35 !important;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.duel-topnav-link:hover {
+  text-shadow: 0 0 10px rgba(255,107,53,0.5);
+}
 
 .quiz-card {
   background: var(--bg-panel);
@@ -2751,4 +2761,12 @@ footer {
   .duel-comparison-table { flex-direction: column; }
   .duel-promo-banner { flex-direction: column; }
   .countdown-number { font-size: 80px; }
+}
+
+@media (max-width: 640px) {
+  .duel-card { padding: 22px 16px; }
+  .duel-stat-box { padding: 10px 14px; }
+  .duel-stat-box .val { font-size: 22px; }
+  .share-buttons-row { flex-direction: column; width: 100%; }
+  .share-buttons-row button { width: 100%; }
 }

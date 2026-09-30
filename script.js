@@ -1754,17 +1754,14 @@ document.addEventListener('DOMContentLoaded', () => {
      MODE SWITCHER
   ------------------------------------------------------------------ */
   window.switchQuizMainMode = function(mode) {
-    const tabDuel = document.getElementById('tabModeDuel');
-    const tabSolo = document.getElementById('tabModeSolo');
-    const cardDuel = document.getElementById('duelCard');
-    const cardSolo = document.getElementById('quizCard');
-    if (!tabDuel || !tabSolo || !cardDuel || !cardSolo) return;
     if (mode === 'duel') {
-      tabDuel.classList.add('active'); tabSolo.classList.remove('active');
-      cardDuel.classList.remove('hidden'); cardSolo.classList.add('hidden');
-    } else {
-      tabSolo.classList.add('active'); tabDuel.classList.remove('active');
-      cardSolo.classList.remove('hidden'); cardDuel.classList.add('hidden');
+      if (!document.getElementById('duelCard')) {
+        window.location.href = 'duel.html';
+      }
+    } else if (mode === 'solo') {
+      if (!document.getElementById('quizCard')) {
+        window.location.href = 'quiz.html';
+      }
     }
   };
 
@@ -2081,7 +2078,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   function copyRoomLink() {
-    const url = location.origin + location.pathname + '?duel=' + duel.roomCode;
+    const dir = location.pathname.substring(0, location.pathname.lastIndexOf('/') + 1);
+    const url = location.origin + dir + 'duel.html?duel=' + duel.roomCode;
     navigator.clipboard.writeText(url).then(() => {
       const btn = document.getElementById('btnCopyRoomLink');
       if (btn) { const o = btn.textContent; btn.textContent = '✅ Lien copié !'; setTimeout(() => btn.textContent = o, 1800); }
@@ -2350,7 +2348,19 @@ document.addEventListener('DOMContentLoaded', () => {
      INIT
   ------------------------------------------------------------------ */
   function initDuel() {
-    if (!document.getElementById('duelCard')) return;
+    const params = new URLSearchParams(location.search);
+    const codeParam = params.get('duel') || params.get('room');
+    const modeParam = params.get('mode');
+
+    // If on a page without duelCard (e.g. quiz.html) but URL has duel params -> redirect to duel.html
+    if (!document.getElementById('duelCard')) {
+      if (codeParam) {
+        window.location.href = 'duel.html?duel=' + encodeURIComponent(codeParam);
+      } else if (modeParam === 'duel') {
+        window.location.href = 'duel.html';
+      }
+      return;
+    }
 
     // Player name persistence
     const nameInput = document.getElementById('duelPlayerName');
@@ -2376,16 +2386,11 @@ document.addEventListener('DOMContentLoaded', () => {
     wire('btnDuelNewMatch', () => resetToLobby(true));
     wire('btnDuelExit', () => { destroyPeer(); resetToLobby(false); });
 
-    // URL auto-join: ?duel=1234
-    const params = new URLSearchParams(location.search);
-    const codeParam = params.get('duel') || params.get('room');
+    // URL auto-join on duel.html: ?duel=1234
     if (codeParam) {
-      window.switchQuizMainMode('duel');
       const inp = document.getElementById('duelJoinCodeInput');
       if (inp) inp.value = codeParam.replace(/[^0-9]/g,'');
       setTimeout(() => joinPrivateRoom(codeParam.replace(/[^0-9]/g,'')), 400);
-    } else if (params.get('mode') === 'duel') {
-      window.switchQuizMainMode('duel');
     }
   }
 
