@@ -1845,14 +1845,14 @@ document.addEventListener('DOMContentLoaded', () => {
         startDuelCountdown();
         break;
       case 'score':
-        duel.opponentScore = data.s || 0;
+        duel.opponentScore = (typeof data.s === 'number') ? data.s : (duel.opponentScore || 0);
         duel.opponentStreak = data.c || 0;
         updateOpponentHud();
         updateTugBar();
         feedAlert(`⚡ ${duel.opponentName}: ${duel.opponentScore} pts`, 'feed-event-opp');
         break;
       case 'end':
-        duel.opponentScore = data.s || duel.opponentScore;
+        if (typeof data.s === 'number') duel.opponentScore = data.s;
         break;
       case 'rematch_ok':
         startDuelCountdown();
@@ -2211,10 +2211,15 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(renderQ, 120);
     } else {
       btnEl.classList.add('wrong');
-      duel.streak = 0; duel.wrongCount++;
+      duel.score--; // Pénalité -1 point anti-spam
+      duel.streak = 0;
+      duel.wrongCount++;
       duel.mistakes.push({ q: item.q, correct: item.correct });
+      const sEl = document.getElementById('duelHudP1Score');
+      if (sEl) { sEl.classList.remove('bump', 'drop'); void sEl.offsetWidth; sEl.classList.add('drop'); }
       allBtns.forEach(b => { if (b.querySelector('.opt-text') && b.querySelector('.opt-text').textContent === correct) b.classList.add('correct'); });
-      feedAlert(`❌ Erreur ! Réponse : ${correct}`, 'feed-event-opp');
+      feedAlert(`❌ Erreur (-1 pt) ! Réponse : ${correct}`, 'feed-event-opp');
+      if (duel.conn && duel.conn.open) duel.conn.send({ type:'score', s:duel.score, c:duel.streak });
       updatePlayerHud(); updateTugBar();
       setTimeout(renderQ, 380);
     }
@@ -2239,13 +2244,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const tugMe = document.getElementById('duelTugMe');
     const tugOpp = document.getElementById('duelTugOpp');
     const tag = document.getElementById('duelDifferentialTag');
-    const total = duel.score + duel.opponentScore;
-    let pct = 50;
-    if (total > 0) pct = Math.max(12, Math.min(88, Math.round((duel.score / total) * 100)));
+    const diff = duel.score - duel.opponentScore;
+    // Base 50%, 5% per point diff, clamped between 12% and 88%
+    let pct = Math.max(12, Math.min(88, 50 + (diff * 5)));
     if (tugMe) tugMe.style.width = pct + '%';
-    if (tugOpp) tugOpp.style.width = (100-pct) + '%';
+    if (tugOpp) tugOpp.style.width = (100 - pct) + '%';
     if (tag) {
-      const diff = duel.score - duel.opponentScore;
       if (diff > 0) { tag.textContent = `+${diff} pts`; tag.className = 'duel-differential-tag winning'; }
       else if (diff < 0) { tag.textContent = `${diff} pts`; tag.className = 'duel-differential-tag losing'; }
       else { tag.textContent = 'ÉGALITÉ'; tag.className = 'duel-differential-tag'; }
